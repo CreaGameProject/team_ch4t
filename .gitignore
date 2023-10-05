@@ -73,7 +73,10 @@ crashlytics-build.properties
 
 
 #TMP Asset
+*TextMesh Pro/
+*TextMesh Pro.meta
 *Fonts/
+*Fonts.meta
 
 # Rider
 *.idea/
