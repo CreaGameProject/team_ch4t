@@ -4,11 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(LongPressTrigger))]
-public class CustomButton :
-    Button,
-    IPointerDownHandler,
-    IPointerUpHandler,
-    IPointerClickHandler
+public class CustomButton : Button
 {
     public Action OnClickAction;
     public Action OnPressAction;
