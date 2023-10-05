@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(LongPressTrigger))]
 public class CustomButton :
-    MonoBehaviour,
+    Button,
     IPointerDownHandler,
     IPointerUpHandler,
     IPointerClickHandler
@@ -16,22 +17,28 @@ public class CustomButton :
 
     private bool _isLongPress;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         var longPressTrigger = gameObject.GetComponent<LongPressTrigger>();
         longPressTrigger.AddLongPressAction(OnLongPress);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+        
         OnClickAction = null;
         OnPressAction = null;
         OnReleaseAction = null;
         OnLongPressAction = null;
     }
 
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public override void OnPointerDown(PointerEventData eventData)
     {
+        base.OnPointerDown(eventData);
+        
         if (!enabled)
         {
             return;
@@ -45,8 +52,10 @@ public class CustomButton :
         _isLongPress = false;
     }
 
-    public virtual void OnPointerUp(PointerEventData eventData)
+    public override void OnPointerUp(PointerEventData eventData)
     {
+        base.OnPointerUp(eventData);
+        
         if (!enabled)
         {
             return;
@@ -58,8 +67,10 @@ public class CustomButton :
         }
     }
 
-    public virtual void OnPointerClick(PointerEventData eventData)
+    public override void OnPointerClick(PointerEventData eventData)
     {
+        base.OnPointerClick(eventData);
+        
         if (!enabled)
         {
             return;
