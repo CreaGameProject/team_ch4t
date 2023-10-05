@@ -78,5 +78,6 @@ crashlytics-build.properties
 *Fonts/
 *Fonts.meta
 
+
 # Rider
 *.idea/
