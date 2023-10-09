@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Board : MonoBehaviour
 {
@@ -27,7 +25,11 @@ public class Board : MonoBehaviour
         UpdateCell((3, 4), Cell.Type.black);
         UpdateCell((4, 4), Cell.Type.white);
 
-        //ViewBoard(Cell.Type.white, true);
+        /*List<(int, int)> proposedCells = GetProposedCell(Cell.Type.black);
+        (int, int) cellIndex = proposedCells[Random.Range(0, proposedCells.Count)];
+        UpdateCell(cellIndex, Cell.Type.secret);*/
+
+        //石を置く
 
         GameStart();
     }
@@ -203,6 +205,7 @@ public class Board : MonoBehaviour
                     case Cell.Type.white: line += "●"; break;
                     case Cell.Type.black: line += "〇"; break;
                     case Cell.Type.proposed: line += "☆"; break;
+                    case Cell.Type.secret: line += "◇"; break;
                     default: line += "？"; break;
                 }
             }
@@ -258,14 +261,15 @@ public class Board : MonoBehaviour
         }
 
         // 既に石が置かれていないか判定
-        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2] == Cell.Type.white || this.board[indexOnBoard.Item1, indexOnBoard.Item2] == Cell.Type.black)
+        var checkCell = this.board[indexOnBoard.Item1, indexOnBoard.Item2];
+        if (checkCell == Cell.Type.black || checkCell == Cell.Type.white || checkCell == Cell.Type.secret)
         {
             Debug.Log("<b><color=#FDC110>【 Board - PutStone 】" + string.Format("（列：{0}, 行：{1}）", indexOnBoard.Item1 + 1, indexOnBoard.Item2 + 1) + " には既に石が置かれています。</color></b>");
             return false;
         }
 
         // 石を置ける場所か判定する
-        List<(int, int)> proposedCells = GetProposedCell(myType);
+        List<(int, int)> proposedCells = GetProposedCell((myType == Cell.Type.secret) ? Cell.Type.black : myType);
         bool didIndexMatchAnyItem = false;
         foreach (var cell in proposedCells)
         {
@@ -319,7 +323,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[originIndex.Item1, Y] == Cell.Type.empty) { break; }
 
-            if (this.board[originIndex.Item1, Y] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[originIndex.Item1, Y] == oppositeType || this.board[originIndex.Item1, Y] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[originIndex.Item1, Y] == type)
             {
@@ -340,7 +344,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[X, Y] == Cell.Type.empty) { break; }
 
-            if (this.board[X, Y] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[X, Y] == type)
             {
@@ -361,7 +365,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[X, originIndex.Item2] == Cell.Type.empty) { break; }
 
-            if (this.board[X, originIndex.Item2] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[X, originIndex.Item2] == oppositeType || this.board[X, originIndex.Item2] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[X, originIndex.Item2] == type)
             {
@@ -382,7 +386,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[X, Y] == Cell.Type.empty) { break; }
 
-            if (this.board[X, Y] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[X, Y] == type)
             {
@@ -403,7 +407,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[originIndex.Item1, Y] == Cell.Type.empty) { break; }
 
-            if (this.board[originIndex.Item1, Y] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[originIndex.Item1, Y] == oppositeType || this.board[originIndex.Item1, Y] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[originIndex.Item1, Y] == type)
             {
@@ -424,7 +428,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[X, Y] == Cell.Type.empty) { break; }
 
-            if (this.board[X, Y] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[X, Y] == type)
             {
@@ -445,7 +449,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[X, originIndex.Item2] == Cell.Type.empty) { break; }
 
-            if (this.board[X, originIndex.Item2] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[X, originIndex.Item2] == oppositeType || this.board[X, originIndex.Item2] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[X, originIndex.Item2] == type)
             {
@@ -466,7 +470,7 @@ public class Board : MonoBehaviour
         {
             if (this.board[X, Y] == Cell.Type.empty) { break; }
 
-            if (this.board[X, Y] == oppositeType) { numberOfCellsToFlip++; }
+            if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret) { numberOfCellsToFlip++; }
 
             if (this.board[X, Y] == type)
             {
@@ -488,7 +492,7 @@ public class Board : MonoBehaviour
 
         Cell.Type oppositeType = GetOppositeType(type);
 
-        //候補地
+        // 候補地
         List<(int, int)> proposedCells = new List<(int, int)>();
 
 
@@ -510,7 +514,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[originIndex.Item1, Y] == Cell.Type.empty || this.board[originIndex.Item1, Y] == type) { break; }
 
-                    if (this.board[originIndex.Item1, Y] == oppositeType) 
+                    if (this.board[originIndex.Item1, Y] == oppositeType || this.board[originIndex.Item1, Y] == Cell.Type.secret) 
                     {
                         //場外判定
                         if (Y - 1 < 0) { break; }
@@ -518,7 +522,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[originIndex.Item1, Y - 1] == oppositeType)
+                        if (this.board[originIndex.Item1, Y - 1] == oppositeType || this.board[originIndex.Item1, Y - 1] == Cell.Type.secret)
                         {                            
                             continue;
                         }
@@ -543,7 +547,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[originIndex.Item1, Y] == Cell.Type.empty || this.board[originIndex.Item1, Y] == type) { break; }
 
-                    if (this.board[originIndex.Item1, Y] == oppositeType)
+                    if (this.board[originIndex.Item1, Y] == oppositeType || this.board[originIndex.Item1, Y] == Cell.Type.secret)
                     {
                         //場外判定
                         if (Y + 1 > 7) { break; }
@@ -551,7 +555,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[originIndex.Item1, Y + 1] == oppositeType)
+                        if (this.board[originIndex.Item1, Y + 1] == oppositeType || this.board[originIndex.Item1, Y + 1] == Cell.Type.secret)
                         {
                             continue;
                         }
@@ -575,7 +579,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[X, originIndex.Item2] == Cell.Type.empty || this.board[X, originIndex.Item2] == type) { break; }
 
-                    if (this.board[X, originIndex.Item2] == oppositeType)
+                    if (this.board[X, originIndex.Item2] == oppositeType || this.board[X, originIndex.Item2] == Cell.Type.secret)
                     {
                         //場外判定
                         if (X - 1 < 0) { break; }
@@ -583,7 +587,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[X - 1, originIndex.Item2] == oppositeType)
+                        if (this.board[X - 1, originIndex.Item2] == oppositeType || this.board[X - 1, originIndex.Item2] == Cell.Type.secret)
                         {
                             continue;
                         }
@@ -607,7 +611,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[X, originIndex.Item2] == Cell.Type.empty || this.board[X, originIndex.Item2] == type) { break; }
 
-                    if (this.board[X, originIndex.Item2] == oppositeType)
+                    if (this.board[X, originIndex.Item2] == oppositeType || this.board[X, originIndex.Item2] == Cell.Type.secret)
                     {
                         //場外判定
                         if (X + 1 > 7) { break; }
@@ -615,7 +619,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[X + 1, originIndex.Item2] == oppositeType)
+                        if (this.board[X + 1, originIndex.Item2] == oppositeType || this.board[X + 1, originIndex.Item2] == Cell.Type.secret)
                         {
                             continue;
                         }
@@ -639,7 +643,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[X, Y] == Cell.Type.empty || this.board[X, Y] == type) { break; }
 
-                    if (this.board[X, Y] == oppositeType)
+                    if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret)
                     {
                         //場外判定
                         if (X + 1 > 7 || Y - 1 < 0) { break; }
@@ -647,7 +651,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[X + 1, Y - 1] == oppositeType) 
+                        if (this.board[X + 1, Y - 1] == oppositeType || this.board[X + 1, Y - 1] == Cell.Type.secret) 
                         {
                             continue;
                         }
@@ -671,7 +675,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[X, Y] == Cell.Type.empty || this.board[X, Y] == type) { break; }
 
-                    if (this.board[X, Y] == oppositeType)
+                    if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret)
                     {
                         //場外判定
                         if (X + 1 > 7 || Y + 1 > 7) { break; }
@@ -679,7 +683,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[X + 1, Y + 1] == oppositeType)
+                        if (this.board[X + 1, Y + 1] == oppositeType || this.board[X + 1, Y + 1] == Cell.Type.secret)
                         {
                             continue;
                         }
@@ -703,7 +707,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[X, Y] == Cell.Type.empty || this.board[X, Y] == type) { break; }
 
-                    if (this.board[X, Y] == oppositeType)
+                    if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret)
                     {
                         //場外判定
                         if (X - 1 < 0 || Y - 1 < 0) { break; }
@@ -711,7 +715,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[X - 1, Y - 1] == oppositeType)
+                        if (this.board[X - 1, Y - 1] == oppositeType || this.board[X - 1, Y - 1] == Cell.Type.secret)
                         {
                             continue;
                         }
@@ -735,7 +739,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[X, Y] == Cell.Type.empty || this.board[X, Y] == type) { break; }
 
-                    if (this.board[X, Y] == oppositeType)
+                    if (this.board[X, Y] == oppositeType || this.board[X, Y] == Cell.Type.secret)
                     {
                         //場外判定
                         if (X - 1 < 0 || Y + 1 > 7) { break; }
@@ -743,7 +747,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[X - 1, Y + 1] == oppositeType)
+                        if (this.board[X - 1, Y + 1] == oppositeType || this.board[X - 1, Y + 1] == Cell.Type.secret)
                         {
                             continue;
                         }
