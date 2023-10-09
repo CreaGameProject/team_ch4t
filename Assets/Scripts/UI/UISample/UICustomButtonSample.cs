@@ -11,6 +11,7 @@ namespace UI.UISample
             {
                 Debug.Log("Click");
             };
+            
             _button.OnLongPressAction = () =>
             {
                 Debug.Log("LongPress");
