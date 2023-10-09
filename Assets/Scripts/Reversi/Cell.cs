@@ -11,5 +11,6 @@ public class Cell : MonoBehaviour
         white = 1, //白石が置かれている
         black = 2, //黒石が置かれている
         proposed = 3, //石を置ける場所
+        secret = 4, //ヒミツマス
     }
 }
