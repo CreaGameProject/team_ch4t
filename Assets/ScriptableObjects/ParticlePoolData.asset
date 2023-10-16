@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa9dbcd952b4edb8e9eedfad274bfc2, type: 3}
   m_Name: ParticlePoolData
   m_EditorClassIdentifier: 
+  particlePoolDataList:
+  - particleType: 0
+    particleObject: {fileID: 0}
+    defaultPoolStock: 10

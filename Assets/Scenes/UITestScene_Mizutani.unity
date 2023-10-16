@@ -907,7 +907,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422363276}
-  - component: {fileID: 1422363275}
+  - component: {fileID: 1422363278}
+  - component: {fileID: 1422363277}
   m_Layer: 0
   m_Name: ParticleManager
   m_TagString: Untagged
@@ -915,22 +916,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1422363275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422363274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb42e33059bc4de5b0425543a0750c01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data:
-  - particleType: 0
-    particleObject: {fileID: 0}
-    defaultPoolStock: 0
 --- !u!4 &1422363276
 Transform:
   m_ObjectHideFlags: 0
@@ -946,6 +931,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1422363277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422363274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb42e33059bc4de5b0425543a0750c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolData: {fileID: 1422363278}
+--- !u!114 &1422363278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422363274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9761c855b3e5432fa01117b845f03808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlePoolDataAsset: {fileID: 11400000, guid: 3a608174a03b14d0296ab95f415f3cda, type: 2}
 --- !u!1 &1458322688
 GameObject:
   m_ObjectHideFlags: 0
