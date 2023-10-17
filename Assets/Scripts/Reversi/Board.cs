@@ -9,13 +9,15 @@ public class Board : MonoBehaviour
     //第一次元⇒x座標、右に行けば増える
     //第二次元⇒y座標、下に行けば増える
     [SerializeField] private Cell.Type[,] board = new Cell.Type[8, 8];
+    public Cell.Type[,] GetBoard() { return this.board; }
+
     [SerializeField] private Transform boardAnchor = null;
 
     [SerializeField] private Computer computer = null;
 
     public Turn.Type turn = new Turn.Type();
 
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -129,7 +131,7 @@ public class Board : MonoBehaviour
             result = "DROW | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
         }
 
-        return result; 
+        return result;
     }
 
     //ゲームが継続するか調べる
@@ -140,7 +142,7 @@ public class Board : MonoBehaviour
         int numberOfPlayerProposedCell = GetProposedCell(Cell.Type.white).Count;
         int numerOfComputerProposedCell = GetProposedCell(Cell.Type.black).Count;
 
-        if (numberOfPlayerProposedCell == 0 && numerOfComputerProposedCell == 0)  
+        if (numberOfPlayerProposedCell == 0 && numerOfComputerProposedCell == 0)
         {
             willTheMatchContinue = false;
         }
@@ -156,7 +158,7 @@ public class Board : MonoBehaviour
         {
             StartPlayerTurn();
         }
-        else if(this.turn == Turn.Type.player)
+        else if (this.turn == Turn.Type.player)
         {
             StartComputerTurn();
         }
@@ -183,11 +185,11 @@ public class Board : MonoBehaviour
                 type = Cell.Type.white;
             }
 
-            List<(int, int)> proposedCells = GetProposedCell(type);
+            List<((int, int), int) > proposedCells = GetProposedCell(type);
 
-            foreach ((int, int) cell in proposedCells)
+            foreach (((int, int), int) cell in proposedCells)
             {
-                board[cell.Item1, cell.Item2] = Cell.Type.proposed;
+                board[cell.Item1.Item1, cell.Item1.Item2] = Cell.Type.proposed;
             }
         }
 
@@ -230,6 +232,10 @@ public class Board : MonoBehaviour
         {
             oppositeType = Cell.Type.white;
         }
+        else if (type == Cell.Type.secret)
+        {
+            oppositeType = Cell.Type.white;
+        }
 
         return oppositeType;
     }
@@ -269,11 +275,11 @@ public class Board : MonoBehaviour
         }
 
         // 石を置ける場所か判定する
-        List<(int, int)> proposedCells = GetProposedCell((myType == Cell.Type.secret) ? Cell.Type.black : myType);
+        List<((int, int), int) > proposedCells = GetProposedCell((myType == Cell.Type.secret) ? Cell.Type.black : myType);
         bool didIndexMatchAnyItem = false;
-        foreach (var cell in proposedCells)
+        foreach (((int, int), int) cell in proposedCells)
         {
-            if (indexOnBoard == cell)
+            if (indexOnBoard == cell.Item1)
             {
                 didIndexMatchAnyItem = true;
                 break;
@@ -487,21 +493,23 @@ public class Board : MonoBehaviour
     }
 
     //設置可能な座標（index）を調べて、配列で返す
-    public List<(int, int)> GetProposedCell(Cell.Type type)
+    //戻り値：
+    public List<((int, int), int)> GetProposedCell(Cell.Type type)
     {
-
         Cell.Type oppositeType = GetOppositeType(type);
 
         // 候補地
-        List<(int, int)> proposedCells = new List<(int, int)>();
-
+        List<((int, int), int)> proposedCells = new List<((int, int), int)>();
 
         for (int x = 0; x < 8; x++)
         {
             for (int y = 0; y < 8; y++)
             {
                 //自分の色を起点に検索する
-                if (this.board[x,y] != type) { continue; }
+                if (this.board[x, y] != type)
+                {
+                    continue;
+                }
 
                 int numberOfCellsToFlip = 0; //裏返す石の数
                 (int, int) originIndex = (0, 0); //探索開始位置（index表記）
@@ -514,7 +522,7 @@ public class Board : MonoBehaviour
                 {
                     if (this.board[originIndex.Item1, Y] == Cell.Type.empty || this.board[originIndex.Item1, Y] == type) { break; }
 
-                    if (this.board[originIndex.Item1, Y] == oppositeType || this.board[originIndex.Item1, Y] == Cell.Type.secret) 
+                    if (this.board[originIndex.Item1, Y] == oppositeType || this.board[originIndex.Item1, Y] == Cell.Type.secret)
                     {
                         //場外判定
                         if (Y - 1 < 0) { break; }
@@ -523,7 +531,7 @@ public class Board : MonoBehaviour
 
                         //相手⇒検索続行
                         if (this.board[originIndex.Item1, Y - 1] == oppositeType || this.board[originIndex.Item1, Y - 1] == Cell.Type.secret)
-                        {                            
+                        {
                             continue;
                         }
 
@@ -533,7 +541,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((originIndex.Item1, Y - 1));
+                                proposedCells.Add(((originIndex.Item1, Y - 1), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -565,7 +573,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((originIndex.Item1, Y + 1));
+                                proposedCells.Add(((originIndex.Item1, Y + 1), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -597,7 +605,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((X - 1, originIndex.Item2));
+                                proposedCells.Add(((X - 1, originIndex.Item2), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -629,7 +637,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((X + 1, originIndex.Item2));
+                                proposedCells.Add(((X + 1, originIndex.Item2), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -651,7 +659,7 @@ public class Board : MonoBehaviour
                         numberOfCellsToFlip++;
 
                         //相手⇒検索続行
-                        if (this.board[X + 1, Y - 1] == oppositeType || this.board[X + 1, Y - 1] == Cell.Type.secret) 
+                        if (this.board[X + 1, Y - 1] == oppositeType || this.board[X + 1, Y - 1] == Cell.Type.secret)
                         {
                             continue;
                         }
@@ -661,7 +669,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((X + 1, Y - 1));
+                                proposedCells.Add(((X + 1, Y - 1), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -693,7 +701,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((X + 1, Y + 1));
+                                proposedCells.Add(((X + 1, Y + 1), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -725,7 +733,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((X - 1, Y - 1));
+                                proposedCells.Add(((X - 1, Y - 1), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -757,7 +765,7 @@ public class Board : MonoBehaviour
                         {
                             if (numberOfCellsToFlip > 0)
                             {
-                                proposedCells.Add((X - 1, Y + 1));
+                                proposedCells.Add(((X - 1, Y + 1), numberOfCellsToFlip));
                                 break;
                             }
                         }
@@ -773,5 +781,26 @@ public class Board : MonoBehaviour
         }*/
 
         return proposedCells;
-    }    
+    }
+
+    //設置可能な座標（index）を調べて、配列で返す
+    public List<(int, int)> GetSecretCell()
+    {
+        // 候補地
+        List<(int, int)> secretCells = new List<(int, int)>();
+
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                //自分の色を起点に検索する
+                if (this.board[x, y] == Cell.Type.secret) 
+                {
+                    secretCells.Add((x, y));
+                }
+            }
+        }
+
+        return secretCells;
+    }
 }
