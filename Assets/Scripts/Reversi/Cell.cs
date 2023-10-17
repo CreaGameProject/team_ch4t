@@ -13,4 +13,12 @@ public class Cell : MonoBehaviour
         proposed = 3, //石を置ける場所
         secret = 4, //ヒミツマス
     }
+
+    [System.Serializable]
+    public enum Color
+    {
+        empty = 0, //何も置かれていない
+        white = 1, //白石が置かれている
+        black = 2, //黒石が置かれている
+    }
 }
