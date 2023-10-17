@@ -19,7 +19,7 @@ public class Computer : MonoBehaviour
     {
         //石を置ける場所を探す
 
-        List<((int, int), int) > proposedCells = this.board.GetProposedCell(this.myType);
+        List<((int, int), int) > proposedCells = this.board.GetProposedCell(Cell.Color.black);
 
 
         //ヒミツマスを探す
@@ -85,7 +85,7 @@ public class Computer : MonoBehaviour
 
         List<(int, int)> secretCells = this.board.GetSecretCell();
 
-        Cell.Type cellType = this.myType;
+        Cell.Type cellType = Cell.Type.black;
 
         if (secretCells.Count == 0)
         {
@@ -115,13 +115,15 @@ public class Computer : MonoBehaviour
                 }
             }
 
+            Debug.Log(string.Format("maxLength => {0}", maxLength));
+
             // 候補が複数ある場合はランダムで選ぶ
             cellIndex = maxCell[Random.Range(0, maxCell.Count)];
 
-            foreach (((int, int), int) proposedCell in proposedCells)
+            /*foreach (((int, int), int) proposedCell in proposedCells)
             {
                 Debug.Log(string.Format("proposedCell => {0}", proposedCell));
-            }
+            }*/
         }
 
         
