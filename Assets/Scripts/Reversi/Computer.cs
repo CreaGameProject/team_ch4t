@@ -453,21 +453,21 @@ public class Computer : MonoBehaviour
         }
 
         List<(int, int)> mostDifficultToTurnOverCells = new List<(int, int)>();
-        int maxFrequency = frequency[0, 0];
+        int minFrequency = 999;
         for (int y = 0; y < frequency.GetLength(1); y++)
         {
             for (int x = 0; x < frequency.GetLength(0); x++)
             {
                 if (frequency[x, y] <= 0) { continue; }
 
-                if (frequency[x, y] > maxFrequency)
+                if (frequency[x, y] < minFrequency)
                 {
-                    maxFrequency = frequency[x, y];
+                    minFrequency = frequency[x, y];
 
                     mostDifficultToTurnOverCells.Clear();
                     mostDifficultToTurnOverCells.Add((x, y));
                 }
-                else if (frequency[x, y] == maxFrequency)
+                else if (frequency[x, y] == minFrequency)
                 {
                     mostDifficultToTurnOverCells.Add((x, y));
                 }
