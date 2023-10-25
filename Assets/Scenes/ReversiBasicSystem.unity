@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1607851398}
-  myType: 2
+  myColor: 1
 --- !u!4 &888730779
 Transform:
   m_ObjectHideFlags: 0
@@ -398,7 +398,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardAnchor: {fileID: 1975592717}
+  player: {fileID: 400552904}
   computer: {fileID: 888730778}
+  turnCounter: 0
   turn: 0
 --- !u!1 &1789721045
 GameObject:

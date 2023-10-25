@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Cysharp.Threading.Tasks;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,21 +8,15 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Board board = null;
 
-
-    // Start is called before the first frame update
-    void Start()
+    async public UniTask Action()
     {
-        
-    }
+        bool wasTheStonePlacedCorrectly = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        do
         {
-            //Debug.Log("左ボタンが押されています。");
+            await UniTask.Yield();
 
-            if (this.board.turn != Turn.Type.player) { return; }
+            await UniTask.WaitUntil(() => Input.GetMouseButtonDown(0));
 
             // カーソル位置を取得
             Vector3 mousePosition = Input.mousePosition;
@@ -29,11 +25,9 @@ public class Player : MonoBehaviour
             // カーソル位置をワールド座標に変換
             Vector3 target = Camera.main.ScreenToWorldPoint(mousePosition);
 
-            bool wasTheStonePlacedCorrectly = this.board.PutStone((target.x, target.z), Cell.Type.white);
-            if (wasTheStonePlacedCorrectly)
-            {
-                this.board.TurnEnd();
-            }
-        }
+            wasTheStonePlacedCorrectly = this.board.PutStone((target.x, target.z), Cell.Type.black);
+
+        } while (!wasTheStonePlacedCorrectly);
+
     }
 }
