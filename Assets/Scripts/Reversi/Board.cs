@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,86 +15,96 @@ public class Board : MonoBehaviour
 
     [SerializeField] private Transform boardAnchor = null;
 
+    [SerializeField] private Player player = null;
     [SerializeField] private Computer computer = null;
 
+    [SerializeField] private int turnCounter = 0; 
     public Turn.Type turn = new Turn.Type();
 
 
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         UpdateCell((3, 3), Cell.Type.white);
         UpdateCell((4, 3), Cell.Type.black);
         UpdateCell((3, 4), Cell.Type.black);
         UpdateCell((4, 4), Cell.Type.white);
 
-        /*List<(int, int)> proposedCells = GetProposedCell(Cell.Type.black);
-        (int, int) cellIndex = proposedCells[Random.Range(0, proposedCells.Count)];
-        UpdateCell(cellIndex, Cell.Type.secret);*/
-
-        //石を置く
-
-        GameStart();
+        await Game();
     }
 
-    public void GameStart()
+    async private UniTask Game()
     {
-        int number = UnityEngine.Random.Range(1, 100 + 1);
-        if (number % 2 == 0)
-        {
-            StartPlayerTurn();
-        }
-        else
-        {
-            StartComputerTurn();
-        }
-    }
+        // ゲームスタート
+        Debug.Log("<b><color=#F26E3E>【 Board 】GAME START! </color></b>");
 
-    public void StartPlayerTurn()
-    {
-        this.turn = Turn.Type.player;
-        Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Player のターンです。</color></b>");
-
-        ViewBoard(this.turn, true);
-
-        if (GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count == 0)
+        // ゲームが終わるまでターンを繰り返す
+        while (true)
         {
-            Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
-            TurnEnd();
-        }
-    }
+            await UniTask.Yield();
 
-    public void StartComputerTurn()
-    {
-        this.turn = Turn.Type.computer;
-        Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
+            // ターン数インクリメント
+            //Debug.Log("【Board】TurnUnit() | ターン数インクリメント");
+            this.turnCounter++;
 
-        ViewBoard(this.turn, true);
+            Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Player のターンです。</color></b>");
 
-        if (GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count == 0)
-        {
-            Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
-            TurnEnd();
-        }
-        else
-        {
-            this.computer.Action();
-        }
-    }
+            // 盤面をコンソールに表示する
+            ViewBoard(Turn.Type.player, true);
 
-    public void TurnEnd()
-    {
-        bool willTheMatchContinue = ContinuationJudgment();
-        if (willTheMatchContinue)
-        {
-            ChangeTurn();
+            // プレイヤーが石を置けるか確認する、置けないならパスする
+            //Debug.Log("【Board】TurnUnit() | プレイヤーが石を置けるか確認する");
+            List<((int, int), int)> proposedCells = GetProposedCell(Cell.Color.black);
+            if (proposedCells.Count > 0)
+            {
+                // プレイヤーが石を置く
+                await this.player.Action();
+            }
+            else
+            {
+                Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
+            }
+
+            // ゲームが継続するか調べる
+            //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
+            if (!ContinuationJudgment()) { break; }
+
+            Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
+
+            // 盤面をコンソールに表示する
+            ViewBoard(Turn.Type.computer, true);
+
+            // コンピュータが石を置けるか確認する、置けないならパスする
+            //Debug.Log("【Board】TurnUnit() | コンピュータが石を置けるか確認する");
+            proposedCells.Clear();
+            proposedCells = GetProposedCell(Cell.Color.white);
+            if (proposedCells.Count > 0)
+            {
+                // コンピュータが石を置く
+                await this.computer.Action();
+            }
+            else
+            {
+                Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
+            }
+
+            // 偶数ターン時にコンピュータが喋る
+            //Debug.Log("【Board】TurnUnit() | 偶数ターン時にコンピュータが喋る");
+            if (this.turnCounter % 2 == 0)
+            {
+                Debug.Log("【Board】TurnUnit() | キャラクターが喋るよ。");
+            }
+
+            // ゲームが継続するか調べる
+            //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
+            if (!ContinuationJudgment()) { break; }
         }
-        else
-        {
-            string result = GameResultJudgment();
-            Debug.Log("<b><color=#F26E3E>【 Board 】GAME SET! => " + result + "</color></b>");
-        }
+
+        string result = GameResultJudgment();
+        Debug.Log("<b><color=#F26E3E>【 Board 】GAME SET! => " + result + "</color></b>");
+
+
     }
 
     //ゲームの勝敗を返す
@@ -106,11 +117,11 @@ public class Board : MonoBehaviour
         {
             for (int x = 0; x < this.board.GetLength(0); x++)
             {
-                if (this.board[x, y].Item2 == Cell.Color.white)
+                if (this.board[x, y].Item2 == Cell.Color.black)
                 {
                     numberOfPlayerCell++;
                 }
-                else if (this.board[x, y].Item2 == Cell.Color.black)
+                else if (this.board[x, y].Item2 == Cell.Color.white)
                 {
                     numberOfComputerCell++;
                 }
@@ -140,8 +151,8 @@ public class Board : MonoBehaviour
     {
         bool willTheMatchContinue = true;
 
-        int numberOfPlayerProposedCell = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
-        int numerOfComputerProposedCell = GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count;
+        int numberOfPlayerProposedCell = GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count;
+        int numerOfComputerProposedCell = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
 
         if (numberOfPlayerProposedCell == 0 && numerOfComputerProposedCell == 0)
         {
@@ -150,19 +161,6 @@ public class Board : MonoBehaviour
 
         return willTheMatchContinue;
 
-    }
-
-    //ターンを変更する
-    public void ChangeTurn()
-    {
-        if (this.turn == Turn.Type.computer)
-        {
-            StartPlayerTurn();
-        }
-        else if (this.turn == Turn.Type.player)
-        {
-            StartComputerTurn();
-        }
     }
 
     // 盤面をコンソールに表示する
@@ -179,11 +177,11 @@ public class Board : MonoBehaviour
             Cell.Type type = Cell.Type.empty;
             if (myType == Turn.Type.computer)
             {
-                type = Cell.Type.black;
+                type = Cell.Type.white;
             }
             else if (myType == Turn.Type.player)
             {
-                type = Cell.Type.white;
+                type = Cell.Type.black;
             }
 
             List<((int, int), int) > proposedCells = GetProposedCell(ConvertTypeToColor(type));
