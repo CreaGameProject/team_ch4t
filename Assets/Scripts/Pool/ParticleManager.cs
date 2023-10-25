@@ -7,7 +7,7 @@ namespace Pool
     [RequireComponent(typeof(ParticlePoolDataHolder))]
     public class ParticleManager : SingletonMonoBehaviour<ParticleManager>
     {
-        [SerializeField] private ParticlePoolDataHolder _poolData;
+        private ParticlePoolDataHolder _poolData;
         private Dictionary<ParticleType, ParticlePool> _particleDictionary = new Dictionary<ParticleType, ParticlePool>();
 
         protected override void Awake()
@@ -19,6 +19,7 @@ namespace Pool
 
         private void Start()
         {
+            _poolData = GetComponent<ParticlePoolDataHolder>();
             foreach (var data in _poolData.ParticlePoolDataList)
             {
                 var parentObject = new GameObject(data.ParticleType + "ParticlePool");
@@ -37,11 +38,8 @@ namespace Pool
                 return;
             }
 
-            //ObjectPoolから1つ取得
-            var effect = pool.Rent();
-
-            //エフェクトを再生し、再生終了したらpoolに返却する
-            effect.PlayParticle(position).Subscribe(__ => { pool.Return(effect); });
+            var effect = pool.Rent(); //ObjectPoolから1つ取得
+            effect.PlayParticle(position).Subscribe(__ => { pool.Return(effect); }); //エフェクトを再生し、再生終了したらpoolに返却する
         }
     }
 }

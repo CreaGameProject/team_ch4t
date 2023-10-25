@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using Pool;
 using UnityEngine;
 
 public class CursorManager : MonoBehaviour
 {
+    [SerializeField] private Camera overlayParticleCamera;
+    
     private void Update()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition - Camera.main.transform.forward * 5);
+        Vector3 mousePos = overlayParticleCamera.ScreenToWorldPoint(Input.mousePosition + overlayParticleCamera.transform.forward * 5);
 
         if (Input.GetMouseButtonDown(0))
         {
