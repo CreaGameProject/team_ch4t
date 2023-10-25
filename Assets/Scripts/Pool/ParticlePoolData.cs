@@ -7,8 +7,8 @@ namespace Pool
     {
         [SerializeField] private ParticleType particleType;
         public ParticleType ParticleType => particleType;
-        [SerializeField] private GameObject particleObject;
-        public GameObject ParticleObject => particleObject;
+        [SerializeField] private ParticleObject particleObject;
+        public ParticleObject ParticleObject => particleObject;
         [SerializeField] private int defaultPoolStock;
         public int DefaultPoolStock => defaultPoolStock;
     }
