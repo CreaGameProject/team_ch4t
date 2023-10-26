@@ -14,6 +14,8 @@ public class Computer : MonoBehaviour
 
     [SerializeField] private Cell.Color myColor = Cell.Color.white;
 
+    
+
     async public UniTask Action()
     {
         
@@ -59,6 +61,10 @@ public class Computer : MonoBehaviour
                     {
                         maxLength = proposedCells[i].Item2;
                         maxCell.Clear();
+                        maxCell.Add(proposedCells[i].Item1);
+                    }
+                    else if(maxLength == proposedCells[i].Item2)
+                    {
                         maxCell.Add(proposedCells[i].Item1);
                     }
                 }
@@ -383,7 +389,8 @@ public class Computer : MonoBehaviour
             }
         }
 
-
+        // 盤面の頻度を表示する
+        /*
         string content = "";
 
         for (int y = 0; y < frequency.GetLength(1); y++)
@@ -412,6 +419,7 @@ public class Computer : MonoBehaviour
         }
 
         Debug.Log(content);
+        */
 
         return mostDifficultToTurnOverCells;
     }

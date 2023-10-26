@@ -18,8 +18,11 @@ public class Board : MonoBehaviour
     [SerializeField] private Player player = null;
     [SerializeField] private Computer computer = null;
 
-    [SerializeField] private int turnCounter = 0; 
-    public Turn.Type turn = new Turn.Type();
+    [SerializeField] private int turnCounter = 0;
+
+    [SerializeField] private BoardPreset boardPreset = null;
+
+    //public Turn.Type turn = new Turn.Type();
 
 
 
@@ -30,6 +33,8 @@ public class Board : MonoBehaviour
         UpdateCell((4, 3), Cell.Type.black);
         UpdateCell((3, 4), Cell.Type.black);
         UpdateCell((4, 4), Cell.Type.white);
+
+        
 
         await Game();
     }
@@ -99,6 +104,24 @@ public class Board : MonoBehaviour
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
             if (!ContinuationJudgment()) { break; }
+
+            // ヒミツマスを設置する
+            //Debug.Log("【Board】TurnUnit() | ヒミツマスを設置する");
+            int secretCellsCount = GetSecretCell().Count;
+            if (this.turnCounter == 3 && secretCellsCount == 0)
+            {
+                // ヒミツマスを設置する場所の候補地を取得する
+                List<(int, int)> cells = GetMostDifficultToTurnOverCells(this.board);
+
+                // 複数ある場合はランダムで選ぶ
+                (int, int) cell = cells[Random.Range(0, cells.Count)];
+
+                // ヒミツマスを設置する
+                UpdateCell(cell, Cell.Type.secret);
+            }
+            
+
+            
         }
 
         string result = GameResultJudgment();
@@ -206,7 +229,7 @@ public class Board : MonoBehaviour
                     case Cell.Type.white: line += "●"; break;
                     case Cell.Type.black: line += "〇"; break;
                     case Cell.Type.proposed: line += "☆"; break;
-                    case Cell.Type.secret: line += "◇"; break;
+                    case Cell.Type.secret: line += "◆"; break;
                     default: line += "？"; break;
                 }
             }
@@ -303,8 +326,49 @@ public class Board : MonoBehaviour
 
         UpdateCell(indexOnBoard, myType);
 
-        FlipCell(indexOnBoard, (myType == Cell.Type.secret) ? Cell.Type.black : myType);
-        //ViewBoard(myType, true);
+        bool didFlipSecretCell = FlipCell(indexOnBoard, (myType == Cell.Type.secret) ? Cell.Type.black : myType);
+
+        if (didFlipSecretCell)
+        {
+            Debug.Log("ヒミツマスを裏返した。");
+
+            // プリセットを読み込み
+            (Cell.Type, Cell.Color)[,] newBoard = new (Cell.Type, Cell.Color)[8, 8];
+            string boardString = this.boardPreset.character.boardPresets[0];
+            char[] removeChars = new char[] { '\r', '\n' };
+            foreach (char c in removeChars) { boardString = boardString.Replace(c.ToString(), ""); }
+
+            for (int i = 0; i < boardString.Length; i++)
+            {
+                (Cell.Type, Cell.Color) cell = (Cell.Type.empty, Cell.Color.empty);
+                switch (boardString[i])
+                {
+                    case '＃': cell = (Cell.Type.empty, Cell.Color.empty);  break;
+                    case '○': cell = (Cell.Type.black, Cell.Color.black); break;
+                    case '●': cell = (Cell.Type.black, Cell.Color.white); break;
+                    case '◆': cell = (Cell.Type.secret, Cell.Color.white); break;
+                    default : Debug.Log(string.Format("プリセット読み込みエラー：意図しない文字 {0} が含まれています。", boardString[i])); break;
+                }
+
+                newBoard[i % 8, (int)(i / 8)] = cell;
+            }
+
+            // 盤面をアップデート
+            for (int y = 0; y < newBoard.GetLength(1); y++)
+            {
+                for (int x = 0; x < newBoard.GetLength(0); x++)
+                {
+                    UpdateCell((x, y), newBoard[x, y].Item1);
+                }
+            }
+
+            this.boardPreset.character.boardPresets.RemoveAt(0);
+        }
+
+        
+
+
+
 
         return true;
     }
@@ -317,7 +381,7 @@ public class Board : MonoBehaviour
         {
             case Cell.Type.white : color = Cell.Color.white; break;
             case Cell.Type.black : color = Cell.Color.black; break;
-            case Cell.Type.secret : color = Cell.Color.black; break;
+            case Cell.Type.secret : color = Cell.Color.white; break;
             default: break;
         }
 
@@ -325,9 +389,11 @@ public class Board : MonoBehaviour
         Debug.Log("<b><color=#01AC56>【 Board - UpdateCell 】" + string.Format("（{0}列, {1}行）を type = {2}, color = {3} に更新しました。", indexOnBoard.Item1 + 1, indexOnBoard.Item2 + 1, type.ToString(), color.ToString()) + "</color></b>");
     }
 
-    //石を裏返す
-    public void FlipCell((int, int) indexOnBoard, Cell.Type type)
+    // 石を裏返す
+    // 戻り値：裏返したセルにヒミツマスが含まれているか
+    public bool FlipCell((int, int) indexOnBoard, Cell.Type type)
     {
+        bool didFlipSecretCell = false;
 
         int x = indexOnBoard.Item1;
         int y = indexOnBoard.Item2;
@@ -374,6 +440,7 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
+                    if(this.board[originIndex.Item1 + j, originIndex.Item2 - j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1 + j, originIndex.Item2 - j), type);
                 }
 
@@ -394,6 +461,7 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
+                    if (this.board[originIndex.Item1 + j, originIndex.Item2].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1 + j, originIndex.Item2), type);
                 }
 
@@ -414,6 +482,7 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
+                    if (this.board[originIndex.Item1 + j, originIndex.Item2 + j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1 + j, originIndex.Item2 + j), type);
                 }
 
@@ -434,7 +503,7 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
-                    //this.board[originIndex.Item1, originIndex.Item2 + j] = type;
+                    if (this.board[originIndex.Item1, originIndex.Item2 + j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1, originIndex.Item2 + j), type);
                 }
 
@@ -455,7 +524,7 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
-                    //this.board[originIndex.Item1 - j, originIndex.Item2 + j] = type;
+                    if (this.board[originIndex.Item1 - j, originIndex.Item2 + j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1 - j, originIndex.Item2 + j), type);
                 }
 
@@ -476,7 +545,7 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
-                    //this.board[originIndex.Item1 - j, originIndex.Item2] = type;
+                    if (this.board[originIndex.Item1 - j, originIndex.Item2].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1 - j, originIndex.Item2), type);
                 }
 
@@ -497,13 +566,15 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
-                    //this.board[originIndex.Item1 - j, originIndex.Item2 - j] = type;
+                    if (this.board[originIndex.Item1 - j, originIndex.Item2 - j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1 - j, originIndex.Item2 - j), type);
                 }
 
                 break;
             }
         }
+
+        return didFlipSecretCell;
 
     }
 
@@ -816,5 +887,348 @@ public class Board : MonoBehaviour
         }
 
         return secretCells;
+    }
+
+    private List<(int, int)> GetMostDifficultToTurnOverCells((Cell.Type, Cell.Color)[,] board)
+    {
+        // 裏返される回数をカウントする
+        int[,] frequency = new int[8, 8];
+        for (int y = 0; y < board.GetLength(1); y++)
+        {
+            for (int x = 0; x < board.GetLength(0); x++)
+            {
+                if (board[x, y].Item2 != Cell.Color.black) { continue; }
+
+                Cell.Color myColor = Cell.Color.black; // プレイヤーの色
+                Cell.Color oppositeColor = Cell.Color.white; // コンピュータの色
+
+                int numberOfCellsToFlip = 0; //裏返す石の数
+                (int, int) originIndex = (0, 0); //探索開始位置（index表記）
+                int X, Y;
+
+                //上方向への検索
+                originIndex = (x, y - 1);
+                numberOfCellsToFlip = 0;
+                for (Y = y - 1; Y > -1; Y--)
+                {
+                    if (board[originIndex.Item1, Y].Item1 == Cell.Type.empty || board[originIndex.Item1, Y].Item2 == myColor) { break; }
+
+                    if (board[originIndex.Item1, Y].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (Y - 1 < 0) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[originIndex.Item1, Y - 1].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[originIndex.Item1, Y - 1].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1, originIndex.Item2 - n] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                //下方向への検索
+                originIndex = (x, y + 1);
+                numberOfCellsToFlip = 0;
+                for (Y = y + 1; Y < 8; Y++)
+                {
+                    if (board[originIndex.Item1, Y].Item1 == Cell.Type.empty || board[originIndex.Item1, Y].Item2 == myColor) { break; }
+
+                    if (board[originIndex.Item1, Y].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (Y + 1 > 7) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[originIndex.Item1, Y + 1].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[originIndex.Item1, Y + 1].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1, originIndex.Item2 + n] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                //左方向への検索
+                originIndex = (x - 1, y);
+                numberOfCellsToFlip = 0;
+                for (X = x - 1; X > -1; X--)
+                {
+                    if (board[X, originIndex.Item2].Item1 == Cell.Type.empty || board[X, originIndex.Item2].Item2 == myColor) { break; }
+
+                    if (board[X, originIndex.Item2].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (X - 1 < 0) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[X - 1, originIndex.Item2].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[X - 1, originIndex.Item2].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1 - n, originIndex.Item2] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                //右方向への検索
+                originIndex = (x + 1, y);
+                numberOfCellsToFlip = 0;
+                for (X = x + 1; X < 8; X++)
+                {
+                    if (board[X, originIndex.Item2].Item1 == Cell.Type.empty || board[X, originIndex.Item2].Item2 == myColor) { break; }
+
+                    if (board[X, originIndex.Item2].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (X + 1 > 7) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[X + 1, originIndex.Item2].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[X + 1, originIndex.Item2].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1 + n, originIndex.Item2] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                //右上方向への検索
+                originIndex = (x + 1, y - 1);
+                numberOfCellsToFlip = 0;
+                for (X = x + 1, Y = y - 1; X < 8 && Y > -1; X++, Y--)
+                {
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+
+                    if (board[X, Y].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (X + 1 > 7 || Y - 1 < 0) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[X + 1, Y - 1].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[X + 1, Y - 1].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1 + n, originIndex.Item2 - n] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                //右下方向への検索
+                originIndex = (x + 1, y + 1);
+                numberOfCellsToFlip = 0;
+                for (X = x + 1, Y = y + 1; X < 8 && Y < 8; X++, Y++)
+                {
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+
+                    if (board[X, Y].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (X + 1 > 7 || Y + 1 > 7) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[X + 1, Y + 1].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[X + 1, Y + 1].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1 + n, originIndex.Item2 + n] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                //左上方向への検索
+                originIndex = (x - 1, y - 1);
+                numberOfCellsToFlip = 0;
+                for (X = x - 1, Y = y - 1; X > -1 && Y > -1; X--, Y--)
+                {
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+
+                    if (board[X, Y].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (X - 1 < 0 || Y - 1 < 0) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[X - 1, Y - 1].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[X - 1, Y - 1].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1 - n, originIndex.Item2 - n] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                //左下方向への検索
+                originIndex = (x - 1, y + 1);
+                numberOfCellsToFlip = 0;
+                for (X = x - 1, Y = y + 1; X > -1 && Y < 8; X--, Y++)
+                {
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+
+                    if (board[X, Y].Item2 == oppositeColor)
+                    {
+                        //場外判定
+                        if (X - 1 < 0 || Y + 1 > 7) { break; }
+
+                        numberOfCellsToFlip++;
+
+                        //相手⇒検索続行
+                        if (board[X - 1, Y + 1].Item2 == oppositeColor)
+                        {
+                            continue;
+                        }
+
+                        //空白⇒候補地決定
+                        if (board[X - 1, Y + 1].Item1 == Cell.Type.empty)
+                        {
+                            for (int n = 0; n < numberOfCellsToFlip; n++)
+                            {
+                                frequency[originIndex.Item1 - n, originIndex.Item2 + n] += 1;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        // 最も裏返される回数が少ない場所を探す。
+        List<(int, int)> mostDifficultToTurnOverCells = new List<(int, int)>();
+        int minFrequency = 999;
+        for (int y = 0; y < frequency.GetLength(1); y++)
+        {
+            for (int x = 0; x < frequency.GetLength(0); x++)
+            {
+                if (frequency[x, y] <= 0) { continue; }
+
+                if (frequency[x, y] < minFrequency)
+                {
+                    minFrequency = frequency[x, y];
+
+                    mostDifficultToTurnOverCells.Clear();
+                    mostDifficultToTurnOverCells.Add((x, y));
+                }
+                else if (frequency[x, y] == minFrequency)
+                {
+                    mostDifficultToTurnOverCells.Add((x, y));
+                }
+
+            }
+        }
+
+        // 盤面の頻度を表示する
+        /*
+        string content = "";
+
+        for (int y = 0; y < frequency.GetLength(1); y++)
+        {
+            string line = "";
+
+            for (int x = 0; x < frequency.GetLength(0); x++)
+            {
+                switch (frequency[x, y])
+                {
+                    case 0 : line += "０"; break;
+                    case 1 : line += "１"; break;
+                    case 2 : line += "２"; break;
+                    case 3 : line += "３"; break;
+                    case 4 : line += "４"; break;
+                    case 5 : line += "５"; break;
+                    case 6 : line += "６"; break;
+                    case 7 : line += "７"; break;
+                    case 8 : line += "８"; break;
+                    case 9 : line += "９"; break;
+                    default: line += "Ｍ"; break;
+                }
+            }
+
+            content += line + "\n";
+        }
+
+        Debug.Log(content);
+        */
+
+        return mostDifficultToTurnOverCells;
     }
 }
