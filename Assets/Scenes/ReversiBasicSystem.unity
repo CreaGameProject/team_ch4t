@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1607851398}
+  myColor: 2
 --- !u!4 &400552905
 Transform:
   m_ObjectHideFlags: 0
@@ -401,7 +402,7 @@ MonoBehaviour:
   player: {fileID: 400552904}
   computer: {fileID: 888730778}
   turnCounter: 0
-  turn: 0
+  boardPreset: {fileID: 11400000, guid: 03e6a7a7533b24143b0f801425c8aa91, type: 2}
 --- !u!1 &1789721045
 GameObject:
   m_ObjectHideFlags: 0

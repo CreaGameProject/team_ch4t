@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private Board board = null;
+    [SerializeField] private Cell.Color myColor = Cell.Color.black;
 
     async public UniTask Action()
     {
