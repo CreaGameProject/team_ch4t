@@ -5,6 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
+public class Preset
+{
+    [Header("手数（０になるとゲームオーバー）")] public int turn;
+
+    [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・● ⇒ プレイヤーの石\n・○ ⇒ コンピュータの石\n・◇ ⇒ ヒミツマス")]
+    [TextArea(9, 9)] public string board;
+}
+
 public class Board : MonoBehaviour
 {
     //第一次元⇒x座標、右に行けば増える
@@ -20,7 +29,8 @@ public class Board : MonoBehaviour
 
     [SerializeField] private int turnCounter = 0;
 
-    [SerializeField] private BoardPreset boardPreset = null;
+
+    [SerializeField] private List<Preset> presets =new List<Preset>();
 
     //public Turn.Type turn = new Turn.Type();
 
@@ -39,15 +49,21 @@ public class Board : MonoBehaviour
         await Game();
     }
 
+    bool didFlipSecretCell = false;
+
     async private UniTask Game()
     {
         // ゲームスタート
         Debug.Log("<b><color=#F26E3E>【 Board 】GAME START! </color></b>");
 
+        int code = 1; // ゲーム終了
+
         // ゲームが終わるまでターンを繰り返す
         while (true)
         {
             await UniTask.Yield();
+
+            this.didFlipSecretCell = false;
 
             // ターン数インクリメント
             //Debug.Log("【Board】TurnUnit() | ターン数インクリメント");
@@ -71,9 +87,14 @@ public class Board : MonoBehaviour
                 Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
             }
 
+            // ヒミツマスを裏返したターンは手数が減らないようにする必要アリ
+            if (!this.didFlipSecretCell) { this.presets[0].turn--; } // プレイヤーの手数を減らす
+
+
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
-            if (!ContinuationJudgment()) { break; }
+            code = ContinuationJudgment(this.presets[0].turn, this.presets.Count);
+            if (210 % code == 0 && code != 2) { break; }
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
 
@@ -103,7 +124,8 @@ public class Board : MonoBehaviour
 
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
-            if (!ContinuationJudgment()) { break; }
+            code = ContinuationJudgment(this.presets[0].turn, this.presets.Count);
+            if (210 % code == 0 && code != 2) { break; }
 
             // ヒミツマスを設置する
             //Debug.Log("【Board】TurnUnit() | ヒミツマスを設置する");
@@ -119,71 +141,85 @@ public class Board : MonoBehaviour
                 // ヒミツマスを設置する
                 UpdateCell(cell, Cell.Type.secret);
             }
-            
-
-            
         }
 
-        string result = GameResultJudgment();
+        /*
+        if (code % 3 == 0) { Debug.Log("【 Board 】Game()｜両者とも石の設置が不可能"); } 
+        if (code % 5 == 0) { Debug.Log("【 Board 】Game()｜ターン数が０になった"); }
+        if (code % 7 == 0) { Debug.Log("【 Board 】Game()｜ヒミツが０になった"); }
+        */
+
+        string result = GameResultJudgment(code);
         Debug.Log("<b><color=#F26E3E>【 Board 】GAME SET! => " + result + "</color></b>");
-
-
     }
 
-    //ゲームの勝敗を返す
-    private string GameResultJudgment()
+    // ゲームの勝敗を返す
+    private string GameResultJudgment(int code)
     {
-        int numberOfPlayerCell = 0;
-        int numberOfComputerCell = 0;
-
-        for (int y = 0; y < this.board.GetLength(1); y++)
-        {
-            for (int x = 0; x < this.board.GetLength(0); x++)
-            {
-                if (this.board[x, y].Item2 == Cell.Color.black)
-                {
-                    numberOfPlayerCell++;
-                }
-                else if (this.board[x, y].Item2 == Cell.Color.white)
-                {
-                    numberOfComputerCell++;
-                }
-            }
-        }
-
         string result = "";
 
-        if (numberOfPlayerCell > numberOfComputerCell)
+        if (code % 3 == 0)
         {
-            result = "Player WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+            Debug.Log("【 Board 】Game()｜両者とも石の設置が不可能");
+
+            int numberOfPlayerCell = 0;
+            int numberOfComputerCell = 0;
+
+            for (int y = 0; y < this.board.GetLength(1); y++)
+            {
+                for (int x = 0; x < this.board.GetLength(0); x++)
+                {
+                    if (this.board[x, y].Item2 == Cell.Color.black)
+                    {
+                        numberOfPlayerCell++;
+                    }
+                    else if (this.board[x, y].Item2 == Cell.Color.white)
+                    {
+                        numberOfComputerCell++;
+                    }
+                }
+            } 
+
+            if (numberOfPlayerCell > numberOfComputerCell)
+            {
+                result = "Player WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+            }
+            else if (numberOfPlayerCell < numberOfComputerCell)
+            {
+                result = "Computer WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+            }
+            else if (numberOfPlayerCell == numberOfComputerCell)
+            {
+                result = "DROW | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+            }
         }
-        else if (numberOfPlayerCell < numberOfComputerCell)
+        else if (code % 5 == 0)
         {
-            result = "Computer WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+            Debug.Log("【 Board 】Game()｜ターン数が０になった");
+            result = "Computer WIN";
         }
-        else if (numberOfPlayerCell == numberOfComputerCell)
+        else if (code % 7 == 0)
         {
-            result = "DROW | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+            Debug.Log("【 Board 】Game()｜ヒミツが０になった");
+            result = "Player WIN";
         }
 
         return result;
     }
 
-    //ゲームが継続するか調べる
-    private bool ContinuationJudgment()
+    // ゲームが継続するか調べる
+    // 戻り値：code：どの
+    private int ContinuationJudgment(int turn, int presetCount)
     {
-        bool willTheMatchContinue = true;
+        int code = 2;
 
-        int numberOfPlayerProposedCell = GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count;
-        int numerOfComputerProposedCell = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
+        int proposedCellPlayer = GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count;
+        int proposedCellComputer = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
+        if (proposedCellPlayer == 0 && proposedCellComputer == 0) { code *= 3; } // 両者とも石の設置が不可能
+        if (turn == 0) { code *= 5; } // ターン数が０になった
+        if (presetCount == 0) { code *= 7; } // ヒミツが０になった
 
-        if (numberOfPlayerProposedCell == 0 && numerOfComputerProposedCell == 0)
-        {
-            willTheMatchContinue = false;
-        }
-
-        return willTheMatchContinue;
-
+        return code;
     }
 
     // 盤面をコンソールに表示する
@@ -227,7 +263,7 @@ public class Board : MonoBehaviour
                 {
                     case Cell.Type.empty: line += "＃"; break;
                     case Cell.Type.white: line += "●"; break;
-                    case Cell.Type.black: line += "〇"; break;
+                    case Cell.Type.black: line += "○"; break;
                     case Cell.Type.proposed: line += "☆"; break;
                     case Cell.Type.secret: line += "◆"; break;
                     default: line += "？"; break;
@@ -327,14 +363,18 @@ public class Board : MonoBehaviour
         UpdateCell(indexOnBoard, myType);
 
         bool didFlipSecretCell = FlipCell(indexOnBoard, (myType == Cell.Type.secret) ? Cell.Type.black : myType);
+         
 
         if (didFlipSecretCell)
         {
             Debug.Log("ヒミツマスを裏返した。");
 
+            this.turnCounter = 0;
+            this.didFlipSecretCell = true;
+
             // プリセットを読み込み
             (Cell.Type, Cell.Color)[,] newBoard = new (Cell.Type, Cell.Color)[8, 8];
-            string boardString = this.boardPreset.character.boardPresets[0];
+            string boardString = this.presets[0].board;
             char[] removeChars = new char[] { '\r', '\n' };
             foreach (char c in removeChars) { boardString = boardString.Replace(c.ToString(), ""); }
 
@@ -344,8 +384,9 @@ public class Board : MonoBehaviour
                 switch (boardString[i])
                 {
                     case '＃': cell = (Cell.Type.empty, Cell.Color.empty);  break;
-                    case '○': cell = (Cell.Type.black, Cell.Color.black); break;
-                    case '●': cell = (Cell.Type.black, Cell.Color.white); break;
+                    case '○': cell = (Cell.Type.black, Cell.Color.black); break; // 記号
+                    case '〇': cell = (Cell.Type.black, Cell.Color.black); break; // 漢数字
+                    case '●': cell = (Cell.Type.white, Cell.Color.white); break;
                     case '◆': cell = (Cell.Type.secret, Cell.Color.white); break;
                     default : Debug.Log(string.Format("プリセット読み込みエラー：意図しない文字 {0} が含まれています。", boardString[i])); break;
                 }
@@ -362,13 +403,12 @@ public class Board : MonoBehaviour
                 }
             }
 
-            this.boardPreset.character.boardPresets.RemoveAt(0);
+            // 盤面をコンソールに表示する
+            ViewBoard(Turn.Type.computer, false);
+
+
+            this.presets.RemoveAt(0);
         }
-
-        
-
-
-
 
         return true;
     }
@@ -420,6 +460,7 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
+                    if (this.board[originIndex.Item1, originIndex.Item2 - j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
                     UpdateCell((originIndex.Item1, originIndex.Item2 - j), type);
                 }
 
