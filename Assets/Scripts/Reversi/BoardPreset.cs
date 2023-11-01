@@ -14,8 +14,4 @@ public class Character
 {
     [Header("キャラクターID")] public int id;
     [Header("キャラクター名")] public string name;
-    [Header("プリセット")]
-    [Header("＃ ⇒ 何も置かれていない\n● ⇒ プレイヤーの石\n○ ⇒ コンピュータの石\n◇ ⇒ ヒミツマス")]
-    [TextArea(9, 9)] public List<string> boardPresets = new List<string> { "＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃",
-                                                                           "＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃\r\n＃＃＃＃＃＃＃＃" };
 }
