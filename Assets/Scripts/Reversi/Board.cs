@@ -22,17 +22,26 @@ public class Board : MonoBehaviour
     [SerializeField] private (Cell.Type, Cell.Color)[,] board = new (Cell.Type, Cell.Color)[8, 8];
     public (Cell.Type, Cell.Color)[,] GetBoard() { return this.board; }
 
+    [Header("アンカー（盤面の左上に設置）")]
     [SerializeField] private Transform boardAnchor = null;
 
+    [Header("プレイヤー")]
     [SerializeField] private Player player = null;
+
+    [Header("コンピュータ")]
     [SerializeField] private Computer computer = null;
 
+    [Header("経過ターン数")]
     [SerializeField] private int turnCounter = 0;
 
+    [Header("現在、誰のターンか")]
+    [SerializeField] private Turn.Type turn = Turn.Type.neutral;
+    public Turn.Type GetNowTurn() { return this.turn; }
 
+    [Header("盤面と手数のプリセット")]
     [SerializeField] private List<Preset> presets =new List<Preset>();
 
-    //public Turn.Type turn = new Turn.Type();
+    
 
 
 
@@ -70,6 +79,7 @@ public class Board : MonoBehaviour
             this.turnCounter++;
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Player のターンです。</color></b>");
+            this.turn = Turn.Type.player;
 
             // 盤面をコンソールに表示する
             ViewBoard(Turn.Type.player, true);
@@ -97,6 +107,7 @@ public class Board : MonoBehaviour
             if (210 % code == 0 && code != 2) { break; }
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
+            this.turn = Turn.Type.computer;
 
             // 盤面をコンソールに表示する
             ViewBoard(Turn.Type.computer, true);
