@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.2850266, g: 0.37139308, b: 0.49600935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -890,10 +890,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1199798007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9593f72fdec044d0b1593d55e5ef783f, type: 3}
+  m_Script: {fileID: 11500000, guid: ac8963a85ac974787b164da879ea9544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEventList: []
 --- !u!4 &1278355951 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4354465822509128, guid: 85dfab9623c67784fa7894de63cd1604, type: 3}
@@ -1660,6 +1659,14 @@ PrefabInstance:
     - target: {fileID: 4200554580264924023, guid: ba3d3e6fc5ad549deb03bcc481088156, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307001766287143317, guid: ba3d3e6fc5ad549deb03bcc481088156, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255666023757753256, guid: ba3d3e6fc5ad549deb03bcc481088156, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8794787416570824627, guid: ba3d3e6fc5ad549deb03bcc481088156, type: 3}
       propertyPath: m_LocalPosition.x

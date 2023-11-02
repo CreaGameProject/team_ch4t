@@ -1,1 +1,46 @@
-[{"event_number":1,"type":"TALK","name":"テストキャラクター","file":"portrait_kohaku_01","text":"こんにちは"},{"event_number":2,"type":"TALK","name":"テストキャラクター","file":"portrait_kohaku_02","text":"テキストのテストキャラクターだよ"},{"event_number":3,"type":"TALK","name":"テストキャラクター","file":"portrait_kohaku_03","text":"話す速度は大丈夫かな？"},{"event_number":4,"type":"TALK","name":"テストキャラクター","file":"portrait_kohaku_04","text":"カットインのテストをするよ！"},{"event_number":5,"type":"CUT_IN","name":"テストキャラクター","file":"portrait_kohaku_05","text":"カットイン"},{"event_number":6,"type":"END","name":null,"file":null,"text":null}]
+{
+  "dialogueEvents": [
+    {
+      "event_number": 1,
+      "type": "TALK",
+      "name": "テストキャラクター",
+      "file": "portrait_kohaku_01",
+      "text": "こんにちは"
+    },
+    {
+      "event_number": 2,
+      "type": "TALK",
+      "name": "テストキャラクター",
+      "file": "portrait_kohaku_02",
+      "text": "テキストのテストキャラクターだよ"
+    },
+    {
+      "event_number": 3,
+      "type": "TALK",
+      "name": "テストキャラクター",
+      "file": "portrait_kohaku_03",
+      "text": "話す速度は大丈夫かな？"
+    },
+    {
+      "event_number": 4,
+      "type": "TALK",
+      "name": "テストキャラクター",
+      "file": "portrait_kohaku_04",
+      "text": "カットインのテストをするよ！"
+    },
+    {
+      "event_number": 5,
+      "type": "CUT_IN",
+      "name": "テストキャラクター",
+      "file": "portrait_kohaku_05",
+      "text": "カットイン"
+    },
+    {
+      "event_number": 6,
+      "type": "END",
+      "name": null,
+      "file": null,
+      "text": null
+    }
+  ]
+}
