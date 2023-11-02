@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
             // カーソル位置をワールド座標に変換
             Vector3 target = Camera.main.ScreenToWorldPoint(mousePosition);
 
-            wasTheStonePlacedCorrectly = this.board.PutStone((target.x, target.z), Cell.Type.black);
+            wasTheStonePlacedCorrectly = await this.board.PutStone((target.x, target.z), Cell.Type.black);
 
         } while (!wasTheStonePlacedCorrectly);
 

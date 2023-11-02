@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,15 @@ public class Board : MonoBehaviour
     [Header("コンピュータ")]
     [SerializeField] private Computer computer = null;
 
+    [Header("石のプレハブ")]
+    [SerializeField] private GameObject normalStone = null;
+
+    [Header("ヒミツのプレハブ")]
+    [SerializeField] private GameObject secretStone = null;
+
+    [Header("ボード上のオブジェクト")]
+    [SerializeField] private GameObject[] boardObjects = new GameObject[64];
+
     [Header("経過ターン数")]
     [SerializeField] private int turnCounter = 0;
 
@@ -41,19 +51,13 @@ public class Board : MonoBehaviour
     [Header("盤面と手数のプリセット")]
     [SerializeField] private List<Preset> presets =new List<Preset>();
 
-    
-
-
-
     // Start is called before the first frame update
     async void Start()
     {
-        UpdateCell((3, 3), Cell.Type.white);
-        UpdateCell((4, 3), Cell.Type.black);
-        UpdateCell((3, 4), Cell.Type.black);
-        UpdateCell((4, 4), Cell.Type.white);
-
-        
+        await UpdateCell((3, 3), Cell.Type.white);
+        await UpdateCell((4, 3), Cell.Type.black);
+        await UpdateCell((3, 4), Cell.Type.black);
+        await UpdateCell((4, 4), Cell.Type.white);
 
         await Game();
     }
@@ -103,7 +107,7 @@ public class Board : MonoBehaviour
 
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
-            code = ContinuationJudgment(this.presets[0].turn, this.presets.Count);
+            code = ContinuationJudgment((this.presets.Count != 0) ? this.presets[0].turn : 999, this.presets.Count);
             if (210 % code == 0 && code != 2) { break; }
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
@@ -135,7 +139,7 @@ public class Board : MonoBehaviour
 
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
-            code = ContinuationJudgment(this.presets[0].turn, this.presets.Count);
+            code = ContinuationJudgment((this.presets.Count != 0) ? this.presets[0].turn : 999, this.presets.Count);
             if (210 % code == 0 && code != 2) { break; }
 
             // ヒミツマスを設置する
@@ -150,7 +154,7 @@ public class Board : MonoBehaviour
                 (int, int) cell = cells[Random.Range(0, cells.Count)];
 
                 // ヒミツマスを設置する
-                UpdateCell(cell, Cell.Type.secret);
+                await UpdateCell(cell, Cell.Type.secret);
             }
         }
 
@@ -321,19 +325,19 @@ public class Board : MonoBehaviour
 
     // 盤面に石を置く（プレイヤー用）
     // 戻り値 bool型 result ⇒ 正しく石が置かれたかどうか
-    public bool PutStone((float, float) mousePosition, Cell.Type type)
+    async public UniTask<bool> PutStone((float, float) mousePosition, Cell.Type type)
     {
         //受け取った座標を盤面上のインデックスに変換する
         float x = Mathf.Floor(mousePosition.Item1 - boardAnchor.position.x);
         float z = -1 * Mathf.Floor((mousePosition.Item2 - boardAnchor.position.z));
         (int, int) indexOnBoard = ((int)x, (int)(z - 1));
 
-        return PutStone(indexOnBoard, type);
+        return await PutStone(indexOnBoard, type);
     }
 
     // 盤面に石を置く
     // 戻り値 bool型 result ⇒ 正しく石が置かれたかどうか
-    public bool PutStone((int, int) indexOnBoard, Cell.Type myType)
+    async public UniTask<bool> PutStone((int, int) indexOnBoard, Cell.Type myType)
     {
         // 場外判定
         bool isXIndexSafe = indexOnBoard.Item1 > -1 && 8 > indexOnBoard.Item1;
@@ -371,9 +375,9 @@ public class Board : MonoBehaviour
             return false;
         }
 
-        UpdateCell(indexOnBoard, myType);
+        await UpdateCell(indexOnBoard, myType);
 
-        bool didFlipSecretCell = FlipCell(indexOnBoard, (myType == Cell.Type.secret) ? Cell.Type.black : myType);
+        bool didFlipSecretCell = await FlipCell(indexOnBoard, (myType == Cell.Type.secret) ? Cell.Type.black : myType);
          
 
         if (didFlipSecretCell)
@@ -405,12 +409,18 @@ public class Board : MonoBehaviour
                 newBoard[i % 8, (int)(i / 8)] = cell;
             }
 
+            // 盤面を初期化する
+            for (int index = 0; index < 64; index++)
+            {
+                UpdateCell((index % 8, (int)(index / 8)), Cell.Type.empty);
+            }
+
             // 盤面をアップデート
             for (int y = 0; y < newBoard.GetLength(1); y++)
             {
                 for (int x = 0; x < newBoard.GetLength(0); x++)
                 {
-                    UpdateCell((x, y), newBoard[x, y].Item1);
+                    await UpdateCell((x, y), newBoard[x, y].Item1);
                 }
             }
 
@@ -425,7 +435,7 @@ public class Board : MonoBehaviour
     }
 
     //盤面（１マス）を更新する
-    public void UpdateCell((int, int) indexOnBoard, Cell.Type type)
+    async UniTask UpdateCell((int, int) indexOnBoard, Cell.Type type)
     {
         Cell.Color color = Cell.Color.empty;
         switch (type)
@@ -434,6 +444,63 @@ public class Board : MonoBehaviour
             case Cell.Type.black : color = Cell.Color.black; break;
             case Cell.Type.secret : color = Cell.Color.white; break;
             default: break;
+        } 
+
+        // empty => anything without empty : 石を生成する
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type != Cell.Type.empty)
+        {
+            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
+            GameObject g = Instantiate(this.normalStone, pos, Quaternion.identity);
+            Stone stone = g.GetComponent<Stone>();
+            stone.color = color;
+            await stone.Generate();
+            this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
+        }
+
+        // white => secret : ヒミツマスを生成する
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.white && type == Cell.Type.secret)
+        {
+            // 既存の白石を破棄する
+            GameObject white = this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
+            await white.GetComponent<Stone>().Destroy();
+            Destroy(white);
+
+            // ヒミツマスを生成
+            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
+            GameObject g = Instantiate(this.secretStone, pos, Quaternion.identity);
+            Stone stone = g.GetComponent<Stone>();
+            stone.color = color;
+            await stone.Generate();
+            this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
+        }
+
+
+        // anything without empty => empty : 石を破棄する
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 != Cell.Type.empty && type == Cell.Type.empty)
+        {
+            // 既存の石を破棄する
+            GameObject stone = this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
+            await stone.GetComponent<Stone>().Destroy();
+            Destroy(stone);
+        }
+
+
+        // white => black : 石を裏返す
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item2 == Cell.Color.white && type == Cell.Type.black)
+        {
+            GameObject g = this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
+            Stone stone = g.GetComponent<Stone>();
+            stone.color = Cell.Color.black;
+            await stone.Flip();
+        }
+
+        // black => white : 石を裏返す
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item2 == Cell.Color.black && type == Cell.Type.white)
+        {
+            GameObject g = this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
+            Stone stone = g.GetComponent<Stone>();
+            stone.color = Cell.Color.white;
+            await stone.Flip();
         }
 
         this.board[indexOnBoard.Item1, indexOnBoard.Item2] = (type, color);
@@ -442,7 +509,7 @@ public class Board : MonoBehaviour
 
     // 石を裏返す
     // 戻り値：裏返したセルにヒミツマスが含まれているか
-    public bool FlipCell((int, int) indexOnBoard, Cell.Type type)
+    async public UniTask<bool> FlipCell((int, int) indexOnBoard, Cell.Type type)
     {
         bool didFlipSecretCell = false;
 
@@ -472,7 +539,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if (this.board[originIndex.Item1, originIndex.Item2 - j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1, originIndex.Item2 - j), type);
+                    await UpdateCell((originIndex.Item1, originIndex.Item2 - j), type);
                 }
 
                 break;
@@ -493,7 +560,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if(this.board[originIndex.Item1 + j, originIndex.Item2 - j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1 + j, originIndex.Item2 - j), type);
+                    await UpdateCell((originIndex.Item1 + j, originIndex.Item2 - j), type);
                 }
 
                 break;
@@ -514,7 +581,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if (this.board[originIndex.Item1 + j, originIndex.Item2].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1 + j, originIndex.Item2), type);
+                    await UpdateCell((originIndex.Item1 + j, originIndex.Item2), type);
                 }
 
                 break;
@@ -535,7 +602,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if (this.board[originIndex.Item1 + j, originIndex.Item2 + j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1 + j, originIndex.Item2 + j), type);
+                    await UpdateCell((originIndex.Item1 + j, originIndex.Item2 + j), type);
                 }
 
                 break;
@@ -556,7 +623,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if (this.board[originIndex.Item1, originIndex.Item2 + j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1, originIndex.Item2 + j), type);
+                    await UpdateCell((originIndex.Item1, originIndex.Item2 + j), type);
                 }
 
                 break;
@@ -577,7 +644,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if (this.board[originIndex.Item1 - j, originIndex.Item2 + j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1 - j, originIndex.Item2 + j), type);
+                    await UpdateCell((originIndex.Item1 - j, originIndex.Item2 + j), type);
                 }
 
                 break;
@@ -598,7 +665,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if (this.board[originIndex.Item1 - j, originIndex.Item2].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1 - j, originIndex.Item2), type);
+                    await UpdateCell((originIndex.Item1 - j, originIndex.Item2), type);
                 }
 
                 break;
@@ -619,7 +686,7 @@ public class Board : MonoBehaviour
                 for (int j = 0; j < numberOfCellsToFlip; j++)
                 {
                     if (this.board[originIndex.Item1 - j, originIndex.Item2 - j].Item1 == Cell.Type.secret) { didFlipSecretCell = true; }
-                    UpdateCell((originIndex.Item1 - j, originIndex.Item2 - j), type);
+                    await UpdateCell((originIndex.Item1 - j, originIndex.Item2 - j), type);
                 }
 
                 break;
