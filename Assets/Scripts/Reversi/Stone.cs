@@ -35,6 +35,8 @@ public class Stone : MonoBehaviour
 
         this.transform.localScale = Vector3.zero;
 
+        // yŒø‰Ê‰¹Ä¶‰ÓŠz¶¬
+
         await this.transform.DOScale(originScale, 0.4f).AsyncWaitForCompletion();
     }
 
@@ -42,6 +44,8 @@ public class Stone : MonoBehaviour
     async public UniTask Destroy()
     {
         await UniTask.Yield();
+
+        // yŒø‰Ê‰¹Ä¶‰ÓŠz”jŠü
 
         await this.transform.DOScale(Vector3.zero, 0.4f).AsyncWaitForCompletion();
     }
@@ -59,5 +63,7 @@ public class Stone : MonoBehaviour
                       .Join(transform.DORotate(new Vector3(0, 0, 180), 0.4f, RotateMode.WorldAxisAdd)).AsyncWaitForCompletion();
 
         await this.transform.DOMoveY(0, 0.4f).AsyncWaitForCompletion();
+
+        // yŒø‰Ê‰¹Ä¶‰ÓŠzƒpƒ`ƒbI
     }
 }

@@ -17,6 +17,16 @@ public class Preset
 
 public class Board : MonoBehaviour
 {
+    public static Board instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     //第一次元⇒x座標、右に行けば増える
     //第二次元⇒y座標、下に行けば増える
     //[SerializeField] private Cell.Type[,] board = new Cell.Type[8, 8];
@@ -46,10 +56,13 @@ public class Board : MonoBehaviour
 
     [Header("現在、誰のターンか")]
     [SerializeField] private Turn.Type turn = Turn.Type.neutral;
-    public Turn.Type GetNowTurn() { return this.turn; }
+    public Turn.Type getTurn { get { return this.turn; } }
 
     [Header("盤面と手数のプリセット")]
-    [SerializeField] private List<Preset> presets =new List<Preset>();
+    [SerializeField] private List<Preset> presets = new List<Preset>();
+    public int getPresetRestTurn { get { return this.presets[this.presetIndex].turn; } }
+
+    
 
     // Start is called before the first frame update
     async void Start()
@@ -60,7 +73,7 @@ public class Board : MonoBehaviour
     }
 
     bool didFlipSecretCell = false;
-    private int presetIndex = -1;
+    private int presetIndex = 0;
 
     async private UniTask Game()
     {
@@ -134,7 +147,8 @@ public class Board : MonoBehaviour
             // Debug.Log("【Board】TurnUnit() | 偶数ターン時にコンピュータが喋る");
             if (this.turnCounter % 2 == 0)
             {
-                Debug.Log("【Board】TurnUnit() | キャラクターが喋るよ。");
+                
+                SpeakComputer();
             }
 
             // ゲームが継続するか調べる
@@ -166,6 +180,23 @@ public class Board : MonoBehaviour
 
         string result = GameResultJudgment(code);
         Debug.Log("<b><color=#F26E3E>【 Board 】GAME SET! => " + result + "</color></b>");
+    }
+
+    // COMが喋る
+
+    // メソッドAが実行されたことを通知するデリゲート
+    public delegate void MethodAExecutedDelegate();
+    public event MethodAExecutedDelegate OnMethodAExecuted;
+    
+    public void SpeakComputer()
+    {
+        Debug.Log("【Board】SpeakComputer() | キャラクターが喋るよ。");
+
+        // メソッドAが実行されたことを通知
+        if (OnMethodAExecuted != null)
+        {
+            OnMethodAExecuted();
+        }
     }
 
     // ゲームの勝敗を返す
@@ -330,7 +361,7 @@ public class Board : MonoBehaviour
     // 盤面をプリセットに上書きする
     async private UniTask SetPresetOnBoard()
     {
-        presetIndex++;
+        
 
         // プリセットを読み込み
         (Cell.Type, Cell.Color)[,] newBoard = new (Cell.Type, Cell.Color)[8, 8];
@@ -373,6 +404,8 @@ public class Board : MonoBehaviour
 
         // 盤面をコンソールに表示する
         ViewBoard(Turn.Type.computer, false);
+
+        presetIndex++;
 
     }
 
