@@ -11,7 +11,7 @@ public class Preset
 {
     [Header("手数（０になるとゲームオーバー）")] public int turn;
 
-    [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・● ⇒ プレイヤーの石\n・○ ⇒ コンピュータの石\n・◇ ⇒ ヒミツマス")]
+    [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・● ⇒ プレイヤーの石\n・○ ⇒ コンピュータの石\n・◆ ⇒ ヒミツマス")]
     [TextArea(9, 9)] public string board;
 }
 
@@ -54,15 +54,13 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        await UpdateCell((3, 3), Cell.Type.white);
-        await UpdateCell((4, 3), Cell.Type.black);
-        await UpdateCell((3, 4), Cell.Type.black);
-        await UpdateCell((4, 4), Cell.Type.white);
+        await SetPresetOnBoard();
 
         await Game();
     }
 
     bool didFlipSecretCell = false;
+    private int presetIndex = -1;
 
     async private UniTask Game()
     {
@@ -102,13 +100,15 @@ public class Board : MonoBehaviour
             }
 
             // ヒミツマスを裏返したターンは手数が減らないようにする必要アリ
-            if (!this.didFlipSecretCell) { this.presets[0].turn--; } // プレイヤーの手数を減らす
+            if (!this.didFlipSecretCell) { this.presets[this.presetIndex].turn--; } // プレイヤーの手数を減らす
 
 
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
-            code = ContinuationJudgment((this.presets.Count != 0) ? this.presets[0].turn : 999, this.presets.Count);
+            code = ContinuationJudgment(this.presetIndex);
             if (210 % code == 0 && code != 2) { break; }
+
+            if (this.didFlipSecretCell) { continue; }
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
             this.turn = Turn.Type.computer;
@@ -131,15 +131,15 @@ public class Board : MonoBehaviour
             }
 
             // 偶数ターン時にコンピュータが喋る
-            //Debug.Log("【Board】TurnUnit() | 偶数ターン時にコンピュータが喋る");
+            // Debug.Log("【Board】TurnUnit() | 偶数ターン時にコンピュータが喋る");
             if (this.turnCounter % 2 == 0)
             {
                 Debug.Log("【Board】TurnUnit() | キャラクターが喋るよ。");
             }
 
             // ゲームが継続するか調べる
-            //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
-            code = ContinuationJudgment((this.presets.Count != 0) ? this.presets[0].turn : 999, this.presets.Count);
+            // Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
+            code = ContinuationJudgment(this.presetIndex);
             if (210 % code == 0 && code != 2) { break; }
 
             // ヒミツマスを設置する
@@ -224,15 +224,19 @@ public class Board : MonoBehaviour
 
     // ゲームが継続するか調べる
     // 戻り値：code：どの
-    private int ContinuationJudgment(int turn, int presetCount)
+    private int ContinuationJudgment(int presetIndex)
     {
         int code = 2;
 
         int proposedCellPlayer = GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count;
         int proposedCellComputer = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
         if (proposedCellPlayer == 0 && proposedCellComputer == 0) { code *= 3; } // 両者とも石の設置が不可能
-        if (turn == 0) { code *= 5; } // ターン数が０になった
-        if (presetCount == 0) { code *= 7; } // ヒミツが０になった
+
+        int turn = this.presets[presetIndex].turn;
+        Debug.Log(string.Format("turn : {0}", turn));
+        if (turn == 0) { code *= 5; } // ターン数が０になった 
+
+        if (presetIndex == this.presets.Count) { code *= 7; } // ヒミツが０になった
 
         return code;
     }
@@ -323,6 +327,55 @@ public class Board : MonoBehaviour
         return color;
     }
 
+    // 盤面をプリセットに上書きする
+    async private UniTask SetPresetOnBoard()
+    {
+        presetIndex++;
+
+        // プリセットを読み込み
+        (Cell.Type, Cell.Color)[,] newBoard = new (Cell.Type, Cell.Color)[8, 8];
+        string boardString = this.presets[presetIndex].board;
+        char[] removeChars = new char[] { '\r', '\n' };
+        foreach (char c in removeChars) { boardString = boardString.Replace(c.ToString(), ""); }
+
+        for (int i = 0; i < boardString.Length; i++)
+        {
+            (Cell.Type, Cell.Color) cell = (Cell.Type.empty, Cell.Color.empty);
+            switch (boardString[i])
+            {
+                case '＃': cell = (Cell.Type.empty, Cell.Color.empty); break;
+                case '○': cell = (Cell.Type.black, Cell.Color.black); break; // 記号
+                case '〇': cell = (Cell.Type.black, Cell.Color.black); break; // 漢数字
+                case '●': cell = (Cell.Type.white, Cell.Color.white); break;
+                case '◆': cell = (Cell.Type.secret, Cell.Color.white); break;
+                default: Debug.Log(string.Format("プリセット読み込みエラー：意図しない文字 {0} が含まれています。", boardString[i])); break;
+            }
+
+            newBoard[i % 8, (int)(i / 8)] = cell;
+        }
+
+        // 盤面を初期化する
+        for (int index = 0; index < 64; index++)
+        {
+            UpdateCell((index % 8, (int)(index / 8)), Cell.Type.empty);
+        }
+
+        // 盤面をアップデート
+        for (int y = 0; y < newBoard.GetLength(1); y++)
+        {
+            for (int x = 0; x < newBoard.GetLength(0); x++)
+            {
+                await UpdateCell((x, y), newBoard[x, y].Item1);
+            }
+        }
+
+        
+
+        // 盤面をコンソールに表示する
+        ViewBoard(Turn.Type.computer, false);
+
+    }
+
     // 盤面に石を置く（プレイヤー用）
     // 戻り値 bool型 result ⇒ 正しく石が置かれたかどうか
     async public UniTask<bool> PutStone((float, float) mousePosition, Cell.Type type)
@@ -387,48 +440,11 @@ public class Board : MonoBehaviour
             this.turnCounter = 0;
             this.didFlipSecretCell = true;
 
-            // プリセットを読み込み
-            (Cell.Type, Cell.Color)[,] newBoard = new (Cell.Type, Cell.Color)[8, 8];
-            string boardString = this.presets[0].board;
-            char[] removeChars = new char[] { '\r', '\n' };
-            foreach (char c in removeChars) { boardString = boardString.Replace(c.ToString(), ""); }
+            if (this.presetIndex != this.presets.Count) { await SetPresetOnBoard(); }
 
-            for (int i = 0; i < boardString.Length; i++)
-            {
-                (Cell.Type, Cell.Color) cell = (Cell.Type.empty, Cell.Color.empty);
-                switch (boardString[i])
-                {
-                    case '＃': cell = (Cell.Type.empty, Cell.Color.empty);  break;
-                    case '○': cell = (Cell.Type.black, Cell.Color.black); break; // 記号
-                    case '〇': cell = (Cell.Type.black, Cell.Color.black); break; // 漢数字
-                    case '●': cell = (Cell.Type.white, Cell.Color.white); break;
-                    case '◆': cell = (Cell.Type.secret, Cell.Color.white); break;
-                    default : Debug.Log(string.Format("プリセット読み込みエラー：意図しない文字 {0} が含まれています。", boardString[i])); break;
-                }
+            
 
-                newBoard[i % 8, (int)(i / 8)] = cell;
-            }
-
-            // 盤面を初期化する
-            for (int index = 0; index < 64; index++)
-            {
-                UpdateCell((index % 8, (int)(index / 8)), Cell.Type.empty);
-            }
-
-            // 盤面をアップデート
-            for (int y = 0; y < newBoard.GetLength(1); y++)
-            {
-                for (int x = 0; x < newBoard.GetLength(0); x++)
-                {
-                    await UpdateCell((x, y), newBoard[x, y].Item1);
-                }
-            }
-
-            // 盤面をコンソールに表示する
-            ViewBoard(Turn.Type.computer, false);
-
-
-            this.presets.RemoveAt(0);
+            //this.presets.RemoveAt(0);
         }
 
         return true;
@@ -1011,7 +1027,15 @@ public class Board : MonoBehaviour
     private List<(int, int)> GetMostDifficultToTurnOverCells((Cell.Type, Cell.Color)[,] board)
     {
         // 裏返される回数をカウントする
-        int[,] frequency = new int[8, 8];
+        int[,] frequency = new int[8, 8] /*{ { -1, -1, -1, -1, -1, -1, -1, -1},
+                                           { -1, -1, -1, -1, -1, -1, -1, -1},
+                                           { -1, -1, -1, -1, -1, -1, -1, -1},
+                                           { -1, -1, -1, -1, -1, -1, -1, -1},
+                                           { -1, -1, -1, -1, -1, -1, -1, -1},
+                                           { -1, -1, -1, -1, -1, -1, -1, -1},
+                                           { -1, -1, -1, -1, -1, -1, -1, -1},
+                                           { -1, -1, -1, -1, -1, -1, -1, -1} }*/;
+
         for (int y = 0; y < board.GetLength(1); y++)
         {
             for (int x = 0; x < board.GetLength(0); x++)
@@ -1299,7 +1323,9 @@ public class Board : MonoBehaviour
         {
             for (int x = 0; x < frequency.GetLength(0); x++)
             {
-                if (frequency[x, y] <= 0) { continue; }
+                //if (frequency[x, y] <= 0) { continue; }
+
+                if (this.board[x, y].Item2 != Cell.Color.white) { continue; }
 
                 if (frequency[x, y] < minFrequency)
                 {
@@ -1317,7 +1343,7 @@ public class Board : MonoBehaviour
         }
 
         // 盤面の頻度を表示する
-        /*
+        
         string content = "";
 
         for (int y = 0; y < frequency.GetLength(1); y++)
@@ -1346,7 +1372,7 @@ public class Board : MonoBehaviour
         }
 
         Debug.Log(content);
-        */
+        
 
         return mostDifficultToTurnOverCells;
     }
