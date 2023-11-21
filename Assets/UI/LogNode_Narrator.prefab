@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 455.5, y: 0}
-  m_SizeDelta: {x: 730, y: 0}
+  m_AnchoredPosition: {x: 444.5, y: 0}
+  m_SizeDelta: {x: 710, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7858659482064933758
 CanvasRenderer:
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1c56b3c7351ba5f49b766ade9a565678, type: 3}
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 1631013166952052732}
   - component: {fileID: 2488582680346023490}
   m_Layer: 5
-  m_Name: LogNode_You
+  m_Name: LogNode_Narrator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
-    m_Right: 0
+    m_Right: 21
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 2
