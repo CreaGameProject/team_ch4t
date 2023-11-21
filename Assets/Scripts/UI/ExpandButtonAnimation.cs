@@ -27,7 +27,6 @@ public class ExpandButtonAnimation : MonoBehaviour
     public void ExpandButton()
     {
         rt.DOScale(expandRate, animationTime);
-        Debug.Log("aaaaaaaaaaa");
     }
 
     public void ShrinkButton()
