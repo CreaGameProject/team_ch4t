@@ -1374,6 +1374,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4034953206302874438, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: seSlider
+      value: 
+      objectReference: {fileID: 715137695}
+    - target: {fileID: 4034953206302874438, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: bgmSlider
+      value: 
+      objectReference: {fileID: 943495386}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
