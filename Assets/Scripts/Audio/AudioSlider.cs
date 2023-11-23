@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AudioSlider : MonoBehaviour
 {
-    public Slider seSlider;
-    public Slider bgmSlider;
+    private Slider seSlider;
+    private Slider bgmSlider;
     private AudioSource seSource;
     private AudioSource bgmSource;
 
@@ -17,18 +18,38 @@ public class AudioSlider : MonoBehaviour
         seSlider = GameObject.Find("SESlider").GetComponent<Slider>();
         bgmSlider = GameObject.Find("BGMSlider").GetComponent<Slider>();
 
-        AudioSource[] components = this.GetComponents<AudioSource>();
-        this.seSource = components[0];
-        this.bgmSource = components[1];
+        // AudioManagerオブジェクトを取得
+        GameObject audioManager = GameObject.Find("AudioManager");
+        
+        // AudioManagerが存在し、AudioSourceが2つ以上あるか確認
+        if (audioManager != null)
+        {
+            AudioSource[] components = audioManager.GetComponents<AudioSource>();
 
-        seSlider.value = seSource.volume;
-        bgmSlider.value = bgmSource.volume;
+            // AudioSourceが2つ以上ある場合にのみ代入
+            if (components.Length >= 2)
+            {
+                this.seSource = components[0];
+                this.bgmSource = components[1];
 
-        // SEのスライダーの値が変更されたときに音量を更新
-        seSlider.onValueChanged.AddListener(UpdateSEVolume);
+                seSlider.value = seSource.volume;
+                bgmSlider.value = bgmSource.volume;
 
-        // BGMのスライダーの値が変更されたときに音量を更新
-        bgmSlider.onValueChanged.AddListener(UpdateBGMVolume);
+                // SEのスライダーの値が変更されたときに音量を更新
+                seSlider.onValueChanged.AddListener(UpdateSEVolume);
+
+                // BGMのスライダーの値が変更されたときに音量を更新
+                bgmSlider.onValueChanged.AddListener(UpdateBGMVolume);
+            }
+            else
+            {
+                Debug.LogError("AudioManagerに2つ以上のAudioSourceが必要です。");
+            }
+        }
+        else
+        {
+            Debug.LogError("AudioManagerが見つかりません。");
+        }
     }
 
     // Update is called once per frame
