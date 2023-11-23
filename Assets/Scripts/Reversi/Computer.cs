@@ -74,7 +74,8 @@ public class Computer : MonoBehaviour
 
             }
 
-            wasTheStonePlacedCorrectly = await board.PutStone(cellIndex, cellType);
+            (bool, bool) returnBool = await board.PutStone(cellIndex, cellType);
+            wasTheStonePlacedCorrectly = returnBool.Item1;
 
         } while (!wasTheStonePlacedCorrectly);
 
