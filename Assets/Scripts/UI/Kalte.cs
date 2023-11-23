@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Diagnostics.Eventing.Reader;
+using Unity.VisualScripting;
 
-public class SecretWindow: MonoBehaviour
+public class Kalte : MonoBehaviour
 {
-    public float animationTime = 0.3f;
+    [SerializeField]
+    private float animationTime = 0.3f;
     [SerializeField]
     private float windowScaleRatio = 2;
+    [SerializeField]
+    private GameObject[] secretText = new GameObject[3];
     private RectTransform rt;
     private Vector2 defaultWindowsSize;
     private Vector2 defaultWindowsPosition;
     private Quaternion defaultWindowsRotation;
     private bool isExpand;
+    private int currentSecretNum = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +27,11 @@ public class SecretWindow: MonoBehaviour
         defaultWindowsSize = rt.localScale;
         defaultWindowsPosition = rt.position;
         defaultWindowsRotation = rt.rotation;
+
+        for (int i = 0; i < 3; i++)
+        {
+            secretText[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -50,5 +60,19 @@ public class SecretWindow: MonoBehaviour
             rt.DORotateQuaternion(defaultWindowsRotation, animationTime);
             isExpand = false;
         }
+    }
+
+    /// <summary>
+    /// ŽŸ‚Ì”é–§‚ð•\Ž¦‚·‚é
+    /// </summary>
+    public void AddNextSecretText()
+    {
+        if (currentSecretNum == 3)
+        {
+            Debug.Log("”é–§‚Í3‚Â‚µ‚©‚ ‚è‚Ü‚¹‚ñ");
+            return;
+        }
+        currentSecretNum++;
+        secretText[currentSecretNum].SetActive(true);
     }
 }
