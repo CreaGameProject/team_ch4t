@@ -10,10 +10,12 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class Preset
 {
-    [Header("手数（０になるとゲームオーバー）")] public int turn;
+    //[Header("手数（０になるとゲームオーバー）")] public int turn;
 
     [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・● ⇒ プレイヤーの石\n・○ ⇒ コンピュータの石\n・◆ ⇒ ヒミツマス")]
     [TextArea(9, 9)] public string board;
+
+    //[Header("メモ")] public string memo;
 }
 
 public class Board : MonoBehaviour
@@ -52,18 +54,18 @@ public class Board : MonoBehaviour
     [Header("ボード上のオブジェクト")]
     [SerializeField] private GameObject[] boardObjects = new GameObject[64];
 
-    [Header("経過ターン数")]
+    [Header("経過ターン数（現在のプリセットで何ターン目か）")]
     [SerializeField] private int turnCounter = 0;
 
     [Header("現在、誰のターンか")]
     [SerializeField] private Turn.Type turn = Turn.Type.neutral;
     public Turn.Type getTurn { get { return this.turn; } }
 
+    [Header("手数（０になるとゲームオーバー）")] public int restTurn;
+    public int getPresetRestTurn { get { return this.restTurn; } } // todo : getRestTurn に変更する
+
     [Header("盤面と手数のプリセット")]
     [SerializeField] private List<Preset> presets = new List<Preset>();
-    public int getPresetRestTurn { get { return this.presets[this.presetIndex].turn; } }
-
-    
 
     // Start is called before the first frame update
     async void Start()
@@ -74,7 +76,8 @@ public class Board : MonoBehaviour
     }
 
     bool didFlipSecretCell = false;
-    private int presetIndex = 0;
+    [Header("プリセットインデックス")]
+    [SerializeField] private int presetIndex = 0;
 
     async private UniTask Game()
     {
@@ -113,21 +116,22 @@ public class Board : MonoBehaviour
                 Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
             }
 
-            // ヒミツマスを裏返したターンは手数が減らないようにする必要アリ
-            if (!this.didFlipSecretCell) { this.presets[this.presetIndex].turn--; } // プレイヤーの手数を減らす
-
-            Debug.Log("到達1");
+            // プレイヤーの手数を減らす
+            // ヒミツマスを裏返したのが、最後のプリセットのときは減らさない
+            // ※ヒミツマスを裏返した時点で、インデックスはインクリメントされるのでこれで良い
+            Debug.Log(string.Format("presetIndex : {0} | presets.Count : {1}", this.presetIndex, this.presets.Count));
+            if (this.presetIndex != this.presets.Count) 
+            {
+                this.restTurn--;
+            }
 
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
             code = ContinuationJudgment(this.presetIndex);
             if (210 % code == 0 && code != 2) { break; }
 
-            Debug.Log("到達2");
-
+            // ヒミツマスを裏返したらプレイヤーから始まる
             if (this.didFlipSecretCell) { continue; }
-
-            Debug.Log("到達3");
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
             this.turn = Turn.Type.computer;
@@ -149,17 +153,14 @@ public class Board : MonoBehaviour
                 Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
             }
 
-            // 偶数ターン時にコンピュータが喋る
-            // Debug.Log("【Board】TurnUnit() | 偶数ターン時にコンピュータが喋る");
-            if (this.turnCounter % 2 == 0)
-            {
-                SpeakComputer();
-            }
-
             // ゲームが継続するか調べる
             // Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
             code = ContinuationJudgment(this.presetIndex);
             if (210 % code == 0 && code != 2) { break; }
+
+            // コンピュータが喋る
+            //if (this.turnCounter % 2 == 0) { SpeakComputer(); }
+            SpeakComputer();
 
             // ヒミツマスを設置する
             //Debug.Log("【Board】TurnUnit() | ヒミツマスを設置する");
@@ -195,7 +196,7 @@ public class Board : MonoBehaviour
     
     public void SpeakComputer()
     {
-        Debug.Log("【Board】SpeakComputer() | キャラクターが喋るよ。");
+        Debug.Log("<b><color=#ef476f>【Board - SpeakComputer】コンピュータが喋るよ！</color></b>");
 
         // メソッドAが実行されたことを通知
         if (OnMethodAExecuted != null)
@@ -276,8 +277,8 @@ public class Board : MonoBehaviour
             int proposedCellComputer = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
             if (proposedCellPlayer == 0 && proposedCellComputer == 0) { code *= 3; } // 両者とも石の設置が不可能
 
-            int turn = this.presets[presetIndex].turn;
-            Debug.Log(string.Format("turn : {0}", turn));
+            int turn = this.restTurn;
+            //Debug.Log(string.Format("turn : {0}", turn));
             if (turn == 0) { code *= 5; } // ターン数が０になった 
         }
         
@@ -502,7 +503,7 @@ public class Board : MonoBehaviour
             GameObject g = Instantiate(this.normalStone, pos, Quaternion.identity);
             Stone stone = g.GetComponent<Stone>();
             stone.color = color;
-            await stone.Generate();
+            await stone.Generate(0.3f);
             this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
         }
 
@@ -513,7 +514,7 @@ public class Board : MonoBehaviour
             GameObject g = Instantiate(this.secretStone, pos, Quaternion.identity);
             Stone stone = g.GetComponent<Stone>();
             stone.color = color;
-            await stone.Generate();
+            await stone.Generate(0.3f);
             this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
         }
 
@@ -522,7 +523,7 @@ public class Board : MonoBehaviour
         {
             // 既存の白石を破棄する
             GameObject white = this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
-            await white.GetComponent<Stone>().Destroy();
+            await white.GetComponent<Stone>().Destroy(0.2f);
             Destroy(white);
 
             // ヒミツマスを生成
@@ -530,7 +531,7 @@ public class Board : MonoBehaviour
             GameObject g = Instantiate(this.secretStone, pos, Quaternion.identity);
             Stone stone = g.GetComponent<Stone>();
             stone.color = color;
-            await stone.Generate();
+            await stone.Generate(0.3f);
             this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
         }
 
@@ -540,7 +541,7 @@ public class Board : MonoBehaviour
         {
             // 既存の石を破棄する
             GameObject stone = this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
-            await stone.GetComponent<Stone>().Destroy();
+            await stone.GetComponent<Stone>().Destroy(0.2f);
             Destroy(stone);
         }
 
@@ -565,7 +566,6 @@ public class Board : MonoBehaviour
 
         this.board[indexOnBoard.Item1, indexOnBoard.Item2] = (type, color);
         Debug.Log("<b><color=#01AC56>【 Board - UpdateCell 】" + string.Format("（{0}列, {1}行）を type = {2}, color = {3} に更新しました。", indexOnBoard.Item1 + 1, indexOnBoard.Item2 + 1, type.ToString(), color.ToString()) + "</color></b>");
-
 
     }
 
