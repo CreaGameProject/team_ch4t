@@ -23,6 +23,5 @@ public class ButtonSePlayer : MonoBehaviour
 
     public void PlayHighlightedButtonSe()
     {
-        AudioManager.instance_AudioManager.PlaySE(1);
-    }
+        AudioManager.instance_AudioManager.PlaySE(1);    }
 }
