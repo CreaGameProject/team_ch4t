@@ -9,9 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Board board = null;
     [SerializeField] private Cell.Color myColor = Cell.Color.black;
 
-    async public UniTask Action()
+    async public UniTask<(bool, bool)> Action()
     {
-        bool wasTheStonePlacedCorrectly = false;
+        (bool, bool) returnBool = (false, false);
 
         do
         {
@@ -26,9 +26,11 @@ public class Player : MonoBehaviour
             // カーソル位置をワールド座標に変換
             Vector3 target = Camera.main.ScreenToWorldPoint(mousePosition);
 
-            wasTheStonePlacedCorrectly = await this.board.PutStone((target.x, target.z), Cell.Type.black);
+            returnBool = await this.board.PutStone((target.x, target.z), Cell.Type.black);
 
-        } while (!wasTheStonePlacedCorrectly);
+        } while (!returnBool.Item1);
+
+        return returnBool;
 
     }
 }

@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,15 +20,43 @@ public class Tester : MonoBehaviour
         Turn.Type turn = Board.instance.getTurn;
         Debug.Log(string.Format("【Tester】restTurn | {0}", turn));
 
+        Board.instance.OnChangeRestTurnExecuted += OnChangeRestTurnExecutedHandler;
+        Board.instance.OnChangeTurnExecuted += OnChangeTurnExecutedHandler;
+
         // セリフ表示スクリプトにこれを追加する
-        // デリゲートにイベントハンドラを追加
-        Board.instance.OnMethodAExecuted += OnMethodAExecutedHandler;
+        Board.instance.OnSpeakComputerExecuted += OnSpeakComputerExecutedHandler;
+        Board.instance.OnSecretCellPerformanceExecuted += OnSecretCellPerformanceExecutedHandler;
     }
 
-    // セリフ表示スクリプトにこれを追加する
-    private void OnMethodAExecutedHandler()
+    // 残り手数が変更されたときに実行される
+    // 引数：restTurn：変更された後の残りの手数
+    private void OnChangeRestTurnExecutedHandler(int restTurn)
+    {
+        // 残り手数が変更されたときの処理を記述する
+        Debug.Log("【Tester】OnChangeRestTurnExecutedHandler | 残り手数が変更されたときの処理を記述する");
+    }
+
+    // 手番（現在のターン）が変更されたときに実行される
+    // 引数：type：変更された後の手番（現在のターン）：
+    private void OnChangeTurnExecutedHandler(Turn.Type type)
+    {
+        // 手番（現在のターン）が変更されたときの処理を記述する
+        Debug.Log("【Tester】OnChangeRestTurnExecutedHandler | 手番（現在のターン）が変更されたときの処理を記述する");
+    }
+
+    async public UniTask OnSecretCellPerformanceExecutedHandler()
+    {
+        // ヒミツマスが裏返されたときの演出を記述する
+        Debug.Log("【Tester】OnSecretCellPerformanceExecutedHandler | ヒミツマスが裏返されたときの演出を記述する");
+
+        await UniTask.Yield();
+    }
+
+    async public UniTask OnSpeakComputerExecutedHandler()
     {
         // キャラクターが喋る処理を記述する
-        Debug.Log("【Tester】OnMethodAExecutedHandler() | SpeakComputer()が実行されました！");
+        Debug.Log("【Tester】OnSpeakComputerExecutedHandler() | キャラクターが喋る処理を記述する");
+
+        await UniTask.Yield();
     }
 }
