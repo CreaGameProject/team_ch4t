@@ -357,7 +357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeGroup: {fileID: 913026529995185566}
   yourLogNode: {fileID: 6426020248823953763, guid: d1cb06087132c354a92696f477640c56, type: 3}
-  partnerLogNode: {fileID: 7979649180618914377, guid: b26d44b99ade4ee4481ccf5a33846de3, type: 3}
+  partnerLogNode: {fileID: 7979649180618914377, guid: 42d0f4e1ad4c0744598d0e250845238d, type: 3}
   scrollView: {fileID: 3356126831912604356}
 --- !u!1 &3356126831912604356
 GameObject:
@@ -1688,7 +1688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1925595881148204691, guid: d1cb06087132c354a92696f477640c56, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 455.5
+      value: 444.5
       objectReference: {fileID: 0}
     - target: {fileID: 1925595881148204691, guid: d1cb06087132c354a92696f477640c56, type: 3}
       propertyPath: m_AnchoredPosition.y

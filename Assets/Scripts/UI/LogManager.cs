@@ -12,7 +12,7 @@ public class LogManager : MonoBehaviour
     [SerializeField]
     private GameObject yourLogNode;
     [SerializeField]
-    private GameObject partnerLogNode;
+    private List<GameObject> partnerLogNode;
     [SerializeField]
     private GameObject scrollView;
     private ScrollRect scrollRect;

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class RemainingTurns : MonoBehaviour
+public class RemainingTurnNumber : MonoBehaviour
 {
     [SerializeField]
-    private GameObject remainingTurns;
-    private TextMeshProUGUI remainingTurnsText;
+    private TextMeshProUGUI remainingTurnNumberText;
+    private int restTurn;
 
     // Start is called before the first frame update
     void Start()
     {
-        remainingTurnsText = remainingTurns.GetComponent<TextMeshProUGUI>();
+
     }
 
     // Update is called once per frame
@@ -22,10 +22,11 @@ public class RemainingTurns : MonoBehaviour
     }
 
     /// <summary>
-    /// 残り手数を1だけ減じる
+    /// 残り手数を更新
     /// </summary>
-    public void ReduceRemainingTurns()
+    public void UpdateRemainingTurnNumberText()
     {
-
+        restTurn = Board.instance.getPresetRestTurn;
+        remainingTurnNumberText.text = restTurn.ToString();
     }
 }
