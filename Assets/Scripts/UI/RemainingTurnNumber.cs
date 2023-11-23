@@ -12,7 +12,7 @@ public class RemainingTurnNumber : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Board.instance.OnChangeRestTurnExecuted += OnChangeRestTurnExecutedHandler;
     }
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class RemainingTurnNumber : MonoBehaviour
     /// <summary>
     /// c‚èè”‚ğXV
     /// </summary>
-    public void UpdateRemainingTurnNumberText()
+    private void OnChangeRestTurnExecutedHandler(int restTurn)
     {
         restTurn = Board.instance.getPresetRestTurn;
         remainingTurnNumberText.text = restTurn.ToString();
