@@ -59,6 +59,8 @@ public class Stone : MonoBehaviour
 
         //float rotation = (color == Cell.Color.black) ? 180.0f : 0f;
 
+        Debug.Log("ÅyStoneÅzFlip() : ó†ï‘Çµ");
+
         await sequence.Append(this.transform.DOMoveY(1.0f, 0.4f))
                       .Join(transform.DORotate(new Vector3(0, 0, 180), 0.4f, RotateMode.WorldAxisAdd)).AsyncWaitForCompletion();
 
