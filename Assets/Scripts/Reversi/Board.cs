@@ -3,6 +3,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -115,13 +116,18 @@ public class Board : MonoBehaviour
             // ヒミツマスを裏返したターンは手数が減らないようにする必要アリ
             if (!this.didFlipSecretCell) { this.presets[this.presetIndex].turn--; } // プレイヤーの手数を減らす
 
+            Debug.Log("到達1");
 
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
             code = ContinuationJudgment(this.presetIndex);
             if (210 % code == 0 && code != 2) { break; }
 
+            Debug.Log("到達2");
+
             if (this.didFlipSecretCell) { continue; }
+
+            Debug.Log("到達3");
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
             this.turn = Turn.Type.computer;
@@ -147,7 +153,6 @@ public class Board : MonoBehaviour
             // Debug.Log("【Board】TurnUnit() | 偶数ターン時にコンピュータが喋る");
             if (this.turnCounter % 2 == 0)
             {
-                
                 SpeakComputer();
             }
 
@@ -257,18 +262,25 @@ public class Board : MonoBehaviour
     // 戻り値：code：どの
     private int ContinuationJudgment(int presetIndex)
     {
+        Debug.Log(string.Format("ContinuationJudgment(int presetIndex) | presetIndex : {0}", presetIndex));
+
         int code = 2;
 
-        int proposedCellPlayer = GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count;
-        int proposedCellComputer = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
-        if (proposedCellPlayer == 0 && proposedCellComputer == 0) { code *= 3; } // 両者とも石の設置が不可能
+        if (presetIndex == this.presets.Count) // ヒミツが０になった
+        { 
+            code *= 7;
+        }
+        else
+        {
+            int proposedCellPlayer = GetProposedCell(ConvertTypeToColor(Cell.Type.black)).Count;
+            int proposedCellComputer = GetProposedCell(ConvertTypeToColor(Cell.Type.white)).Count;
+            if (proposedCellPlayer == 0 && proposedCellComputer == 0) { code *= 3; } // 両者とも石の設置が不可能
 
-        int turn = this.presets[presetIndex].turn;
-        Debug.Log(string.Format("turn : {0}", turn));
-        if (turn == 0) { code *= 5; } // ターン数が０になった 
-
-        if (presetIndex == this.presets.Count) { code *= 7; } // ヒミツが０になった
-
+            int turn = this.presets[presetIndex].turn;
+            Debug.Log(string.Format("turn : {0}", turn));
+            if (turn == 0) { code *= 5; } // ターン数が０になった 
+        }
+        
         return code;
     }
 
@@ -361,8 +373,6 @@ public class Board : MonoBehaviour
     // 盤面をプリセットに上書きする
     async private UniTask SetPresetOnBoard()
     {
-        
-
         // プリセットを読み込み
         (Cell.Type, Cell.Color)[,] newBoard = new (Cell.Type, Cell.Color)[8, 8];
         string boardString = this.presets[presetIndex].board;
@@ -386,10 +396,7 @@ public class Board : MonoBehaviour
         }
 
         // 盤面を初期化する
-        for (int index = 0; index < 64; index++)
-        {
-            UpdateCell((index % 8, (int)(index / 8)), Cell.Type.empty);
-        }
+        for (int index = 0; index < 64; index++) { await UpdateCell((index % 8, (int)(index / 8)), Cell.Type.empty); }
 
         // 盤面をアップデート
         for (int y = 0; y < newBoard.GetLength(1); y++)
@@ -400,13 +407,8 @@ public class Board : MonoBehaviour
             }
         }
 
-        
-
         // 盤面をコンソールに表示する
         ViewBoard(Turn.Type.computer, false);
-
-        presetIndex++;
-
     }
 
     // 盤面に石を置く（プレイヤー用）
@@ -470,14 +472,12 @@ public class Board : MonoBehaviour
         {
             Debug.Log("ヒミツマスを裏返した。");
 
+            this.presetIndex++;
+
             this.turnCounter = 0;
             this.didFlipSecretCell = true;
 
             if (this.presetIndex != this.presets.Count) { await SetPresetOnBoard(); }
-
-            
-
-            //this.presets.RemoveAt(0);
         }
 
         return true;
@@ -493,13 +493,24 @@ public class Board : MonoBehaviour
             case Cell.Type.black : color = Cell.Color.black; break;
             case Cell.Type.secret : color = Cell.Color.white; break;
             default: break;
-        } 
+        }
 
-        // empty => anything without empty : 石を生成する
-        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type != Cell.Type.empty)
+        // empty => anything without empty and secret : 石を生成する
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && !(type == Cell.Type.empty || type == Cell.Type.secret))
         {
             Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
             GameObject g = Instantiate(this.normalStone, pos, Quaternion.identity);
+            Stone stone = g.GetComponent<Stone>();
+            stone.color = color;
+            await stone.Generate();
+            this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
+        }
+
+        // empty => secret : ヒミツマスを生成する
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type == Cell.Type.secret)
+        {
+            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
+            GameObject g = Instantiate(this.secretStone, pos, Quaternion.identity);
             Stone stone = g.GetComponent<Stone>();
             stone.color = color;
             await stone.Generate();
@@ -554,6 +565,8 @@ public class Board : MonoBehaviour
 
         this.board[indexOnBoard.Item1, indexOnBoard.Item2] = (type, color);
         Debug.Log("<b><color=#01AC56>【 Board - UpdateCell 】" + string.Format("（{0}列, {1}行）を type = {2}, color = {3} に更新しました。", indexOnBoard.Item1 + 1, indexOnBoard.Item2 + 1, type.ToString(), color.ToString()) + "</color></b>");
+
+
     }
 
     // 石を裏返す
