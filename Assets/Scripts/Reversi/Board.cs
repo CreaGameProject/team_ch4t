@@ -67,6 +67,50 @@ public class Board : MonoBehaviour
     [Header("盤面と手数のプリセット")]
     [SerializeField] private List<Preset> presets = new List<Preset>();
 
+    //bool didFlipSecretCell = false;
+    /*[Header("プリセットインデックス")]
+    [SerializeField]*/ private int presetIndex = 0;
+
+
+
+    // ヒミツマスを裏返したときに実行される
+    public delegate UniTask SecretCellPerformanceExecutedDelegate();
+    public event SecretCellPerformanceExecutedDelegate OnSecretCellPerformanceExecuted;
+    async public UniTask SecretCellPerformance()
+    {
+        Debug.Log("<b><color=#ef476f>【Board - FlipSecretCell】ヒミツマスを裏返したときの演出</color></b>");
+        if (OnSecretCellPerformanceExecuted != null) { await OnSecretCellPerformanceExecuted(); }
+    }
+
+    // コンピュータが喋るときに実行される
+    public delegate UniTask SpeakComputerExecutedDelegate();
+    public event SpeakComputerExecutedDelegate OnSpeakComputerExecuted;
+    async public UniTask SpeakComputer()
+    {
+        Debug.Log("<b><color=#ef476f>【Board - SpeakComputer】コンピュータが喋るよ！</color></b>");
+        if (OnSpeakComputerExecuted != null) { await OnSpeakComputerExecuted(); }
+    }
+
+    // 手番（現在のターン）が変更されたときに実行される
+    public delegate void ChangeTurnExecutedDelegate(Turn.Type type);
+    public event ChangeTurnExecutedDelegate OnChangeTurnExecuted;
+
+    public void ChangeTurn(Turn.Type type)
+    {
+        Debug.Log("<b><color=#ef476f>【Board - ChangeTurn】手番（現在のターン）が変更されたときの演出</color></b>");
+        if (OnChangeTurnExecuted != null) { OnChangeTurnExecuted(type); }
+    }
+
+    // 残り手数が変更されたときに実行される
+    public delegate void ChangeRestTurnExecutedDelegate(int restTurn);
+    public event ChangeRestTurnExecutedDelegate OnChangeRestTurnExecuted;
+
+    public void ChangeRestTurn(int restTurn)
+    {
+        Debug.Log("<b><color=#ef476f>【Board - ChangeRestTurn】残り手数が変更されたときの演出</color></b>");
+        if (OnChangeRestTurnExecuted != null) { OnChangeRestTurnExecuted(restTurn); }
+    }
+
     // Start is called before the first frame update
     async void Start()
     {
@@ -74,10 +118,6 @@ public class Board : MonoBehaviour
 
         await Game();
     }
-
-    bool didFlipSecretCell = false;
-    [Header("プリセットインデックス")]
-    [SerializeField] private int presetIndex = 0;
 
     async private UniTask Game()
     {
@@ -91,7 +131,7 @@ public class Board : MonoBehaviour
         {
             await UniTask.Yield();
 
-            this.didFlipSecretCell = false;
+            bool didFlipSecretCell = false;
 
             // ターン数インクリメント
             //Debug.Log("【Board】TurnUnit() | ターン数インクリメント");
@@ -99,6 +139,9 @@ public class Board : MonoBehaviour
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Player のターンです。</color></b>");
             this.turn = Turn.Type.player;
+
+            // ターンが変わった時の演出
+            ChangeTurn(this.turn);
 
             // 盤面をコンソールに表示する
             ViewBoard(Turn.Type.player, true);
@@ -109,7 +152,9 @@ public class Board : MonoBehaviour
             if (proposedCells.Count > 0)
             {
                 // プレイヤーが石を置く
-                await this.player.Action();
+                (bool, bool) returnBool = await this.player.Action();
+                didFlipSecretCell = returnBool.Item2;
+                Debug.Log(string.Format("didFlipSecretCell : {0}", didFlipSecretCell));
             }
             else
             {
@@ -118,11 +163,26 @@ public class Board : MonoBehaviour
 
             // プレイヤーの手数を減らす
             // ヒミツマスを裏返したのが、最後のプリセットのときは減らさない
-            // ※ヒミツマスを裏返した時点で、インデックスはインクリメントされるのでこれで良い
             Debug.Log(string.Format("presetIndex : {0} | presets.Count : {1}", this.presetIndex, this.presets.Count));
-            if (this.presetIndex != this.presets.Count) 
+            if ((didFlipSecretCell) || !(this.presetIndex + 1 == this.presets.Count))
             {
                 this.restTurn--;
+
+                // 残り手数が減った時の演出
+                ChangeRestTurn(this.restTurn);
+            }
+
+            // ヒミツマスを裏返したのなら...
+            if (didFlipSecretCell)
+            {
+                // ヒミツマスを裏返したときの演出
+                await SecretCellPerformance();
+
+                // プリセットインデックスをインクリメントする
+                this.presetIndex++;
+
+                // プリセットを展開する
+                if (this.presetIndex != this.presets.Count) { await SetPresetOnBoard(); }
             }
 
             // ゲームが継続するか調べる
@@ -131,10 +191,13 @@ public class Board : MonoBehaviour
             if (210 % code == 0 && code != 2) { break; }
 
             // ヒミツマスを裏返したらプレイヤーから始まる
-            if (this.didFlipSecretCell) { continue; }
+            if (didFlipSecretCell) { continue; }
 
             Debug.Log("<b><color=#00B9CB>【 Board - ChangeTurn 】Computer のターンです。</color></b>");
             this.turn = Turn.Type.computer;
+
+            // ターンが変わった時の演出
+            ChangeTurn(this.turn);
 
             // 盤面をコンソールに表示する
             ViewBoard(Turn.Type.computer, true);
@@ -160,7 +223,7 @@ public class Board : MonoBehaviour
 
             // コンピュータが喋る
             //if (this.turnCounter % 2 == 0) { SpeakComputer(); }
-            SpeakComputer();
+            await SpeakComputer();
 
             // ヒミツマスを設置する
             //Debug.Log("【Board】TurnUnit() | ヒミツマスを設置する");
@@ -186,23 +249,6 @@ public class Board : MonoBehaviour
 
         string result = GameResultJudgment(code);
         Debug.Log("<b><color=#F26E3E>【 Board 】GAME SET! => " + result + "</color></b>");
-    }
-
-    // COMが喋る
-
-    // メソッドAが実行されたことを通知するデリゲート
-    public delegate void MethodAExecutedDelegate();
-    public event MethodAExecutedDelegate OnMethodAExecuted;
-    
-    public void SpeakComputer()
-    {
-        Debug.Log("<b><color=#ef476f>【Board - SpeakComputer】コンピュータが喋るよ！</color></b>");
-
-        // メソッドAが実行されたことを通知
-        if (OnMethodAExecuted != null)
-        {
-            OnMethodAExecuted();
-        }
     }
 
     // ゲームの勝敗を返す
@@ -414,7 +460,7 @@ public class Board : MonoBehaviour
 
     // 盤面に石を置く（プレイヤー用）
     // 戻り値 bool型 result ⇒ 正しく石が置かれたかどうか
-    async public UniTask<bool> PutStone((float, float) mousePosition, Cell.Type type)
+    async public UniTask<(bool, bool)> PutStone((float, float) mousePosition, Cell.Type type)
     {
         //受け取った座標を盤面上のインデックスに変換する
         float x = Mathf.Floor(mousePosition.Item1 - boardAnchor.position.x);
@@ -426,7 +472,7 @@ public class Board : MonoBehaviour
 
     // 盤面に石を置く
     // 戻り値 bool型 result ⇒ 正しく石が置かれたかどうか
-    async public UniTask<bool> PutStone((int, int) indexOnBoard, Cell.Type myType)
+    async public UniTask<(bool, bool)> PutStone((int, int) indexOnBoard, Cell.Type myType)
     {
         // 場外判定
         bool isXIndexSafe = indexOnBoard.Item1 > -1 && 8 > indexOnBoard.Item1;
@@ -435,7 +481,7 @@ public class Board : MonoBehaviour
         {
 
             Debug.Log("<b><color=#FDC110>【 Board - PutStone 】" + string.Format("（列：{0}, 行：{1}）", indexOnBoard.Item1 + 1, indexOnBoard.Item2 + 1) + " は盤面の外です。</color></b>");
-            return false;
+            return (false, false);
         }
 
         // 既に石が置かれていないか判定
@@ -443,7 +489,7 @@ public class Board : MonoBehaviour
         if (checkCell.Item1 == Cell.Type.black || checkCell.Item1 == Cell.Type.white || checkCell.Item1 == Cell.Type.secret)
         {
             Debug.Log("<b><color=#FDC110>【 Board - PutStone 】" + string.Format("（列：{0}, 行：{1}）", indexOnBoard.Item1 + 1, indexOnBoard.Item2 + 1) + " には既に石が置かれています。</color></b>");
-            return false;
+            return (false, false);
         }
 
         // 石を置ける場所か判定する
@@ -461,7 +507,7 @@ public class Board : MonoBehaviour
         if (!didIndexMatchAnyItem)
         {
             Debug.Log("<b><color=#FDC110>【 Board - PutStone 】" + string.Format("（列：{0}, 行：{1}）には石 {2} を置けません。", indexOnBoard.Item1 + 1, indexOnBoard.Item2 + 1, myType.ToString()) + "</color></b>");
-            return false;
+            return (false, false);
         }
 
         await UpdateCell(indexOnBoard, myType);
@@ -473,15 +519,18 @@ public class Board : MonoBehaviour
         {
             Debug.Log("ヒミツマスを裏返した。");
 
-            this.presetIndex++;
+            //this.presetIndex++;
 
             this.turnCounter = 0;
-            this.didFlipSecretCell = true;
+            //this.didFlipSecretCell = true;
 
-            if (this.presetIndex != this.presets.Count) { await SetPresetOnBoard(); }
+            // todo : ヒミツマスを裏返したときの演出を実行する
+            // await SecretCellPerformance();
+
+            // if (this.presetIndex != this.presets.Count) { await SetPresetOnBoard(); }
         }
 
-        return true;
+        return (true, didFlipSecretCell);
     }
 
     //盤面（１マス）を更新する
