@@ -4,14 +4,11 @@ public class DialogueCutInEvent : AbstractDialogueEvent
     public string CharacterName => _characterName;
     private string _filePath;
     public string FilePath => _filePath;
-    private string _text;
-    public string Text => _text;
-    
-    public DialogueCutInEvent(int eventNumber, EventType eventType, string characterName, string filePath, string text)
+
+    public DialogueCutInEvent(int eventNumber, EventType eventType, string characterName, string filePath)
         : base(eventNumber, eventType)
     {
         _characterName = characterName;
         _filePath = filePath;
-        _text = text;
     }
 }

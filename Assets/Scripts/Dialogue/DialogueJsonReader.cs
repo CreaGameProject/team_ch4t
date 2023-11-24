@@ -23,11 +23,15 @@ public class DialogueJsonReader : MonoBehaviour
                 switch (eventType)
                 {
                     case EventType.TALK:
-                        dialogueEvent = new DialogueTalkEvent(dialogueJson.event_number, eventType, dialogueJson.name, dialogueJson.file, dialogueJson.text);
+                        dialogueEvent = new DialogueTalkEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count ,dialogueJson.name, dialogueJson.file, dialogueJson.text);
                         dialogueEvents.Add(dialogueEvent);
                         break;
                     case EventType.CUT_IN:
-                        dialogueEvent = new DialogueCutInEvent(dialogueJson.event_number, eventType, dialogueJson.name, dialogueJson.file, dialogueJson.text);
+                        dialogueEvent = new DialogueCutInEvent(dialogueJson.event_number, eventType, dialogueJson.name, dialogueJson.file);
+                        dialogueEvents.Add(dialogueEvent);
+                        break;
+                    case EventType.CUT_IN_TALK:
+                        dialogueEvent = new DialogueCutInTalkEvent(dialogueJson.event_number, eventType, dialogueJson.name, dialogueJson.file, dialogueJson.text);
                         dialogueEvents.Add(dialogueEvent);
                         break;
                     case EventType.END:
