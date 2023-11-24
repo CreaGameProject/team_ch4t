@@ -8,12 +8,15 @@ public class FadeInOut : MonoBehaviour
 {
     [SerializeField]
     private float fadeDuration = 1;
+    [SerializeField]
+    private GameObject resultPanel;
+
     private Image image;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        image = GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -22,13 +25,14 @@ public class FadeInOut : MonoBehaviour
         
     }
 
-    public void FadeOut()
+    /// <summary>
+    /// ‰æ–Ê‚ðˆÃ“]‚³‚¹‚ÄƒŠƒUƒ‹ƒg‰æ–Ê‚Ö‘JˆÚ
+    /// </summary>
+    public void GoDarkForTransition()
     {
-        image.DOFade(1, fadeDuration);
-    }
-
-    public void FadeIn()
-    {
-        image.DOFade(0, fadeDuration);
+        Sequence fadeAnim = DOTween.Sequence();
+        fadeAnim.Append(image.DOFade(1, fadeDuration))
+                .AppendCallback(() => resultPanel.SetActive(false))
+                .Append(image.DOFade(0, fadeDuration));
     }
 }

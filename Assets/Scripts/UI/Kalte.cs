@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Diagnostics.Eventing.Reader;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class Kalte : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Kalte : MonoBehaviour
     private float animationTime = 0.3f;
     [SerializeField]
     private float windowScaleRatio = 2;
+    [SerializeField]
+    private Image backGround;
     [SerializeField]
     private GameObject[] secretText = new GameObject[3];
     private RectTransform rt;
@@ -27,6 +30,7 @@ public class Kalte : MonoBehaviour
         defaultWindowsSize = rt.localScale;
         defaultWindowsPosition = rt.position;
         defaultWindowsRotation = rt.rotation;
+        backGround.DOFade(0, 0.01f);
 
         for (int i = 0; i < 3; i++)
         {
@@ -47,6 +51,7 @@ public class Kalte : MonoBehaviour
             rt.DOScale(Vector2.one * windowScaleRatio, animationTime).SetEase(Ease.InOutCirc);
             rt.DOMove(new Vector2(Screen.width / 2, Screen.height / 2), animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(Quaternion.identity, animationTime);
+            backGround.DOFade(0.85f, animationTime);
             isExpand = true;
         }
     }
@@ -58,6 +63,7 @@ public class Kalte : MonoBehaviour
             rt.DOScale(defaultWindowsSize, animationTime).SetEase(Ease.InOutCirc);
             rt.DOMove(defaultWindowsPosition, animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(defaultWindowsRotation, animationTime);
+            backGround.DOFade(0, animationTime);
             isExpand = false;
         }
     }
