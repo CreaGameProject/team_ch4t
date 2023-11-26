@@ -67,7 +67,11 @@ public class Tester : MonoBehaviour
     }
 
     // 対局が決着したら実行される
-    // 引数：howManyHimituDidGet：変更された後の現在取得しているヒミツの数
+    // 引数：gameResult：対局の結果
+    // ※ gameResult => None : 初期状態
+    // ※ gameResult => Player_WIN : プレイヤーの勝ち
+    // ※ gameResult => Player_LOSE : プレイヤーの負け
+    // ※ gameResult => Drow : 引き分け
     private void OnGameOverExecutedHandler(GameResult gameResult)
     {
         // 対局が決着したら実行される
