@@ -44,6 +44,7 @@ public class Board : MonoBehaviour
 
     [Header("コンピュータ")]
     [SerializeField] private Computer computer = null;
+    public Computer.Opponent getOpponent { get { return this.computer.getOpponent; } }
 
     [Header("石のプレハブ")]
     [SerializeField] private GameObject normalStone = null;
@@ -64,12 +65,15 @@ public class Board : MonoBehaviour
     [Header("手数（０になるとゲームオーバー）")] public int restTurn;
     public int getPresetRestTurn { get { return this.restTurn; } } // todo : getRestTurn に変更する
 
+    [Header("プリセットインデックス")]
+    [SerializeField] private int presetIndex = 0;
+    public int getHowManyHimituDidGet { get { return this.presetIndex; } }
+
+
     [Header("盤面と手数のプリセット")]
     [SerializeField] private List<Preset> presets = new List<Preset>();
 
-    //bool didFlipSecretCell = false;
-    /*[Header("プリセットインデックス")]
-    [SerializeField]*/ private int presetIndex = 0;
+    
 
 
 
