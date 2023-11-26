@@ -54,9 +54,9 @@ public class LogManager : MonoBehaviour
     /// <param name="log">‘ŠŽè‚Ì”­Œ¾</param>
     public void AddPartnerLog(string log)
     {
-        GameObject sb =  Instantiate(partnerLogNode, nodeGroup.transform);
+        /*GameObject sb =  Instantiate(partnerLogNode, nodeGroup.transform);
         sb.GetComponent<LogNode>().SetContent(log);
-        StartCoroutine(AnimateScrollView());
+        StartCoroutine(AnimateScrollView());*/
     }
 
     private IEnumerator AnimateScrollView()
