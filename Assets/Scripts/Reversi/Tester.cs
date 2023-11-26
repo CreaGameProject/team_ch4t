@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Board;
 
 public class Tester : MonoBehaviour
 {
@@ -33,7 +34,8 @@ public class Tester : MonoBehaviour
 
         Board.instance.OnChangeRestTurnExecuted += OnChangeRestTurnExecutedHandler;
         Board.instance.OnChangeTurnExecuted += OnChangeTurnExecutedHandler;
-        Board.instance.OnChangeHimituNumberExecuted += OnChangeHimituNumberHandler;
+        Board.instance.OnChangeHimituNumberExecuted += OnChangeHimituNumberExecutedHandler;
+        Board.instance.OnGameOverExecuted += OnGameOverExecutedHandler;
 
         // セリフ表示スクリプトにこれを追加する
         Board.instance.OnSpeakComputerExecuted += OnSpeakComputerExecutedHandler;
@@ -58,10 +60,20 @@ public class Tester : MonoBehaviour
 
     // 現在取得しているヒミツの数が変わったら実行される
     // 引数：howManyHimituDidGet：変更された後の現在取得しているヒミツの数
-    private void OnChangeHimituNumberHandler(int howManyHimituDidGet)
+    private void OnChangeHimituNumberExecutedHandler(int howManyHimituDidGet)
     {
         // 現在取得しているヒミツの数が変更されたときの処理を記述する
         Debug.Log("【Tester】OnChangeRestTurnExecutedHandler | 現在取得しているヒミツの数が変更されたときの処理を記述する");
+    }
+
+    // 対局が決着したら実行される
+    // 引数：howManyHimituDidGet：変更された後の現在取得しているヒミツの数
+    private void OnGameOverExecutedHandler(GameResult gameResult)
+    {
+        // 対局が決着したら実行される
+        Debug.Log("【Tester】OnChangeRestTurnExecutedHandler | 対局が決着したら実行される");
+
+        Debug.Log(string.Format("【Tester】OnChangeRestTurnExecutedHandler | gameResult : {0}", gameResult));
     }
 
     async public UniTask OnSecretCellPerformanceExecutedHandler()
