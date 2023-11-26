@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -16,23 +17,30 @@ public class DialoguePresenter : MonoBehaviour
         //await _view.StartBattleDialogue("テストキャラクラー","Sprites/CAS_character_portraits_for_dialogs_vol1portrait_kohaku_02","テキストてきすと<color=#9c3444>文章</color>text");
         //await _view.StartBattleDialogue("テストキャラクター","Sprites/CAS_character_portraits_for_dialogs_vol1/portrait_kohaku_03","テキストてきすと<color=#9c3444>文章</color>text");
         //Debug.Log("話終わりました。");
-        
+        await StartRandomBattleDialogue(_dialogueJsonReader.DialogueTalkEvents, 0);
     }
 
-    private async UniTask StartRandomBattleDialogue(List<DialogueTalkEvent> dialogueTalkEvents ,int secretCount)
+    public async UniTask StartRandomBattleDialogue(List<DialogueTalkEvent> dialogueTalkEvents ,int secretCount)
     {
-        Random random = new Random();
-        int r =  random.Next(dialogueTalkEvents.Count);
+        var selectedTalkEvents = dialogueTalkEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
+            .ToList();
+        
+        var randomOrder = new Random();
+        var randomlyOrderedTalkEvents = selectedTalkEvents.OrderBy(x => randomOrder.Next()).ToList();
 
-        DialogueTalkEvent talkEvent = _dialogueJsonReader.DialogueTalkEvents[r];
-        if (talkEvent.SecretCount == 0)
+        // ランダムに1つの要素を抽出
+        var randomlySelectedTalkEvent = randomlyOrderedTalkEvents.FirstOrDefault();
+        
+        if (randomlySelectedTalkEvent != null)
         {
-            await StartBattleDialogue(talkEvent);
+            await StartBattleDialogue(randomlySelectedTalkEvent);
         }
     }
 
     public async UniTask StartBattleDialogue(DialogueTalkEvent talkEvent)
     {
+        // TODO: 本番環境に差し替え
         await _view.StartBattleDialogue(
             talkEvent.CharacterName,
             "Sprites/CAS_character_portraits_for_dialogs_vol1/" + talkEvent.FilePath,

@@ -8,7 +8,7 @@ public class DialogueJsonReader : MonoBehaviour
     private DialogueJsonHolder dialogueData;
     public List<DialogueTalkEvent> DialogueTalkEvents = new List<DialogueTalkEvent>();
     private List<AbstractDialogueEvent> dialogueCutInEvents = new List<AbstractDialogueEvent>();
-    void Start()
+    void Awake()
     {
         var jsonFile = Resources.Load<TextAsset>("JSON/text_event_test");
         
@@ -44,6 +44,8 @@ public class DialogueJsonReader : MonoBehaviour
                         break;
                 }
             }
+            
+            
         }
         else
         {

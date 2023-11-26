@@ -33,28 +33,51 @@ public class DialogueView : MonoBehaviour
     private async UniTask TypeText(string text)
     {
         dialogueText.text = "";
+        string stockString = "";
+        bool isStock = false;
 
         foreach (char c in text)
         {
-            
-            // TODO: 話した時の効果音を入れる
-            // TODO: 話す速度は変更できるようにする。
-            
-            if (c == '、')
+            if (isStock)
             {
-                dialogueText.text += c;
-                await UniTask.Delay(_talkSpeed * 5); 
-            }
-            else if (c == '。' || c == '？')
-            {
-                dialogueText.text += c;
-                await UniTask.Delay(_talkSpeed * 10); 
+                stockString += c;
+                
+                if (c == '>')
+                {
+                    dialogueText.text += stockString;
+
+                    stockString = "";
+                    isStock = false;
+                }
             }
             else
             {
-                dialogueText.text += c;
-                await UniTask.Delay(_talkSpeed); 
+                if (c == '<')
+                {
+                    stockString += c;
+                    isStock = true;
+                }
+                else if (c == '、')
+                {
+                    dialogueText.text += c;
+                    // TODO: 話した時の効果音を入れる
+                    await UniTask.Delay(_talkSpeed * 5); 
+                }
+                else if (c == '。' || c == '？')
+                {
+                    dialogueText.text += c;
+                    // TODO: 話した時の効果音を入れる
+                    await UniTask.Delay(_talkSpeed * 10); 
+                }
+                else
+                {
+                    dialogueText.text += c;
+                    // TODO: 話した時の効果音を入れる
+                    await UniTask.Delay(_talkSpeed); 
+                }
             }
+            
+            
         }
     }
     
