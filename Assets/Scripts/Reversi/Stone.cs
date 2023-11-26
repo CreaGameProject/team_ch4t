@@ -7,15 +7,22 @@ using Unity.VisualScripting.Antlr3.Runtime;
 
 public class Stone : MonoBehaviour
 {
+    [SerializeField] private GameObject stoneObject = null;
+
     public Cell.Color color = Cell.Color.white;
+    
 
     // Start is called before the first frame update
     async UniTask Start()
     {
+        stoneObject.SetActive(false);
+
         if (this.color == Cell.Color.black)
         {
             this.transform.rotation = Quaternion.AngleAxis(180, Vector3.forward);
         }
+
+        
 
         //await Generate();
     }
@@ -36,6 +43,9 @@ public class Stone : MonoBehaviour
         this.transform.localScale = Vector3.zero;
 
         // Åyå¯â âπçƒê∂â”èäÅzê∂ê¨éû
+        AudioManager.instance_AudioManager.PlaySE(2);
+
+        stoneObject.SetActive(true);
 
         await this.transform.DOScale(originScale, time).AsyncWaitForCompletion();
     }
@@ -67,5 +77,6 @@ public class Stone : MonoBehaviour
         await this.transform.DOMoveY(0, 0.4f).AsyncWaitForCompletion();
 
         // Åyå¯â âπçƒê∂â”èäÅzÉpÉ`ÉbÅI
+        AudioManager.instance_AudioManager.PlaySE(2);
     }
 }
