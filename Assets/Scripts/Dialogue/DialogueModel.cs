@@ -1,7 +1,6 @@
-namespace UnityTemplateProjects.Dialogue
+using UnityEngine;
+
+public class DialogueModel : MonoBehaviour
 {
-    public class DialogueModel
-    {
         
-    }
 }
