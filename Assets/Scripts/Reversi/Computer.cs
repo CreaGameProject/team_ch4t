@@ -8,12 +8,25 @@ using UnityEditor;
 using System.ComponentModel;
 using Cysharp.Threading.Tasks;
 
+
+
 public class Computer : MonoBehaviour
 {
     [SerializeField] private Board board = null;
 
     [SerializeField] private Cell.Color myColor = Cell.Color.white;
 
+    [System.Serializable]
+    public enum Opponent
+    {
+        None = 0,
+        Yukihira_ui = 1,
+        Takahashi_shota = 2,
+    }
+
+    [SerializeField] private Opponent opponent = Opponent.None;
+
+    public Opponent getOpponent { get { return this.opponent; } }
     
 
     async public UniTask Action()

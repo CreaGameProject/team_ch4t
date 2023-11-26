@@ -20,6 +20,17 @@ public class Tester : MonoBehaviour
         Turn.Type turn = Board.instance.getTurn;
         Debug.Log(string.Format("yTesterzrestTurn | {0}", turn));
 
+        // ‘Îí‘Šè‚ğæ“¾‚·‚éi‘Îí‘Šè‚Ì–¼‘Oj
+        // ¦ opponent => None : ’N‚Å‚à‚È‚¢i‰Šúó‘Ôj
+        // ¦ opponent => Yukihira_ui : á•½ —DˆËi‚ä‚«‚Ğ‚ç ‚¤‚¢j
+        // ¦ opponent => Takahashi_shota : ‚‹´ ãÄ‘¾i‚½‚©‚Í‚µ ‚µ‚å‚¤‚½j
+        Computer.Opponent opponent = Board.instance.getOpponent;
+        Debug.Log(string.Format("yTesterzopponent | {0}", opponent));
+
+        // Œ»İæ“¾‚µ‚Ä‚¢‚éƒqƒ~ƒc‚Ì”‚ğæ“¾‚·‚é
+        int howManyHimituDidGet = Board.instance.getHowManyHimituDidGet;
+        Debug.Log(string.Format("yTesterzhowManyHimituDidGet | {0}", howManyHimituDidGet));
+
         Board.instance.OnChangeRestTurnExecuted += OnChangeRestTurnExecutedHandler;
         Board.instance.OnChangeTurnExecuted += OnChangeTurnExecutedHandler;
 
