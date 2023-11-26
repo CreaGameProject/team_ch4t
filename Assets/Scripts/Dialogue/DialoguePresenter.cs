@@ -19,39 +19,21 @@ public class DialoguePresenter : MonoBehaviour
     private async void Start()
     {
         _backLogData = new BackLogData();
-        //BackLogData.logDataList[0].dialogue;]
-        
-        
-        //await _view.StartBattleDialogue("テストキャラクラー","Sprites/CAS_character_portraits_for_dialogs_vol1portrait_kohaku_02","テキストてきすと<color=#9c3444>文章</color>text");
-        //await _view.StartBattleDialogue("テストキャラクター","Sprites/CAS_character_portraits_for_dialogs_vol1/portrait_kohaku_03","テキストてきすと<color=#9c3444>文章</color>text");
-        //Debug.Log("話終わりました。");
-        await StartRandomBattleDialogue(0);
-        await StartRandomBattleDialogue(1);
-        await StartRandomBattleDialogue(0);
-        await StartRandomBattleDialogue(1);
-        
-        /*
-        _button.OnClickAction = () =>
-        {
-            Debug.Log("Click");
-        };
-        */
 
-        _board.OnSpeakComputerExecuted += () =>
-        {
-            Debug.Log("コンピューターのおしゃべり");
-            return default;
-        };
+        _board.OnSpeakComputerExecuted += SpeakComputerEventHandler;
+        
+        _view.PrefixBattleDialogue(
+            _model.DialogueTalkEvents[0].CharacterName,
+            "Sprites/CAS_character_portraits_for_dialogs_vol1/" +  _model.DialogueTalkEvents[0].FilePath
+            );
     }
     
     private async UniTask SpeakComputerEventHandler()
     {
-        Debug.Log("イベントが発生しました！コンピュータが喋ります。");
-
-        // ここに必要な処理を追加
+        await StartRandomBattleDialogue(Board.instance.getHowManyHimituDidGet);
     }
 
-    public async UniTask StartRandomBattleDialogue(int secretCount)
+    private async UniTask StartRandomBattleDialogue(int secretCount)
     {
         var selectedTalkEvents = _model.DialogueTalkEvents
             .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)

@@ -16,18 +16,25 @@ public class DialogueView : MonoBehaviour
     public Image DialogueNextImage => dialogueNextImage;
 
     private int _talkSpeed = 50;
+    
+    
+    
+    public void PrefixBattleDialogue(string characterName, string filePath)
+    {
+        dialogueCharacterImage.sprite = Resources.Load<Sprite>(filePath);
+        nameText.text = characterName;
+    }
 
     public async UniTask StartBattleDialogue(string characterName, string filePath, string dialogue)
     {
         // TODO: イメージはあらかじめ読み込まれている状態にしたい。
-        dialogueCharacterImage.sprite = Resources.Load<Sprite>(filePath);
-        nameText.text = characterName;
+        PrefixBattleDialogue(characterName, filePath);
         
         dialogueNextImage.gameObject.SetActive(false);
         await TypeText(dialogue);
         
-        dialogueNextImage.gameObject.SetActive(true);
-        await WaitUntilMouseClick();
+        //dialogueNextImage.gameObject.SetActive(true);
+        //await WaitUntilMouseClick();
     }
     
     private async UniTask TypeText(string text)
@@ -81,6 +88,7 @@ public class DialogueView : MonoBehaviour
         }
     }
     
+    // マウスクリックで次の文章を表示する
     private UniTask WaitUntilMouseClick()
     {
         var clickStream = Observable.EveryUpdate()
