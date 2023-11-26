@@ -33,6 +33,7 @@ public class Tester : MonoBehaviour
 
         Board.instance.OnChangeRestTurnExecuted += OnChangeRestTurnExecutedHandler;
         Board.instance.OnChangeTurnExecuted += OnChangeTurnExecutedHandler;
+        Board.instance.OnChangeHimituNumberExecuted += OnChangeHimituNumberHandler;
 
         // セリフ表示スクリプトにこれを追加する
         Board.instance.OnSpeakComputerExecuted += OnSpeakComputerExecutedHandler;
@@ -53,6 +54,14 @@ public class Tester : MonoBehaviour
     {
         // 手番（現在のターン）が変更されたときの処理を記述する
         Debug.Log("【Tester】OnChangeRestTurnExecutedHandler | 手番（現在のターン）が変更されたときの処理を記述する");
+    }
+
+    // 現在取得しているヒミツの数が変わったら実行される
+    // 引数：howManyHimituDidGet：変更された後の現在取得しているヒミツの数
+    private void OnChangeHimituNumberHandler(int howManyHimituDidGet)
+    {
+        // 現在取得しているヒミツの数が変更されたときの処理を記述する
+        Debug.Log("【Tester】OnChangeRestTurnExecutedHandler | 現在取得しているヒミツの数が変更されたときの処理を記述する");
     }
 
     async public UniTask OnSecretCellPerformanceExecutedHandler()
