@@ -11,19 +11,38 @@ public class DialoguePresenter : MonoBehaviour
 {
     [SerializeField] private DialogueModel _model;
     [SerializeField] private DialogueView _view;
+    [SerializeField] private Board _board;
+    
     
     private async void Start()
     {
         //await _view.StartBattleDialogue("テストキャラクラー","Sprites/CAS_character_portraits_for_dialogs_vol1portrait_kohaku_02","テキストてきすと<color=#9c3444>文章</color>text");
         //await _view.StartBattleDialogue("テストキャラクター","Sprites/CAS_character_portraits_for_dialogs_vol1/portrait_kohaku_03","テキストてきすと<color=#9c3444>文章</color>text");
         //Debug.Log("話終わりました。");
-        await StartRandomBattleDialogue(_model.DialogueTalkEvents, 0);
-        await StartRandomBattleDialogue(_model.DialogueTalkEvents, 1);
-    }
+        await StartRandomBattleDialogue(0);
+        await StartRandomBattleDialogue(1);
+        await StartRandomBattleDialogue(0);
+        await StartRandomBattleDialogue(1);
+        
+        /*
+        _button.OnClickAction = () =>
+        {
+            Debug.Log("Click");
+        };
+        */
 
-    public async UniTask StartRandomBattleDialogue(List<DialogueTalkEvent> dialogueTalkEvents ,int secretCount)
+        _board.OnSpeakComputerExecuted += () =>
+        {
+            Debug.Log("コンピューターのおしゃべり");
+            return default;
+        };
+    }
+    
+    
+
+    public async UniTask StartRandomBattleDialogue(int secretCount)
     {
-        var selectedTalkEvents = dialogueTalkEvents
+        var selectedTalkEvents = _model.DialogueTalkEvents
             .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
             .ToList();
         
@@ -48,4 +67,6 @@ public class DialoguePresenter : MonoBehaviour
             talkEvent.Text
         );
     }
+    
+    
 }

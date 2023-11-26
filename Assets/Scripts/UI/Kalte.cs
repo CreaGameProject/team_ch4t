@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Diagnostics.Eventing.Reader;
+using Unity.VisualScripting;
+using UnityEngine.UI;
 
-public class SecretWindow: MonoBehaviour
+public class Kalte : MonoBehaviour
 {
-    public float animationTime = 0.3f;
+    [SerializeField]
+    private float animationTime = 0.3f;
     [SerializeField]
     private float windowScaleRatio = 2;
+    [SerializeField]
+    private Image backGround;
+    [SerializeField]
+    private GameObject[] secretText = new GameObject[3];
     private RectTransform rt;
     private Vector2 defaultWindowsSize;
     private Vector2 defaultWindowsPosition;
     private Quaternion defaultWindowsRotation;
     private bool isExpand;
+    private int currentSecretNum = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +30,12 @@ public class SecretWindow: MonoBehaviour
         defaultWindowsSize = rt.localScale;
         defaultWindowsPosition = rt.position;
         defaultWindowsRotation = rt.rotation;
+        backGround.DOFade(0, 0.01f);
+
+        for (int i = 0; i < 3; i++)
+        {
+            secretText[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -37,6 +51,7 @@ public class SecretWindow: MonoBehaviour
             rt.DOScale(Vector2.one * windowScaleRatio, animationTime).SetEase(Ease.InOutCirc);
             rt.DOMove(new Vector2(Screen.width / 2, Screen.height / 2), animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(Quaternion.identity, animationTime);
+            backGround.DOFade(0.85f, animationTime);
             isExpand = true;
         }
     }
@@ -48,7 +63,22 @@ public class SecretWindow: MonoBehaviour
             rt.DOScale(defaultWindowsSize, animationTime).SetEase(Ease.InOutCirc);
             rt.DOMove(defaultWindowsPosition, animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(defaultWindowsRotation, animationTime);
+            backGround.DOFade(0, animationTime);
             isExpand = false;
         }
+    }
+
+    /// <summary>
+    /// ŽŸ‚Ì”é–§‚ð•\Ž¦‚·‚é
+    /// </summary>
+    public void AddNextSecretText()
+    {
+        if (currentSecretNum == 3)
+        {
+            Debug.Log("”é–§‚Í3‚Â‚µ‚©‚ ‚è‚Ü‚¹‚ñ");
+            return;
+        }
+        currentSecretNum++;
+        secretText[currentSecretNum].SetActive(true);
     }
 }

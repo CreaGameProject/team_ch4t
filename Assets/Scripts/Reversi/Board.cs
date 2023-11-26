@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using static Board;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -115,6 +116,28 @@ public class Board : MonoBehaviour
         if (OnChangeRestTurnExecuted != null) { OnChangeRestTurnExecuted(restTurn); }
     }
 
+    // 現在取得しているヒミツの数が変わったら実行される
+    public delegate void ChangeHimituNumberExecutedDelegate(int howManyHimituDidGet);
+    public event ChangeHimituNumberExecutedDelegate OnChangeHimituNumberExecuted;
+    public void OnChangeHimituNumber(int howManyHimituDidGet)
+    {
+        Debug.Log("<b><color=#ef476f>【Board - OnChangeHimituNumber】現在取得しているヒミツの数が変わったら実行される</color></b>");
+        if (OnChangeHimituNumberExecuted != null) { OnChangeHimituNumberExecuted(howManyHimituDidGet); }
+    }
+
+
+    // ゲームオーバーになった時に実行される
+    // 勝敗・引き分け => プレイヤーの勝ち、プレイヤーの負け、引き分け
+    // 勝因・敗因 => ヒミツを全て暴いた、プレイヤーの持ち手が０になった、（引き分けは理由なし）
+    public enum GameResult { None = 0, Player_WIN = 1, Player_LOSE = 2, Drow = 3 }
+    public delegate void GameOverExecutedDelegate(GameResult gameResult);
+    public event GameOverExecutedDelegate OnGameOverExecuted;
+    public void OnGameOver(GameResult gameResult)
+    {
+        Debug.Log("<b><color=#ef476f>【Board - OnGameOver】ゲームオーバーになった時に実行される</color></b>");
+        if (OnGameOverExecuted != null) { OnGameOverExecuted(gameResult); }
+    }
+
     // Start is called before the first frame update
     async void Start()
     {
@@ -185,6 +208,9 @@ public class Board : MonoBehaviour
                 // プリセットインデックスをインクリメントする
                 this.presetIndex++;
 
+                // 現在取得しているヒミツの数が変わったら実行される
+                OnChangeHimituNumber(this.presetIndex);
+
                 // プリセットを展開する
                 if (this.presetIndex != this.presets.Count) { await SetPresetOnBoard(); }
             }
@@ -251,14 +277,17 @@ public class Board : MonoBehaviour
         if (code % 7 == 0) { Debug.Log("【 Board 】Game()｜ヒミツが０になった"); }
         */
 
-        string result = GameResultJudgment(code);
-        Debug.Log("<b><color=#F26E3E>【 Board 】GAME SET! => " + result + "</color></b>");
+        (GameResult, string) result = GameResultJudgment(code);
+        
+        Debug.Log("<b><color=#F26E3E>【 Board 】GAME SET! => " + result.Item2 + "</color></b>");
+
+        OnGameOver(result.Item1);
     }
 
     // ゲームの勝敗を返す
-    private string GameResultJudgment(int code)
+    private (GameResult, string) GameResultJudgment(int code)
     {
-        string result = "";
+        (GameResult, string) result = (GameResult.None, "");
 
         if (code % 3 == 0)
         {
@@ -284,26 +313,31 @@ public class Board : MonoBehaviour
 
             if (numberOfPlayerCell > numberOfComputerCell)
             {
-                result = "Player WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+                result.Item1 = GameResult.Player_WIN;
+                result.Item2 = "Player WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
             }
             else if (numberOfPlayerCell < numberOfComputerCell)
             {
-                result = "Computer WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+                result.Item1 = GameResult.Player_LOSE;
+                result.Item2 = "Computer WIN | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
             }
             else if (numberOfPlayerCell == numberOfComputerCell)
             {
-                result = "DROW | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
+                result.Item1 = GameResult.Drow;
+                result.Item2 = "DROW | player => " + numberOfPlayerCell + " : computer => " + numberOfComputerCell;
             }
         }
         else if (code % 5 == 0)
         {
             Debug.Log("【 Board 】Game()｜ターン数が０になった");
-            result = "Computer WIN";
+            result.Item1 = GameResult.Player_LOSE;
+            result.Item2 = "Computer WIN";
         }
         else if (code % 7 == 0)
         {
             Debug.Log("【 Board 】Game()｜ヒミツが０になった");
-            result = "Player WIN";
+            result.Item1 = GameResult.Player_WIN;
+            result.Item2 = "Player WIN";
         }
 
         return result;
