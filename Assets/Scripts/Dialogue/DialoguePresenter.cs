@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = System.Random;
 
 public class DialoguePresenter : MonoBehaviour
@@ -12,10 +11,17 @@ public class DialoguePresenter : MonoBehaviour
     [SerializeField] private DialogueModel _model;
     [SerializeField] private DialogueView _view;
     [SerializeField] private Board _board;
+
+    private BackLogData _backLogData;
+    public BackLogData BackLogData => _backLogData;
     
     
     private async void Start()
     {
+        _backLogData = new BackLogData();
+        //BackLogData.logDataList[0].dialogue;]
+        
+        
         //await _view.StartBattleDialogue("テストキャラクラー","Sprites/CAS_character_portraits_for_dialogs_vol1portrait_kohaku_02","テキストてきすと<color=#9c3444>文章</color>text");
         //await _view.StartBattleDialogue("テストキャラクター","Sprites/CAS_character_portraits_for_dialogs_vol1/portrait_kohaku_03","テキストてきすと<color=#9c3444>文章</color>text");
         //Debug.Log("話終わりました。");
@@ -38,7 +44,12 @@ public class DialoguePresenter : MonoBehaviour
         };
     }
     
-    
+    private async UniTask SpeakComputerEventHandler()
+    {
+        Debug.Log("イベントが発生しました！コンピュータが喋ります。");
+
+        // ここに必要な処理を追加
+    }
 
     public async UniTask StartRandomBattleDialogue(int secretCount)
     {

@@ -1286,6 +1286,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueUI
       objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856483694597631829, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8fa8266edf3f98842ab38c4bd426d6b6, type: 3}
     - target: {fileID: 9152267308190717448, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
