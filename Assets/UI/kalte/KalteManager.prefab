@@ -50,4 +50,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kaltes:
   - {fileID: 558601801486703460, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
-  - {fileID: 558601801486703460, guid: 7d6afc4d3738686478f672f66d7b8bad, type: 3}
+  - {fileID: 558601801486703460, guid: ba9d3eb4375acb64ea126b92670a7096, type: 3}
