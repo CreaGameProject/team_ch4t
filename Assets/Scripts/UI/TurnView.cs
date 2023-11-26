@@ -17,6 +17,7 @@ public class TurnView : MonoBehaviour
     void Start()
     {
         turnImage = GetComponent<Image>();
+        Board.instance.OnChangeTurnExecuted += OnChangeTurnExecutedHandler;
     }
 
     // Update is called once per frame
@@ -25,12 +26,10 @@ public class TurnView : MonoBehaviour
         
     }
 
-    /// <summary>
-    /// 手番を更新
-    /// </summary>
-    public void UpdateTurnText()
+    // 手番（現在のターン）が変更されたときに実行される
+    // 引数：type：変更された後の手番（現在のターン）：
+    private void OnChangeTurnExecutedHandler(Turn.Type type)
     {
-        turn = Board.instance.getTurn;
         switch (turn)
         {
             case Turn.Type.player:

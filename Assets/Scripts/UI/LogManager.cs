@@ -10,9 +10,9 @@ public class LogManager : MonoBehaviour
     [SerializeField]
     private GameObject nodeGroup;
     [SerializeField]
-    private GameObject yourLogNode;
+    private GameObject narratorLogNode;
     [SerializeField]
-    private List<GameObject> partnerLogNode;
+    private GameObject uiLogNode, bossLogNode, puppuLogNode;
     [SerializeField]
     private GameObject scrollView;
     private ScrollRect scrollRect;
@@ -26,37 +26,26 @@ public class LogManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            AddPartnerLog("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        }
 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            AddYourLog("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-        }
     }
 
     /// <summary>
-    /// 会話ログにあなたの発言を追加
+    /// 会話ログに発言を追加
     /// </summary>
+    /// <param name="name">発言者</param>
     /// <param name="log">あなたの発言</param>
-    public void AddYourLog(string log)
+    public void AddLog(string name, string log)
     {
-        GameObject sb =  Instantiate(yourLogNode, nodeGroup.transform);
+        GameObject sb = null;
+        switch (name)
+        {
+            case "ui": sb = Instantiate(uiLogNode, nodeGroup.transform); break;
+            case "boss": sb = Instantiate(bossLogNode, nodeGroup.transform); break;
+            case "puppu": sb = Instantiate(puppuLogNode, nodeGroup.transform); break;
+            case "narrator": sb = Instantiate(narratorLogNode, nodeGroup.transform); break;
+        }
         sb.GetComponent<LogNode>().SetContent(log);
         StartCoroutine(AnimateScrollView());
-    }
-
-    /// <summary>
-    /// 会話ログに相手の発言を追加
-    /// </summary>
-    /// <param name="log">相手の発言</param>
-    public void AddPartnerLog(string log)
-    {
-        /*GameObject sb =  Instantiate(partnerLogNode, nodeGroup.transform);
-        sb.GetComponent<LogNode>().SetContent(log);
-        StartCoroutine(AnimateScrollView());*/
     }
 
     private IEnumerator AnimateScrollView()
