@@ -45,7 +45,7 @@ public class LogManager : MonoBehaviour
             case "narrator": sb = Instantiate(narratorLogNode, nodeGroup.transform); break;
         }
         sb.GetComponent<LogNode>().SetContent(log);
-        StartCoroutine(AnimateScrollView());*/
+        StartCoroutine(AnimateScrollView());
     }
 
     private IEnumerator AnimateScrollView()
