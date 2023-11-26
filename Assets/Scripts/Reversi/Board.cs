@@ -115,6 +115,15 @@ public class Board : MonoBehaviour
         if (OnChangeRestTurnExecuted != null) { OnChangeRestTurnExecuted(restTurn); }
     }
 
+    // 現在取得しているヒミツの数が変わったら実行される
+    public delegate void ChangeHimituNumberExecutedDelegate(int howManyHimituDidGet);
+    public event ChangeHimituNumberExecutedDelegate OnChangeHimituNumberExecuted;
+    public void OnChangeHimituNumber(int howManyHimituDidGet)
+    {
+        Debug.Log("<b><color=#ef476f>【Board - OnChangeHimituNumber】現在取得しているヒミツの数が変わったら実行される</color></b>");
+        if (OnChangeHimituNumberExecuted != null) { OnChangeHimituNumberExecuted(howManyHimituDidGet); }
+    }
+
     // Start is called before the first frame update
     async void Start()
     {
@@ -184,6 +193,9 @@ public class Board : MonoBehaviour
 
                 // プリセットインデックスをインクリメントする
                 this.presetIndex++;
+
+                // 現在取得しているヒミツの数が変わったら実行される
+                OnChangeHimituNumber(this.presetIndex);
 
                 // プリセットを展開する
                 if (this.presetIndex != this.presets.Count) { await SetPresetOnBoard(); }
