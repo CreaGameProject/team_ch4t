@@ -817,6 +817,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8797442954797939816, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 1653201842}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: nameText
       value: 
@@ -1036,6 +1040,17 @@ MonoBehaviour:
   presets:
   - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u3007\u25CF\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
   - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u3007\u25CF\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
+--- !u!114 &1653201842 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 246067422627496838, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+  m_PrefabInstance: {fileID: 1506266606}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8963a85ac974787b164da879ea9544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1789721045
 GameObject:
   m_ObjectHideFlags: 0
