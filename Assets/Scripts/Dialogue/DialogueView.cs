@@ -4,7 +4,6 @@ using DG.Tweening;
 using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DialogueView : MonoBehaviour
@@ -30,7 +29,6 @@ public class DialogueView : MonoBehaviour
     [SerializeField] private Image cutInTalkNextImage;
     
     
-
     private Sprite LoadSprite(string filePath)
     {
         return Resources.Load<Sprite>(filePath);
@@ -42,9 +40,7 @@ public class DialogueView : MonoBehaviour
         PrefixBattleDialogue(characterName, filePath);
 
         await TypeText(battleDialogueText, dialogue);
-        
-        //dialogueNextImage.gameObject.SetActive(true);
-        //await WaitUntilMouseClick();
+        SaveToBackLog(characterName, dialogue);
     }
     
     public void PrefixBattleDialogue(string characterName, string filePath)
@@ -68,14 +64,13 @@ public class DialogueView : MonoBehaviour
         battleDialogueUI.SetActive(false);
     }
     
-    public async UniTask StartCutInTalkDialogue(string dialogue)
+    public async UniTask StartCutInTalkDialogue(string characterName, string dialogue)
     {
-        
         // TODO: イメージはあらかじめ読み込まれている状態にしたい。
         //PrefixCutInTalkDialogue(characterName, filePath);
         
-        
         await TypeText(cutInTalkDialogueText, dialogue);
+        SaveToBackLog(characterName, dialogue);
         
         cutInTalkNextImage.gameObject.SetActive(true);
         await WaitUntilMouseClick();
@@ -132,6 +127,17 @@ public class DialogueView : MonoBehaviour
                 }
             }
         }
+    }
+    
+    /// <summary>
+    /// キャラクターが話終えたときに呼び出される
+    /// </summary>
+    public delegate void OnCharacterTalkExecutedDelegate(string characterName, string dialogue);
+    public event OnCharacterTalkExecutedDelegate OnCharacterTalkExecuted;
+
+    public void SaveToBackLog(string characterName, string dialogue)
+    {
+        if (OnCharacterTalkExecuted != null) { OnCharacterTalkExecuted(characterName, dialogue); }
     }
     
     /// <summary>

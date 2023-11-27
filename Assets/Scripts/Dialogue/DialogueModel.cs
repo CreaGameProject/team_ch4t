@@ -10,11 +10,19 @@ public class DialogueModel : MonoBehaviour
     public List<DialogueCutInEvent> DialogueCutInEvents = new List<DialogueCutInEvent>();
     public List<DialogueCutInTalkEvent> DialogueCutInTalkEvents = new List<DialogueCutInTalkEvent>();
     
+    private BackLogData _backLogData;
+    public BackLogData BackLogData => _backLogData;
+    
     void Awake()
     {
         PrefixDialogueEventList();
     }
-    
+
+    private void Start()
+    {
+        _backLogData = new BackLogData();
+    }
+
 
     private void PrefixDialogueEventList()
     {
@@ -55,5 +63,17 @@ public class DialogueModel : MonoBehaviour
         {
             Debug.LogError("JSONファイルが割り当てられていません。");
         }
+    }
+
+    public void AddBackLogData(string characterName, string dialogue)
+    {
+        var logData = new BackLogData.LogData
+        {
+            speaker = characterName,
+            dialogue = dialogue
+        };
+
+        _backLogData.logDataList.Add(logData);
+        Debug.Log($"バックログにspeaker: {logData.speaker}, dialogue: {logData.dialogue} を追加しました。");
     }
 }

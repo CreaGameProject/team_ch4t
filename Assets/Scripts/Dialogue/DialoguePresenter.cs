@@ -12,15 +12,12 @@ public class DialoguePresenter : MonoBehaviour
     [SerializeField] private DialogueView _view;
     [SerializeField] private Board _board;
 
-    private BackLogData _backLogData;
-    public BackLogData BackLogData => _backLogData;
+    
     
     
     private async void Start()
     {
-        
-        _backLogData = new BackLogData();
-
+        _view.OnCharacterTalkExecuted += CharacterTalkExecutedEventHandler;
         _board.OnSpeakComputerExecuted += SpeakComputerEventHandler;
         _board.OnSecretCellPerformanceExecuted += SecretCellPerformanceEventHandler;
         
@@ -28,6 +25,11 @@ public class DialoguePresenter : MonoBehaviour
             _model.DialogueTalkEvents[0].CharacterName,
             Helper.CharacterFilePath +  _model.DialogueTalkEvents[0].FilePath
             );
+    }
+
+    private void CharacterTalkExecutedEventHandler(string characterName, string dialogue)
+    {
+        _model.AddBackLogData(characterName, dialogue);
     }
     
     private async UniTask SpeakComputerEventHandler()
@@ -113,6 +115,7 @@ public class DialoguePresenter : MonoBehaviour
         var cutInTalkEvent = selectedCutInTalkEvents[0];
         
         await _view.StartCutInTalkDialogue(
+            cutInTalkEvent.CharacterName,
             cutInTalkEvent.Text
         );
     }
