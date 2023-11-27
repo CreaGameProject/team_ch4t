@@ -11,47 +11,46 @@ public class DialoguePresenter : MonoBehaviour
     [SerializeField] private DialogueModel _model;
     [SerializeField] private DialogueView _view;
     [SerializeField] private Board _board;
-
-    private BackLogData _backLogData;
-    public BackLogData BackLogData => _backLogData;
-    
     
     private async void Start()
     {
-        _backLogData = new BackLogData();
-        //BackLogData.logDataList[0].dialogue;]
+        _view.OnCharacterTalkExecuted += CharacterTalkExecutedEventHandler;
+        _board.OnSpeakComputerExecuted += SpeakComputerEventHandler;
+        _board.OnSecretCellPerformanceExecuted += SecretCellPerformanceEventHandler;
         
-        
-        //await _view.StartBattleDialogue("テストキャラクラー","Sprites/CAS_character_portraits_for_dialogs_vol1portrait_kohaku_02","テキストてきすと<color=#9c3444>文章</color>text");
-        //await _view.StartBattleDialogue("テストキャラクター","Sprites/CAS_character_portraits_for_dialogs_vol1/portrait_kohaku_03","テキストてきすと<color=#9c3444>文章</color>text");
-        //Debug.Log("話終わりました。");
-        await StartRandomBattleDialogue(0);
-        await StartRandomBattleDialogue(1);
-        await StartRandomBattleDialogue(0);
-        await StartRandomBattleDialogue(1);
-        
-        /*
-        _button.OnClickAction = () =>
-        {
-            Debug.Log("Click");
-        };
-        */
+        _view.PrefixBattleDialogue(
+            _model.DialogueTalkEvents[0].CharacterName,
+            Helper.CharacterFilePath +  _model.DialogueTalkEvents[0].FilePath
+            );
+    }
 
-        _board.OnSpeakComputerExecuted += () =>
-        {
-            Debug.Log("コンピューターのおしゃべり");
-            return default;
-        };
+    private void CharacterTalkExecutedEventHandler(string characterName, string dialogue)
+    {
+        _model.AddBackLogData(characterName, dialogue);
     }
     
     private async UniTask SpeakComputerEventHandler()
     {
-        Debug.Log("イベントが発生しました！コンピュータが喋ります。");
-
-        // ここに必要な処理を追加
+        await StartRandomBattleDialogue(Board.instance.getHowManyHimituDidGet);
     }
 
-    public async UniTask StartRandomBattleDialogue(int secretCount)
+    private async UniTask SecretCellPerformanceEventHandler()
+    {
+        var cts = new CancellationTokenSource();
+        var token = cts.Token;
+        var secretCount = Board.instance.getHowManyHimituDidGet;
+
+        await UniTask.WhenAll(
+             StartCutIn(secretCount, token),
+             PrefixCutInTalk(secretCount)
+            );
+
+        await StartCutInTalk(secretCount);
+        
+        cts.Cancel();
+    }
+
+    private async UniTask StartRandomBattleDialogue(int secretCount)
     {
         var selectedTalkEvents = _model.DialogueTalkEvents
             .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
@@ -69,15 +68,53 @@ public class DialoguePresenter : MonoBehaviour
         }
     }
 
-    public async UniTask StartBattleDialogue(DialogueTalkEvent talkEvent)
+
+    private async UniTask StartBattleDialogue(DialogueTalkEvent talkEvent)
     {
         // TODO: 本番環境に差し替え
         await _view.StartBattleDialogue(
             talkEvent.CharacterName,
-            "Sprites/CAS_character_portraits_for_dialogs_vol1/" + talkEvent.FilePath,
+            Helper.CharacterFilePath + talkEvent.FilePath,
             talkEvent.Text
         );
     }
-    
-    
+
+    private async UniTask StartCutIn(int secretCount, CancellationToken token)
+    {
+        var selectedCutInEvents = _model.DialogueCutInEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
+            .ToList();
+        var cutInEvent = selectedCutInEvents[0];
+        
+        await _view.StartCutIn(
+            Helper.CharacterFilePath + cutInEvent.FilePath,
+            token
+        );
+    }
+
+    private async UniTask PrefixCutInTalk(int secretCount)
+    {
+        var selectedCutInTalkEvents = _model.DialogueCutInTalkEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
+            .ToList();
+        var cutInTalkEvent = selectedCutInTalkEvents[0];
+        
+        await _view.PrefixCutInTalkDialogue(
+            cutInTalkEvent.CharacterName,
+            Helper.CharacterFilePath + cutInTalkEvent.FilePath
+        );
+    }
+
+    private async UniTask StartCutInTalk(int secretCount)
+    {
+        var selectedCutInTalkEvents = _model.DialogueCutInTalkEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
+            .ToList();
+        var cutInTalkEvent = selectedCutInTalkEvents[0];
+        
+        await _view.StartCutInTalkDialogue(
+            cutInTalkEvent.CharacterName,
+            cutInTalkEvent.Text
+        );
+    }
 }
