@@ -110,28 +110,31 @@ public class DialogueView : MonoBehaviour
         return clickStream;
     }
 
-    public async UniTask StartCutIn(string filePath)
+    public async UniTask StartCutIn(string filePath, CancellationToken token)
     {
         var backgroundRect = cutInBackgroundMask.GetComponent<RectTransform>();
         var characterRect = cutInCharacterImage.GetComponent<RectTransform>();
         cutInUI.SetActive(true);
 
         await UniTask.WhenAll(
-            backgroundRect.DOAnchorPos(new Vector2(200, 375), 0.0f).ToUniTask(),
-            backgroundRect.DOSizeDelta(new Vector2(0, 2500), 0.0f).ToUniTask(), 
-            characterRect.DOAnchorPos(new Vector2(1500, -150), 0.0f).ToUniTask()
-            );
+            characterRect.DOAnchorPos(new Vector2(1500, -150), 0.0f).ToUniTask(cancellationToken: token),
+            backgroundRect.DOAnchorPos(new Vector2(200, 375), 0.0f).ToUniTask(cancellationToken: token),
+            backgroundRect.DOSizeDelta(new Vector2(0, 2500), 0.0f).ToUniTask(cancellationToken: token)
+        );
 
         await UniTask.WhenAll(
-            backgroundRect.DOSizeDelta(new Vector2(1500, 2500), 0.2f).SetEase(Ease.OutCubic).ToUniTask(), 
-            characterRect.DOAnchorPos(new Vector2(-600, -150), 0.2f).SetEase(Ease.OutCubic).ToUniTask()
-            );
+            characterRect.DOAnchorPos(new Vector2(-600, -150), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token),
+            backgroundRect.DOSizeDelta(new Vector2(1500, 2500), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token)
+        );
 
-        await UniTask.Delay(200);
-        
+        await UniTask.Delay(700);
+
         await UniTask.WhenAll(
-            backgroundRect.DOAnchorPos(new Vector2(-1500, 375), 0.2f).SetEase(Ease.OutCubic).ToUniTask(), 
-            characterRect.DOAnchorPos(new Vector2(-1500, -150), 0.2f).SetEase(Ease.OutCubic).ToUniTask()
+            characterRect.DOAnchorPos(new Vector2(-1500, -150), 0.3f).SetEase(Ease.InCubic)
+                .ToUniTask(cancellationToken: token),
+            backgroundRect.DOAnchorPos(new Vector2(-1500, 375), 0.3f).SetEase(Ease.InCubic)
+                .OnComplete(() => { cutInUI.SetActive(false); })
+                .ToUniTask(cancellationToken: token)
         );
     }
 }

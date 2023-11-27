@@ -4,5 +4,4 @@ public enum EventType
     TALK,
     CUT_IN,
     CUT_IN_TALK,
-    END
 }

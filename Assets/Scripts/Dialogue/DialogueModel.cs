@@ -7,7 +7,9 @@ public class DialogueModel : MonoBehaviour
 {
     private DialogueJsonHolder dialogueData;
     public List<DialogueTalkEvent> DialogueTalkEvents = new List<DialogueTalkEvent>();
-    private List<AbstractDialogueEvent> dialogueCutInEvents = new List<AbstractDialogueEvent>();
+    public List<DialogueCutInEvent> DialogueCutInEvents = new List<DialogueCutInEvent>();
+    public List<DialogueCutInTalkEvent> DialogueCutInTalkEvents = new List<DialogueCutInTalkEvent>();
+    
     void Awake()
     {
         PrefixDialogueEventList();
@@ -27,24 +29,20 @@ public class DialogueModel : MonoBehaviour
             {
                 EventType eventType = Enum.Parse<EventType>(dialogueJson.type);
                 
-                AbstractDialogueEvent dialogueEvent;
+                
                 switch (eventType)
                 {
                     case EventType.TALK:
-                        DialogueTalkEvent dialogueTalkEvent = new DialogueTalkEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count ,dialogueJson.name, dialogueJson.file, dialogueJson.text);
-                        DialogueTalkEvents.Add(dialogueTalkEvent);
+                        var dialogueTalk = new DialogueTalkEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file, dialogueJson.text);
+                        DialogueTalkEvents.Add(dialogueTalk);
                         break;
                     case EventType.CUT_IN:
-                        dialogueEvent = new DialogueCutInEvent(dialogueJson.event_number, eventType, dialogueJson.name, dialogueJson.file);
-                        dialogueCutInEvents.Add(dialogueEvent);
+                        var dialogueCutIn = new DialogueCutInEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file);
+                        DialogueCutInEvents.Add(dialogueCutIn);
                         break;
                     case EventType.CUT_IN_TALK:
-                        dialogueEvent = new DialogueCutInTalkEvent(dialogueJson.event_number, eventType, dialogueJson.name, dialogueJson.file, dialogueJson.text);
-                        dialogueCutInEvents.Add(dialogueEvent);
-                        break;
-                    case EventType.END:
-                        dialogueEvent = new DialogueEndEvent(dialogueJson.event_number, eventType);
-                        dialogueCutInEvents.Add(dialogueEvent);
+                        var dialogueCutInTalk = new DialogueCutInTalkEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file, dialogueJson.text);
+                        DialogueCutInTalkEvents.Add(dialogueCutInTalk);
                         break;
                     default:
                         break;

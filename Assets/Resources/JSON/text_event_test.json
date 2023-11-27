@@ -4,7 +4,7 @@
       "event_number": 1,
       "type": "TALK",
       "secret_count": null,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_01",
       "text": "こんにちは"
     },
@@ -12,7 +12,7 @@
       "event_number": 2,
       "type": "TALK",
       "secret_count": null,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_02",
       "text": "テキストのテストキャラクターだよ"
     },
@@ -20,7 +20,7 @@
       "event_number": 3,
       "type": "TALK",
       "secret_count": null,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_03",
       "text": "話す速度は大丈夫かな？"
     },
@@ -28,7 +28,7 @@
       "event_number": 4,
       "type": "TALK",
       "secret_count": null,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_04",
       "text": "ヒミツ取得<color=#9c3444>0</color>の状態のときに話す内容"
     },
@@ -36,7 +36,7 @@
       "event_number": 5,
       "type": "TALK",
       "secret_count": 1,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_03",
       "text": "This is how it looks when spoken in English."
     },
@@ -44,33 +44,49 @@
       "event_number": 6,
       "type": "TALK",
       "secret_count": 1,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_04",
       "text": "ヒミツ取得<color=#9c3444>1</color>の状態のときに話す内容"
     },
     {
       "event_number": 7,
+      "type": "TALK",
+      "secret_count": 1,
+      "name": "プップ",
+      "file": "portrait_kohaku_05",
+      "text": "このゲームは<color=#9c3444>Unity 2022.3.9f1</color>を用いて開発されています。"
+    },
+    {
+      "event_number": 8,
       "type": "CUT_IN",
       "secret_count": null,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_05",
       "text": null
     },
     {
-      "event_number": 8,
+      "event_number": 9,
       "type": "CUT_IN_TALK",
       "secret_count": null,
-      "name": "テストキャラクター",
+      "name": "プップ",
       "file": "portrait_kohaku_03",
-      "text": "カットインで話す内容"
+      "text": "一つ目のヒミツマスを獲得しました。"
     },
     {
-      "event_number": 9,
-      "type": "END",
-      "secret_count": null,
-      "name": null,
-      "file": null,
+      "event_number": 10,
+      "type": "CUT_IN",
+      "secret_count": 1,
+      "name": "プップ",
+      "file": "portrait_kohaku_04",
       "text": null
+    },
+    {
+      "event_number": 11,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "プップ",
+      "file": "portrait_kohaku_02",
+      "text": "二つ目のヒミツマスを獲得しました。"
     }
   ]
 }

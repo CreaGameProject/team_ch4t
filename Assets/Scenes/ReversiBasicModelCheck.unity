@@ -160,7 +160,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 200, y: 375.00012}
-  m_SizeDelta: {x: 1500, y: 2500}
+  m_SizeDelta: {x: 0, y: 2500}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &25239818
 MonoBehaviour:
@@ -846,6 +846,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1051025688 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4821306266508326497, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
+  m_PrefabInstance: {fileID: 1855939871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1184932610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1019,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1653201842}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInUI
+      value: 
+      objectReference: {fileID: 1843121107}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: nameText
       value: 
       objectReference: {fileID: 1311404643}
@@ -1022,9 +1031,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1006937500}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: battleDialogueUI
+      value: 
+      objectReference: {fileID: 1051025688}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: dialogueNextImage
       value: 
       objectReference: {fileID: 1857255315}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInBackgroundMask
+      value: 
+      objectReference: {fileID: 25239818}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInCharacterImage
+      value: 
+      objectReference: {fileID: 1657307002}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: battleCharacterImage
+      value: 
+      objectReference: {fileID: 247625859}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: dialogueCharacterImage
       value: 
@@ -1277,7 +1302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -600, y: -150}
+  m_AnchoredPosition: {x: 1500, y: -150}
   m_SizeDelta: {x: 1000, y: 1280}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1657307002
@@ -1556,7 +1581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1843121108
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1592,7 +1617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4821306266508326497, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
       propertyPath: m_Pivot.x
@@ -2251,7 +2276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &5635864965674130577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2335,7 +2360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -30, y: 30}
+  m_AnchoredPosition: {x: -40, y: 30}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &7058634944635693647
@@ -2358,7 +2383,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 332f3beff4d32754ba108a3aa2eeeaae, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -18,9 +18,11 @@ public class DialoguePresenter : MonoBehaviour
     
     private async void Start()
     {
+        
         _backLogData = new BackLogData();
 
         _board.OnSpeakComputerExecuted += SpeakComputerEventHandler;
+        _board.OnSecretCellPerformanceExecuted += SecretCellPerformanceEventHandler;
         
         _view.PrefixBattleDialogue(
             _model.DialogueTalkEvents[0].CharacterName,
@@ -31,6 +33,16 @@ public class DialoguePresenter : MonoBehaviour
     private async UniTask SpeakComputerEventHandler()
     {
         await StartRandomBattleDialogue(Board.instance.getHowManyHimituDidGet);
+    }
+
+    private async UniTask SecretCellPerformanceEventHandler()
+    {
+        var cts = new CancellationTokenSource();
+        var token = cts.Token;
+
+        await StartCutIn(Board.instance.getHowManyHimituDidGet, token);
+        
+        cts.Cancel();
     }
 
     private async UniTask StartRandomBattleDialogue(int secretCount)
@@ -51,7 +63,7 @@ public class DialoguePresenter : MonoBehaviour
         }
     }
 
-    public async UniTask StartBattleDialogue(DialogueTalkEvent talkEvent)
+    private async UniTask StartBattleDialogue(DialogueTalkEvent talkEvent)
     {
         // TODO: 本番環境に差し替え
         await _view.StartBattleDialogue(
@@ -60,6 +72,18 @@ public class DialoguePresenter : MonoBehaviour
             talkEvent.Text
         );
     }
-    
-    
+
+    private async UniTask StartCutIn(int secretCount, CancellationToken token)
+    {
+        var selectedCutInEvents = _model.DialogueCutInEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
+            .ToList();
+
+        var cutInEvent = selectedCutInEvents[0];
+        await _view.StartCutIn(
+            "Sprites/CAS_character_portraits_for_dialogs_vol1/" + cutInEvent.FilePath,
+            token
+        );
+
+    }
 }
