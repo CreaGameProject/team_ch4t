@@ -4,16 +4,16 @@ using DG.Tweening;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DialogueView : MonoBehaviour
 {
     [Header("BattleDialogue")]
     [SerializeField] private GameObject battleDialogueUI;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI battleNameText;
+    [SerializeField] private TextMeshProUGUI battleDialogueText;
     [SerializeField] private Image battleCharacterImage;
-    [SerializeField] private Image dialogueNextImage;
 
     private int _talkSpeed = 50;
     
@@ -22,14 +22,14 @@ public class DialogueView : MonoBehaviour
     [SerializeField] private Image cutInCharacterImage;
     [SerializeField] private Image cutInBackgroundMask;
     
+    [Header("CutInTalk")]
+    [SerializeField] private GameObject cutInTalkUI;
+    [SerializeField] private TextMeshProUGUI cutInTalkNameText;
+    [SerializeField] private TextMeshProUGUI cutInTalkDialogueText;
+    [SerializeField] private Image cutInTalkCharacterImage;
+    [SerializeField] private Image cutInTalkNextImage;
     
     
-    public void PrefixBattleDialogue(string characterName, string filePath)
-    {
-        battleDialogueUI.SetActive(true);
-        battleCharacterImage.sprite = LoadSprite(filePath);
-        nameText.text = characterName;
-    }
 
     private Sprite LoadSprite(string filePath)
     {
@@ -40,17 +40,54 @@ public class DialogueView : MonoBehaviour
     {
         // TODO: イメージはあらかじめ読み込まれている状態にしたい。
         PrefixBattleDialogue(characterName, filePath);
-        
-        dialogueNextImage.gameObject.SetActive(false);
-        await TypeText(dialogue);
+
+        await TypeText(battleDialogueText, dialogue);
         
         //dialogueNextImage.gameObject.SetActive(true);
         //await WaitUntilMouseClick();
     }
     
-    private async UniTask TypeText(string text)
+    public void PrefixBattleDialogue(string characterName, string filePath)
     {
-        dialogueText.text = "";
+        battleDialogueUI.SetActive(true);
+        battleCharacterImage.sprite = LoadSprite(filePath);
+        battleNameText.text = characterName;
+    }
+
+    public async UniTask PrefixCutInTalkDialogue(string characterName, string filePath)
+    {
+        await UniTask.Delay(500);
+        
+        battleDialogueText.text = "";
+        
+        cutInTalkUI.SetActive(true);
+        cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+        cutInTalkNameText.text = characterName;
+        
+        cutInTalkNextImage.gameObject.SetActive(false);
+        battleDialogueUI.SetActive(false);
+    }
+    
+    public async UniTask StartCutInTalkDialogue(string dialogue)
+    {
+        
+        // TODO: イメージはあらかじめ読み込まれている状態にしたい。
+        //PrefixCutInTalkDialogue(characterName, filePath);
+        
+        
+        await TypeText(cutInTalkDialogueText, dialogue);
+        
+        cutInTalkNextImage.gameObject.SetActive(true);
+        await WaitUntilMouseClick();
+        
+        cutInTalkNextImage.gameObject.SetActive(false);
+        cutInTalkUI.SetActive(false);
+        battleDialogueUI.SetActive(true);
+    }
+    
+    private async UniTask TypeText(TextMeshProUGUI textMeshProUGUI, string text)
+    {
+        textMeshProUGUI.text = "";
         string stockString = "";
         bool isStock = false;
 
@@ -62,7 +99,7 @@ public class DialogueView : MonoBehaviour
                 
                 if (c == '>')
                 {
-                    dialogueText.text += stockString;
+                    textMeshProUGUI.text += stockString;
 
                     stockString = "";
                     isStock = false;
@@ -77,29 +114,29 @@ public class DialogueView : MonoBehaviour
                 }
                 else if (c == '、')
                 {
-                    dialogueText.text += c;
+                    textMeshProUGUI.text += c;
                     // TODO: 話した時の効果音を入れる
                     await UniTask.Delay(_talkSpeed * 5); 
                 }
                 else if (c == '。' || c == '？')
                 {
-                    dialogueText.text += c;
+                    textMeshProUGUI.text += c;
                     // TODO: 話した時の効果音を入れる
                     await UniTask.Delay(_talkSpeed * 10); 
                 }
                 else
                 {
-                    dialogueText.text += c;
+                    textMeshProUGUI.text += c;
                     // TODO: 話した時の効果音を入れる
                     await UniTask.Delay(_talkSpeed); 
                 }
             }
-            
-            
         }
     }
     
-    // マウスクリックで次の文章を表示する
+    /// <summary>
+    /// マウスクリックで次の文章を表示する
+    /// </summary>
     private UniTask WaitUntilMouseClick()
     {
         var clickStream = Observable.EveryUpdate()

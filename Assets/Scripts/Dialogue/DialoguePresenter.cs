@@ -26,7 +26,7 @@ public class DialoguePresenter : MonoBehaviour
         
         _view.PrefixBattleDialogue(
             _model.DialogueTalkEvents[0].CharacterName,
-            "Sprites/CAS_character_portraits_for_dialogs_vol1/" +  _model.DialogueTalkEvents[0].FilePath
+            Helper.CharacterFilePath +  _model.DialogueTalkEvents[0].FilePath
             );
     }
     
@@ -39,8 +39,14 @@ public class DialoguePresenter : MonoBehaviour
     {
         var cts = new CancellationTokenSource();
         var token = cts.Token;
+        var secretCount = Board.instance.getHowManyHimituDidGet;
 
-        await StartCutIn(Board.instance.getHowManyHimituDidGet, token);
+        await UniTask.WhenAll(
+             StartCutIn(secretCount, token),
+             PrefixCutInTalk(secretCount)
+            );
+
+        await StartCutInTalk(secretCount);
         
         cts.Cancel();
     }
@@ -68,7 +74,7 @@ public class DialoguePresenter : MonoBehaviour
         // TODO: 本番環境に差し替え
         await _view.StartBattleDialogue(
             talkEvent.CharacterName,
-            "Sprites/CAS_character_portraits_for_dialogs_vol1/" + talkEvent.FilePath,
+            Helper.CharacterFilePath + talkEvent.FilePath,
             talkEvent.Text
         );
     }
@@ -78,12 +84,36 @@ public class DialoguePresenter : MonoBehaviour
         var selectedCutInEvents = _model.DialogueCutInEvents
             .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
             .ToList();
-
         var cutInEvent = selectedCutInEvents[0];
+        
         await _view.StartCutIn(
-            "Sprites/CAS_character_portraits_for_dialogs_vol1/" + cutInEvent.FilePath,
+            Helper.CharacterFilePath + cutInEvent.FilePath,
             token
         );
+    }
 
+    private async UniTask PrefixCutInTalk(int secretCount)
+    {
+        var selectedCutInTalkEvents = _model.DialogueCutInTalkEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
+            .ToList();
+        var cutInTalkEvent = selectedCutInTalkEvents[0];
+        
+        await _view.PrefixCutInTalkDialogue(
+            cutInTalkEvent.CharacterName,
+            Helper.CharacterFilePath + cutInTalkEvent.FilePath
+        );
+    }
+
+    private async UniTask StartCutInTalk(int secretCount)
+    {
+        var selectedCutInTalkEvents = _model.DialogueCutInTalkEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
+            .ToList();
+        var cutInTalkEvent = selectedCutInTalkEvents[0];
+        
+        await _view.StartCutInTalkDialogue(
+            cutInTalkEvent.Text
+        );
     }
 }

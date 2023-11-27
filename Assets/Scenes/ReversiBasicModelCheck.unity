@@ -1027,17 +1027,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1311404643}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInTalkUI
+      value: 
+      objectReference: {fileID: 4821306266779824383}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 1006937500}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: battleNameText
+      value: 
+      objectReference: {fileID: 1311404643}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: battleDialogueUI
       value: 
       objectReference: {fileID: 1051025688}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInTalkNameText
+      value: 
+      objectReference: {fileID: 2860484115050357343}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: dialogueNextImage
       value: 
       objectReference: {fileID: 1857255315}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: battleDialogueText
+      value: 
+      objectReference: {fileID: 1006937500}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInTalkNextImage
+      value: 
+      objectReference: {fileID: 7058634944635693647}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: cutInBackgroundMask
       value: 
@@ -1051,9 +1071,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 247625859}
     - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInTalkDialogueText
+      value: 
+      objectReference: {fileID: 2894829387799490806}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
       propertyPath: dialogueCharacterImage
       value: 
       objectReference: {fileID: 247625859}
+    - target: {fileID: 9146457859322809502, guid: a1ef16a807ca8164c96fb97b00c3a15d, type: 3}
+      propertyPath: cutInTalkCharacterImage
+      value: 
+      objectReference: {fileID: 8856483694334355915}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1617,7 +1645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4821306266508326497, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6245070853877198481, guid: 4a59f9ff88567ee49a299eaf9222b869, type: 3}
       propertyPath: m_Pivot.x
@@ -2232,7 +2260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &4975143320726132445
 GameObject:
   m_ObjectHideFlags: 0
