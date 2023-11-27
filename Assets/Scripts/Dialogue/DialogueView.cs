@@ -1,4 +1,6 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -6,23 +8,32 @@ using UnityEngine.UI;
 
 public class DialogueView : MonoBehaviour
 {
+    [Header("BattleDialogue")]
+    [SerializeField] private GameObject battleDialogueUI;
     [SerializeField] private TextMeshProUGUI nameText;
-    public TextMeshProUGUI NameText => nameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    public TextMeshProUGUI DialogueText => dialogueText;
-    [SerializeField] private Image dialogueCharacterImage;
-    public Image DialogueCharacterImage => dialogueCharacterImage;
+    [SerializeField] private Image battleCharacterImage;
     [SerializeField] private Image dialogueNextImage;
-    public Image DialogueNextImage => dialogueNextImage;
 
     private int _talkSpeed = 50;
+    
+    [Header("CutIn")]
+    [SerializeField] private GameObject cutInUI;
+    [SerializeField] private Image cutInCharacterImage;
+    [SerializeField] private Image cutInBackgroundMask;
     
     
     
     public void PrefixBattleDialogue(string characterName, string filePath)
     {
-        dialogueCharacterImage.sprite = Resources.Load<Sprite>(filePath);
+        battleDialogueUI.SetActive(true);
+        battleCharacterImage.sprite = LoadSprite(filePath);
         nameText.text = characterName;
+    }
+
+    private Sprite LoadSprite(string filePath)
+    {
+        return Resources.Load<Sprite>(filePath);
     }
 
     public async UniTask StartBattleDialogue(string characterName, string filePath, string dialogue)
@@ -97,5 +108,30 @@ public class DialogueView : MonoBehaviour
             .ToUniTask(useFirstValue: true);
 
         return clickStream;
+    }
+
+    public async UniTask StartCutIn(string filePath)
+    {
+        var backgroundRect = cutInBackgroundMask.GetComponent<RectTransform>();
+        var characterRect = cutInCharacterImage.GetComponent<RectTransform>();
+        cutInUI.SetActive(true);
+
+        await UniTask.WhenAll(
+            backgroundRect.DOAnchorPos(new Vector2(200, 375), 0.0f).ToUniTask(),
+            backgroundRect.DOSizeDelta(new Vector2(0, 2500), 0.0f).ToUniTask(), 
+            characterRect.DOAnchorPos(new Vector2(1500, -150), 0.0f).ToUniTask()
+            );
+
+        await UniTask.WhenAll(
+            backgroundRect.DOSizeDelta(new Vector2(1500, 2500), 0.2f).SetEase(Ease.OutCubic).ToUniTask(), 
+            characterRect.DOAnchorPos(new Vector2(-600, -150), 0.2f).SetEase(Ease.OutCubic).ToUniTask()
+            );
+
+        await UniTask.Delay(200);
+        
+        await UniTask.WhenAll(
+            backgroundRect.DOAnchorPos(new Vector2(-1500, 375), 0.2f).SetEase(Ease.OutCubic).ToUniTask(), 
+            characterRect.DOAnchorPos(new Vector2(-1500, -150), 0.2f).SetEase(Ease.OutCubic).ToUniTask()
+        );
     }
 }
