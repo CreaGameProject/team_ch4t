@@ -248,7 +248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &974187841100228612
 RectTransform:
   m_ObjectHideFlags: 0
@@ -325,10 +325,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6625564123544691241}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 80}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 49}
+  m_SizeDelta: {x: -20, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4767213477266848916
 CanvasRenderer:
@@ -358,10 +358,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u73FE\u5728\u306E\u9032\u884C\u72B6\u6CC1\u304C\u5931\u308F\u308C\u3066\u3057\u307E\u3044\u307E\u3059\u304C\n\u30BF\u30A4\u30C8\u30EB\u753B\u9762\u3078\u623B\u308A\u307E\u3059\u304B\uFF1F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0f60860461a2e4672b3e55c977fc7de0, type: 2}
+  m_sharedMaterial: {fileID: 1940336294336903866, guid: 0f60860461a2e4672b3e55c977fc7de0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -885,7 +885,7 @@ PrefabInstance:
     - target: {fileID: 360131500755258179, guid: 2c896d201675a1a47bf010849c8bb8bc, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f409d5ee77a18b14e877f443514debd0, type: 3}
+      objectReference: {fileID: 21300000, guid: 23a0708d56e7d3045a7861510052646b, type: 3}
     - target: {fileID: 3643215604887551376, guid: 2c896d201675a1a47bf010849c8bb8bc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1048,7 +1048,7 @@ PrefabInstance:
     - target: {fileID: 360131500755258179, guid: 2c896d201675a1a47bf010849c8bb8bc, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e8d94ff005748f24a9debd9d34f60766, type: 3}
+      objectReference: {fileID: 21300000, guid: e19ac98a2a0c6274880d95d8a7d1a394, type: 3}
     - target: {fileID: 3643215604887551376, guid: 2c896d201675a1a47bf010849c8bb8bc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

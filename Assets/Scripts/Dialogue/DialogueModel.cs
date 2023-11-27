@@ -23,7 +23,6 @@ public class DialogueModel : MonoBehaviour
         _backLogData = new BackLogData();
     }
 
-
     private void PrefixDialogueEventList()
     {
         var jsonFile = Resources.Load<TextAsset>("JSON/text_event_test");
@@ -36,8 +35,7 @@ public class DialogueModel : MonoBehaviour
             foreach (var dialogueJson in dialogueData.dialogueEvents)
             {
                 EventType eventType = Enum.Parse<EventType>(dialogueJson.type);
-                
-                
+
                 switch (eventType)
                 {
                     case EventType.TALK:

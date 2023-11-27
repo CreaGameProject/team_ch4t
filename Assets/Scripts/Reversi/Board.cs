@@ -74,9 +74,6 @@ public class Board : MonoBehaviour
     [Header("盤面と手数のプリセット")]
     [SerializeField] private List<Preset> presets = new List<Preset>();
 
-    
-
-
 
     // ヒミツマスを裏返したときに実行される
     public delegate UniTask SecretCellPerformanceExecutedDelegate();
@@ -251,10 +248,6 @@ public class Board : MonoBehaviour
             code = ContinuationJudgment(this.presetIndex);
             if (210 % code == 0 && code != 2) { break; }
 
-            // コンピュータが喋る
-            //if (this.turnCounter % 2 == 0) { SpeakComputer(); }
-            await SpeakComputer();
-
             // ヒミツマスを設置する
             //Debug.Log("【Board】TurnUnit() | ヒミツマスを設置する");
             int secretCellsCount = GetSecretCell().Count;
@@ -269,6 +262,10 @@ public class Board : MonoBehaviour
                 // ヒミツマスを設置する
                 await UpdateCell(cell, Cell.Type.secret);
             }
+
+            // コンピュータが喋る
+            //if (this.turnCounter % 2 == 0) { SpeakComputer(); }
+            await SpeakComputer();
         }
 
         /*
@@ -481,7 +478,13 @@ public class Board : MonoBehaviour
         }
 
         // 盤面を初期化する
-        for (int index = 0; index < 64; index++) { await UpdateCell((index % 8, (int)(index / 8)), Cell.Type.empty); }
+        for (int index = 0; index < 64; index++) { UpdateCell((index % 8, (int)(index / 8)), Cell.Type.empty); }
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+
+
+        // 盤面にある石の数を計算する
+        //int numberOfCell = 0;
+        //for (int index = 0; index < 64; index++) { if (newBoard[index % 8, (int)(index / 8)].Item1 != Cell.Type.empty) { numberOfCell++; } }
 
         // 盤面をアップデート
         for (int y = 0; y < newBoard.GetLength(1); y++)
@@ -489,6 +492,7 @@ public class Board : MonoBehaviour
             for (int x = 0; x < newBoard.GetLength(0); x++)
             {
                 await UpdateCell((x, y), newBoard[x, y].Item1);
+                //await UpdateCell((x, y), newBoard[x, y].Item1, 4.0f / numberOfCell);
             }
         }
 
@@ -572,7 +576,10 @@ public class Board : MonoBehaviour
     }
 
     //盤面（１マス）を更新する
-    async UniTask UpdateCell((int, int) indexOnBoard, Cell.Type type)
+    async UniTask UpdateCell((int, int) indexOnBoard, Cell.Type type) { await UpdateCell(indexOnBoard, type, 0.2f); }
+
+    //盤面（１マス）を更新する : 石のアニメーション時間を指定する場合
+    async UniTask UpdateCell((int, int) indexOnBoard, Cell.Type type, float time)
     {
         Cell.Color color = Cell.Color.empty;
         switch (type)
@@ -583,19 +590,30 @@ public class Board : MonoBehaviour
             default: break;
         }
 
-        // empty => anything without empty and secret : 石を生成する
-        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && !(type == Cell.Type.empty || type == Cell.Type.secret))
+        // empty => anything without empty : 石を生成する
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type != Cell.Type.empty)
         {
             Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
-            GameObject g = Instantiate(this.normalStone, pos, Quaternion.identity);
+
+            GameObject g = null;
+
+            if (type != Cell.Type.secret)
+            {
+                g = Instantiate(this.normalStone, pos, Quaternion.identity);
+            }
+            else 
+            {
+                g = Instantiate(this.secretStone, pos, Quaternion.identity);
+            } 
+            
             Stone stone = g.GetComponent<Stone>();
             stone.color = color;
-            await stone.Generate(0.3f);
+            await stone.Generate(time);
             this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
         }
 
         // empty => secret : ヒミツマスを生成する
-        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type == Cell.Type.secret)
+        /*if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type == Cell.Type.secret)
         {
             Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
             GameObject g = Instantiate(this.secretStone, pos, Quaternion.identity);
@@ -603,7 +621,7 @@ public class Board : MonoBehaviour
             stone.color = color;
             await stone.Generate(0.3f);
             this.boardObjects[indexOnBoard.Item1 + indexOnBoard.Item2 * 8] = g;
-        }
+        }*/
 
         // white => secret : ヒミツマスを生成する
         if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.white && type == Cell.Type.secret)

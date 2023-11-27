@@ -17,6 +17,8 @@ public class LogManager : MonoBehaviour
     private GameObject scrollView;
     private ScrollRect scrollRect;
 
+    private BackLogData presenter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +31,24 @@ public class LogManager : MonoBehaviour
 
     }
 
+    public void LoadLog()
+    {
+        foreach (Transform n in nodeGroup.transform)
+        {
+            Destroy(n.gameObject);
+        }
+
+        for (int i = 0; i < presenter.logDataList.Count; i++)
+        {
+            AddLog(presenter.logDataList[i].speaker, presenter.logDataList[i].dialogue);
+        }
+    }
+
     /// <summary>
     /// ‰ï˜bƒƒO‚É”­Œ¾‚ğ’Ç‰Á
     /// </summary>
     /// <param name="name">”­Œ¾Ò</param>
-    /// <param name="log">‚ ‚È‚½‚Ì”­Œ¾</param>
+    /// <param name="log">”­Œ¾</param>
     public void AddLog(string name, string log)
     {
         GameObject sb = null;

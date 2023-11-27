@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f0de9a1f3daaf4b8b15fcd50c02600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stoneObject: {fileID: 1587665662828151900}
   color: 1
 --- !u!1 &8604099208247045077
 GameObject:
@@ -326,11 +327,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: othello
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2de0612dceae0f04088efe60d5d6bb99, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2de0612dceae0f04088efe60d5d6bb99, type: 3}
+--- !u!1 &1587665662828151900 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2de0612dceae0f04088efe60d5d6bb99, type: 3}
+  m_PrefabInstance: {fileID: 1930333759936674061}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2108622709620825830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2de0612dceae0f04088efe60d5d6bb99, type: 3}

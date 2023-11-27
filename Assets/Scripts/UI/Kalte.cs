@@ -21,7 +21,6 @@ public class Kalte : MonoBehaviour
     private Vector2 defaultWindowsPosition;
     private Quaternion defaultWindowsRotation;
     private bool isExpand;
-    private int currentSecretNum = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +30,7 @@ public class Kalte : MonoBehaviour
         defaultWindowsPosition = rt.position;
         defaultWindowsRotation = rt.rotation;
         backGround.DOFade(0, 0.01f);
+        Board.instance.OnChangeHimituNumberExecuted += OnChangeHimituNumberExecutedHandler;
 
         for (int i = 0; i < 3; i++)
         {
@@ -68,17 +68,14 @@ public class Kalte : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ŽŸ‚Ì”é–§‚ð•\Ž¦‚·‚é
-    /// </summary>
-    public void AddNextSecretText()
+    private void AddNextSecretText(int secret)
     {
-        if (currentSecretNum == 3)
-        {
-            Debug.Log("”é–§‚Í3‚Â‚µ‚©‚ ‚è‚Ü‚¹‚ñ");
-            return;
-        }
-        currentSecretNum++;
-        secretText[currentSecretNum].SetActive(true);
+        secretText[secret].SetActive(true);
+        
+    }
+
+    private void OnChangeHimituNumberExecutedHandler(int howManyHimituDidGet)
+    {
+        AddNextSecretText(howManyHimituDidGet);
     }
 }

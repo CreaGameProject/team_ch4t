@@ -11,9 +11,6 @@ public class DialoguePresenter : MonoBehaviour
     [SerializeField] private DialogueModel _model;
     [SerializeField] private DialogueView _view;
     [SerializeField] private Board _board;
-
-    
-    
     
     private async void Start()
     {
@@ -70,6 +67,7 @@ public class DialoguePresenter : MonoBehaviour
             await StartBattleDialogue(randomlySelectedTalkEvent);
         }
     }
+
 
     private async UniTask StartBattleDialogue(DialogueTalkEvent talkEvent)
     {
