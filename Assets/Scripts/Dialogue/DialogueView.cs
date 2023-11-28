@@ -64,10 +64,9 @@ public class DialogueView : MonoBehaviour
         battleDialogueUI.SetActive(false);
     }
     
-    public async UniTask StartCutInTalkDialogue(string characterName, string dialogue)
+    public async UniTask StartCutInTalkDialogue(string characterName, string filePath, string dialogue)
     {
-        // TODO: イメージはあらかじめ読み込まれている状態にしたい。
-        //PrefixCutInTalkDialogue(characterName, filePath);
+        cutInTalkCharacterImage.sprite = LoadSprite(filePath);
         
         await TypeText(cutInTalkDialogueText, dialogue);
         SaveToBackLog(characterName, dialogue);
@@ -76,6 +75,11 @@ public class DialogueView : MonoBehaviour
         await WaitUntilMouseClick();
         
         cutInTalkNextImage.gameObject.SetActive(false);
+
+    }
+
+    public void CloseCutInTalkDialogue()
+    {
         cutInTalkUI.SetActive(false);
         battleDialogueUI.SetActive(true);
     }

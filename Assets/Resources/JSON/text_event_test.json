@@ -3,7 +3,7 @@
     {
       "event_number": 1,
       "type": "TALK",
-      "secret_count": null,
+      "secret_count": "0",
       "name": "うい",
       "file": "chara_ui_000",
       "text": "こんにちは"
@@ -11,7 +11,7 @@
     {
       "event_number": 2,
       "type": "TALK",
-      "secret_count": null,
+      "secret_count": "0",
       "name": "うい",
       "file": "chara_ui_100",
       "text": "テキストのテストキャラクターだよ"
@@ -19,7 +19,7 @@
     {
       "event_number": 3,
       "type": "TALK",
-      "secret_count": null,
+      "secret_count": "0",
       "name": "うい",
       "file": "chara_ui_200",
       "text": "話す速度は大丈夫かな？"
@@ -27,7 +27,7 @@
     {
       "event_number": 4,
       "type": "TALK",
-      "secret_count": null,
+      "secret_count": "0",
       "name": "うい",
       "file": "chara_ui_300",
       "text": "ヒミツ取得<color=#9c3444>0</color>の状態のときに話す内容"
@@ -67,7 +67,7 @@
     {
       "event_number": 9,
       "type": "CUT_IN",
-      "secret_count": null,
+      "secret_count": "0",
       "name": "うい",
       "file": "chara_ui_800",
       "text": null
@@ -75,13 +75,21 @@
     {
       "event_number": 10,
       "type": "CUT_IN_TALK",
-      "secret_count": null,
+      "secret_count": "0",
       "name": "うい",
       "file": "chara_ui_800",
       "text": "一つ目のヒミツマスを獲得しました。"
     },
     {
       "event_number": 11,
+      "type": "CUT_IN_TALK",
+      "secret_count": "0",
+      "name": "うい",
+      "file": "chara_ui_810",
+      "text": "引き続き話す内容。"
+    },
+    {
+      "event_number": 12,
       "type": "CUT_IN",
       "secret_count": 1,
       "name": "うい",
@@ -89,7 +97,7 @@
       "text": null
     },
     {
-      "event_number": 12,
+      "event_number": 13,
       "type": "CUT_IN_TALK",
       "secret_count": 1,
       "name": "うい",
@@ -97,7 +105,7 @@
       "text": "二つ目のヒミツマスを獲得しました。"
     },
     {
-      "event_number": 13,
+      "event_number": 14,
       "type": "CUT_IN",
       "secret_count": 2,
       "name": "うい",
@@ -105,7 +113,7 @@
       "text": null
     },
     {
-      "event_number": 14,
+      "event_number": 15,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": "うい",
