@@ -16,6 +16,7 @@ public class Kalte : MonoBehaviour
     private Image backGround;
     [SerializeField]
     private GameObject[] secretText = new GameObject[3];
+    [SerializeField]
     private RectTransform rt;
     private Vector2 defaultWindowsSize;
     private Vector2 defaultWindowsPosition;
@@ -52,6 +53,7 @@ public class Kalte : MonoBehaviour
             rt.DOMove(new Vector2(Screen.width / 2, Screen.height / 2), animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(Quaternion.identity, animationTime);
             backGround.DOFade(0.85f, animationTime);
+            AudioManager.instance_AudioManager.PlaySE(2);
             isExpand = true;
         }
     }
@@ -64,6 +66,7 @@ public class Kalte : MonoBehaviour
             rt.DOMove(defaultWindowsPosition, animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(defaultWindowsRotation, animationTime);
             backGround.DOFade(0, animationTime);
+            AudioManager.instance_AudioManager.PlaySE(2);
             isExpand = false;
         }
     }
