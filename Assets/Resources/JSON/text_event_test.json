@@ -99,7 +99,7 @@
     {
       "event_number": 13,
       "type": "CUT_IN",
-      "secret_count": 1,
+      "secret_count": 2,
       "name": "うい",
       "file": "chara_ui_210",
       "text": null
@@ -107,7 +107,7 @@
     {
       "event_number": 14,
       "type": "CUT_IN_TALK",
-      "secret_count": 1,
+      "secret_count": 2,
       "name": "うい",
       "file": "chara_ui_210",
       "text": "三つ目のヒミツマスを獲得しました。"
