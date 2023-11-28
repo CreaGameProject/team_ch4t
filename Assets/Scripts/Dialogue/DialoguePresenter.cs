@@ -97,12 +97,14 @@ public class DialoguePresenter : MonoBehaviour
         var selectedCutInTalkEvents = _model.DialogueCutInTalkEvents
             .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
             .ToList();
-        var cutInTalkEvent = selectedCutInTalkEvents[0];
-        
-        await _view.PrefixCutInTalkDialogue(
-            cutInTalkEvent.CharacterName,
-            Helper.CharacterFilePath + cutInTalkEvent.FilePath
-        );
+
+        foreach (var cutInTalkEvent in selectedCutInTalkEvents)
+        {
+            await _view.PrefixCutInTalkDialogue(
+                cutInTalkEvent.CharacterName,
+                Helper.CharacterFilePath + cutInTalkEvent.FilePath
+            );
+        }
     }
 
     private async UniTask StartCutInTalk(int secretCount)
@@ -110,11 +112,16 @@ public class DialoguePresenter : MonoBehaviour
         var selectedCutInTalkEvents = _model.DialogueCutInTalkEvents
             .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
             .ToList();
-        var cutInTalkEvent = selectedCutInTalkEvents[0];
         
-        await _view.StartCutInTalkDialogue(
-            cutInTalkEvent.CharacterName,
-            cutInTalkEvent.Text
-        );
+        foreach (var cutInTalkEvent in selectedCutInTalkEvents)
+        {
+            await _view.StartCutInTalkDialogue(
+                cutInTalkEvent.CharacterName,
+                Helper.CharacterFilePath + cutInTalkEvent.FilePath,
+                cutInTalkEvent.Text
+            );
+        }
+
+        _view.CloseCutInTalkDialogue();
     }
 }
