@@ -169,6 +169,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &413892801
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705474853395029958, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3049502585207326843, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 03a29c9206372b546932ccda7abd1099, type: 3}
 --- !u!1 &888730777
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,9 +529,10 @@ MonoBehaviour:
   turnCounter: 0
   turn: 0
   restTurn: 10
+  presetIndex: 0
   presets:
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u3007\u25CF\u25C6\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r"
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u3007\u25CF\u25C6\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
+  - board: "\uFF03\u3007\uFF03\uFF03\uFF03\u3007\uFF03\uFF03\r\n\u3007\u3007\u3007\uFF03\u3007\u3007\u3007\uFF03\r\n\u3007\u3007\u3007\u3007\u3007\u3007\u3007\uFF03\r\n\u3007\u3007\u3007\u25C6\u3007\u3007\u3007\uFF03\r\n\uFF03\u3007\u3007\u3007\u3007\u3007\uFF03\uFF03\r\n\uFF03\uFF03\u3007\u3007\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\u25CF\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
+  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25CB\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25CF\uFF03\uFF03\uFF03\u25CF\uFF03\r\n\uFF03\uFF03\u25CF\u3007\u25CF\u25CF\u25CF\u25C6\r\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
   - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\u3007\u25CF\u25C6\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
 --- !u!1 &1695318599
 GameObject:
@@ -908,3 +966,4 @@ SceneRoots:
   - {fileID: 3015472172909724936}
   - {fileID: 8127497739760005780}
   - {fileID: 1695318601}
+  - {fileID: 413892801}

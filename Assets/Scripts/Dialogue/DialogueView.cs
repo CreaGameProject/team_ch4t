@@ -1,4 +1,6 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -6,33 +8,81 @@ using UnityEngine.UI;
 
 public class DialogueView : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI nameText;
-    public TextMeshProUGUI NameText => nameText;
-    [SerializeField] private TextMeshProUGUI dialogueText;
-    public TextMeshProUGUI DialogueText => dialogueText;
-    [SerializeField] private Image dialogueCharacterImage;
-    public Image DialogueCharacterImage => dialogueCharacterImage;
-    [SerializeField] private Image dialogueNextImage;
-    public Image DialogueNextImage => dialogueNextImage;
+    [Header("BattleDialogue")]
+    [SerializeField] private GameObject battleDialogueUI;
+    [SerializeField] private TextMeshProUGUI battleNameText;
+    [SerializeField] private TextMeshProUGUI battleDialogueText;
+    [SerializeField] private Image battleCharacterImage;
 
     private int _talkSpeed = 50;
+    
+    [Header("CutIn")]
+    [SerializeField] private GameObject cutInUI;
+    [SerializeField] private Image cutInCharacterImage;
+    [SerializeField] private Image cutInBackgroundMask;
+    
+    [Header("CutInTalk")]
+    [SerializeField] private GameObject cutInTalkUI;
+    [SerializeField] private TextMeshProUGUI cutInTalkNameText;
+    [SerializeField] private TextMeshProUGUI cutInTalkDialogueText;
+    [SerializeField] private Image cutInTalkCharacterImage;
+    [SerializeField] private Image cutInTalkNextImage;
+    
+    
+    private Sprite LoadSprite(string filePath)
+    {
+        return Resources.Load<Sprite>(filePath);
+    }
 
     public async UniTask StartBattleDialogue(string characterName, string filePath, string dialogue)
     {
         // TODO: イメージはあらかじめ読み込まれている状態にしたい。
-        dialogueCharacterImage.sprite = Resources.Load<Sprite>(filePath);
-        nameText.text = characterName;
-        
-        dialogueNextImage.gameObject.SetActive(false);
-        await TypeText(dialogue);
-        
-        dialogueNextImage.gameObject.SetActive(true);
-        await WaitUntilMouseClick();
+        PrefixBattleDialogue(characterName, filePath);
+
+        await TypeText(battleDialogueText, dialogue);
+        SaveToBackLog(characterName, dialogue);
     }
     
-    private async UniTask TypeText(string text)
+    public void PrefixBattleDialogue(string characterName, string filePath)
     {
-        dialogueText.text = "";
+        battleDialogueUI.SetActive(true);
+        battleCharacterImage.sprite = LoadSprite(filePath);
+        battleNameText.text = characterName;
+    }
+
+    public async UniTask PrefixCutInTalkDialogue(string characterName, string filePath)
+    {
+        await UniTask.Delay(500);
+        
+        battleDialogueText.text = "";
+        
+        cutInTalkUI.SetActive(true);
+        cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+        cutInTalkNameText.text = characterName;
+        
+        cutInTalkNextImage.gameObject.SetActive(false);
+        battleDialogueUI.SetActive(false);
+    }
+    
+    public async UniTask StartCutInTalkDialogue(string characterName, string dialogue)
+    {
+        // TODO: イメージはあらかじめ読み込まれている状態にしたい。
+        //PrefixCutInTalkDialogue(characterName, filePath);
+        
+        await TypeText(cutInTalkDialogueText, dialogue);
+        SaveToBackLog(characterName, dialogue);
+        
+        cutInTalkNextImage.gameObject.SetActive(true);
+        await WaitUntilMouseClick();
+        
+        cutInTalkNextImage.gameObject.SetActive(false);
+        cutInTalkUI.SetActive(false);
+        battleDialogueUI.SetActive(true);
+    }
+    
+    private async UniTask TypeText(TextMeshProUGUI textMeshProUGUI, string text)
+    {
+        textMeshProUGUI.text = "";
         string stockString = "";
         bool isStock = false;
 
@@ -44,7 +94,7 @@ public class DialogueView : MonoBehaviour
                 
                 if (c == '>')
                 {
-                    dialogueText.text += stockString;
+                    textMeshProUGUI.text += stockString;
 
                     stockString = "";
                     isStock = false;
@@ -59,28 +109,40 @@ public class DialogueView : MonoBehaviour
                 }
                 else if (c == '、')
                 {
-                    dialogueText.text += c;
+                    textMeshProUGUI.text += c;
                     // TODO: 話した時の効果音を入れる
                     await UniTask.Delay(_talkSpeed * 5); 
                 }
                 else if (c == '。' || c == '？')
                 {
-                    dialogueText.text += c;
+                    textMeshProUGUI.text += c;
                     // TODO: 話した時の効果音を入れる
                     await UniTask.Delay(_talkSpeed * 10); 
                 }
                 else
                 {
-                    dialogueText.text += c;
+                    textMeshProUGUI.text += c;
                     // TODO: 話した時の効果音を入れる
                     await UniTask.Delay(_talkSpeed); 
                 }
             }
-            
-            
         }
     }
     
+    /// <summary>
+    /// キャラクターが話終えたときに呼び出される
+    /// </summary>
+    public delegate void OnCharacterTalkExecutedDelegate(string characterName, string dialogue);
+    public event OnCharacterTalkExecutedDelegate OnCharacterTalkExecuted;
+
+    private void SaveToBackLog(string characterName, string dialogue)
+    {
+        if (OnCharacterTalkExecuted != null) { OnCharacterTalkExecuted(characterName, dialogue); }
+    }
+    
+    /// <summary>
+    /// マウスクリックで次の文章を表示する
+    /// </summary>
     private UniTask WaitUntilMouseClick()
     {
         var clickStream = Observable.EveryUpdate()
@@ -89,5 +151,33 @@ public class DialogueView : MonoBehaviour
             .ToUniTask(useFirstValue: true);
 
         return clickStream;
+    }
+
+    public async UniTask StartCutIn(string filePath, CancellationToken token)
+    {
+        var backgroundRect = cutInBackgroundMask.GetComponent<RectTransform>();
+        var characterRect = cutInCharacterImage.GetComponent<RectTransform>();
+        cutInUI.SetActive(true);
+
+        await UniTask.WhenAll(
+            characterRect.DOAnchorPos(new Vector2(1500, 0), 0.0f).ToUniTask(cancellationToken: token),
+            backgroundRect.DOAnchorPos(new Vector2(200, 375), 0.0f).ToUniTask(cancellationToken: token),
+            backgroundRect.DOSizeDelta(new Vector2(0, 2500), 0.0f).ToUniTask(cancellationToken: token)
+        );
+
+        await UniTask.WhenAll(
+            characterRect.DOAnchorPos(new Vector2(-400, 0), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token),
+            backgroundRect.DOSizeDelta(new Vector2(1500, 2500), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token)
+        );
+
+        await UniTask.Delay(700);
+
+        await UniTask.WhenAll(
+            characterRect.DOAnchorPos(new Vector2(-1500, 0), 0.3f).SetEase(Ease.InCubic)
+                .ToUniTask(cancellationToken: token),
+            backgroundRect.DOAnchorPos(new Vector2(-1500, 375), 0.3f).SetEase(Ease.InCubic)
+                .OnComplete(() => { cutInUI.SetActive(false); })
+                .ToUniTask(cancellationToken: token)
+        );
     }
 }
