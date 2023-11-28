@@ -98,13 +98,12 @@ public class DialoguePresenter : MonoBehaviour
             .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
             .ToList();
 
-        foreach (var cutInTalkEvent in selectedCutInTalkEvents)
-        {
-            await _view.PrefixCutInTalkDialogue(
-                cutInTalkEvent.CharacterName,
-                Helper.CharacterFilePath + cutInTalkEvent.FilePath
-            );
-        }
+        var cutInTalkEvent = selectedCutInTalkEvents[0];
+
+        await _view.PrefixCutInTalkDialogue(
+            cutInTalkEvent.CharacterName,
+            Helper.CharacterFilePath + cutInTalkEvent.FilePath
+        );
     }
 
     private async UniTask StartCutInTalk(int secretCount)
