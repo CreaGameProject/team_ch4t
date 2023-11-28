@@ -58,6 +58,14 @@
     },
     {
       "event_number": 8,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_500",
+      "text": "ヒミツ取得<color=#9c3444>2</color>の状態のときに話す内容"
+    },
+    {
+      "event_number": 9,
       "type": "CUT_IN",
       "secret_count": null,
       "name": "うい",
@@ -65,7 +73,7 @@
       "text": null
     },
     {
-      "event_number": 9,
+      "event_number": 10,
       "type": "CUT_IN_TALK",
       "secret_count": null,
       "name": "うい",
@@ -73,7 +81,7 @@
       "text": "一つ目のヒミツマスを獲得しました。"
     },
     {
-      "event_number": 10,
+      "event_number": 11,
       "type": "CUT_IN",
       "secret_count": 1,
       "name": "うい",
@@ -81,12 +89,28 @@
       "text": null
     },
     {
-      "event_number": 11,
+      "event_number": 12,
       "type": "CUT_IN_TALK",
       "secret_count": 1,
       "name": "うい",
       "file": "chara_ui_700",
       "text": "二つ目のヒミツマスを獲得しました。"
+    },
+    {
+      "event_number": 13,
+      "type": "CUT_IN",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_210",
+      "text": null
+    },
+    {
+      "event_number": 14,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_210",
+      "text": "三つ目のヒミツマスを獲得しました。"
     }
   ]
 }
