@@ -49,8 +49,8 @@ public class Kalte : MonoBehaviour
     {
         if (!isExpand)
         {
-            rt.DOScale(Vector2.one * windowScaleRatio, animationTime).SetEase(Ease.InOutCirc);
-            rt.DOMove(new Vector2(Screen.width / 2, Screen.height / 2), animationTime).SetEase(Ease.InOutCirc);
+            rt.DOScale(Vector3.one * windowScaleRatio, animationTime).SetEase(Ease.InOutCirc);
+            rt.DOMove(new Vector3(0,0,0), animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(Quaternion.identity, animationTime);
             backGround.DOFade(0.85f, animationTime);
             AudioManager.instance_AudioManager.PlaySE(2);
