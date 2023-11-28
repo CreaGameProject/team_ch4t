@@ -117,7 +117,7 @@ public class DialogueView : MonoBehaviour
                     // TODO: 話した時の効果音を入れる
                     await UniTask.Delay(_talkSpeed * 5); 
                 }
-                else if (c == '。' || c == '？')
+                else if (c == '。' || c == '？' || c == '！' || c == '.')
                 {
                     textMeshProUGUI.text += c;
                     // TODO: 話した時の効果音を入れる
