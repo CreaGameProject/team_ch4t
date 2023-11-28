@@ -8,6 +8,6 @@ public class Helper
         return Params [Random.Range (0, Params.Count)];
     }
 
-    public const string BattleDialogueJsonPath = "JSON/text_event_test";
+    public const string BattleDialogueJsonPath = "JSON/text_event";
     public const string CharacterFilePath = "Sprites/Characters/";
 }
