@@ -67,6 +67,7 @@ public class DialogueView : MonoBehaviour
     public async UniTask StartCutInTalkDialogue(string characterName, string filePath, string dialogue)
     {
         cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+        cutInTalkNameText.text = characterName;
         
         await TypeText(cutInTalkDialogueText, dialogue);
         SaveToBackLog(characterName, dialogue);
