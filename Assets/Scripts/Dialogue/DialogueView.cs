@@ -135,7 +135,7 @@ public class DialogueView : MonoBehaviour
     public delegate void OnCharacterTalkExecutedDelegate(string characterName, string dialogue);
     public event OnCharacterTalkExecutedDelegate OnCharacterTalkExecuted;
 
-    public void SaveToBackLog(string characterName, string dialogue)
+    private void SaveToBackLog(string characterName, string dialogue)
     {
         if (OnCharacterTalkExecuted != null) { OnCharacterTalkExecuted(characterName, dialogue); }
     }
@@ -160,20 +160,20 @@ public class DialogueView : MonoBehaviour
         cutInUI.SetActive(true);
 
         await UniTask.WhenAll(
-            characterRect.DOAnchorPos(new Vector2(1500, -150), 0.0f).ToUniTask(cancellationToken: token),
+            characterRect.DOAnchorPos(new Vector2(1500, 0), 0.0f).ToUniTask(cancellationToken: token),
             backgroundRect.DOAnchorPos(new Vector2(200, 375), 0.0f).ToUniTask(cancellationToken: token),
             backgroundRect.DOSizeDelta(new Vector2(0, 2500), 0.0f).ToUniTask(cancellationToken: token)
         );
 
         await UniTask.WhenAll(
-            characterRect.DOAnchorPos(new Vector2(-600, -150), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token),
+            characterRect.DOAnchorPos(new Vector2(-400, 0), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token),
             backgroundRect.DOSizeDelta(new Vector2(1500, 2500), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token)
         );
 
         await UniTask.Delay(700);
 
         await UniTask.WhenAll(
-            characterRect.DOAnchorPos(new Vector2(-1500, -150), 0.3f).SetEase(Ease.InCubic)
+            characterRect.DOAnchorPos(new Vector2(-1500, 0), 0.3f).SetEase(Ease.InCubic)
                 .ToUniTask(cancellationToken: token),
             backgroundRect.DOAnchorPos(new Vector2(-1500, 375), 0.3f).SetEase(Ease.InCubic)
                 .OnComplete(() => { cutInUI.SetActive(false); })

@@ -54,8 +54,6 @@ public class DialogueModel : MonoBehaviour
                         break;
                 }
             }
-            
-            
         }
         else
         {
