@@ -25,7 +25,7 @@ public class DialogueModel : MonoBehaviour
 
     private void PrefixDialogueEventList()
     {
-        var jsonFile = Resources.Load<TextAsset>("JSON/text_event_test");
+        var jsonFile = Resources.Load<TextAsset>(Helper.BattleDialogueJsonPath);
         
         if (jsonFile != null)
         {

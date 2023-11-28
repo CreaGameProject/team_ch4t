@@ -8,5 +8,6 @@ public class Helper
         return Params [Random.Range (0, Params.Count)];
     }
 
-    public const string CharacterFilePath = "Sprites/CAS_character_portraits_for_dialogs_vol1/";
+    public const string BattleDialogueJsonPath = "JSON/text_event_test";
+    public const string CharacterFilePath = "Sprites/Characters/";
 }
