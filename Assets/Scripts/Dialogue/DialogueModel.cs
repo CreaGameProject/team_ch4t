@@ -70,6 +70,6 @@ public class DialogueModel : MonoBehaviour
         };
 
         _backLogData.logDataList.Add(logData);
-        Debug.Log($"バックログにspeaker: {logData.speaker}, dialogue: {logData.dialogue} を追加しました。");
+        //Debug.Log($"バックログにspeaker: {logData.speaker}, dialogue: {logData.dialogue} を追加しました。");
     }
 }
