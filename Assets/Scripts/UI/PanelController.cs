@@ -55,7 +55,7 @@ public class PanelController : MonoBehaviour
 
     public void DontClosePanel()
     {
-        windowRect.DOPunchScale(Vector3.one * 0.05f, animationTime);
+        windowRect.DOPunchScale(Vector3.one * 0.05f, animationTime).OnComplete(() => windowRect.DOScale(Vector3.one, 0.001f));
     }
 
     /*

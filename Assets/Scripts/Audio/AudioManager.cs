@@ -18,19 +18,22 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
+        bgmSource = gameObject.AddComponent<AudioSource>();
+        bgmSource.loop = true;
+
         for (var i = 0; i < seSourceList.Length; ++i)
         {
             seSourceList[i] = gameObject.AddComponent<AudioSource>();
         }
-        bgmSource = gameObject.AddComponent<AudioSource>();
-        bgmSource.loop = true;
+        
     }
 
     [SerializeField] private AudioData audioData;
-    
-    private AudioSource[] seSourceList = new AudioSource[20];
+
     private AudioSource bgmSource;
+    private AudioSource[] seSourceList = new AudioSource[20];
+    
 
     // Start is called before the first frame update
     
@@ -80,7 +83,7 @@ public class AudioManager : MonoBehaviour
         int index = this.ConvertIdIntoIndex(this.audioData.se_Data, id);
         var seSource = GetUnusedAudioSource();
         seSource.clip = this.audioData.se_Data[index].clip;
-        seSource.volume = this.audioData.se_Data[index].volume;
+        //seSource.volume = this.audioData.se_Data[index].volume;
         seSource.Play();
     }
 
@@ -99,11 +102,19 @@ public class AudioManager : MonoBehaviour
         //this.seSource.UnPause();
     }
 
+    public void SetSEVolume(float newVolume)
+    {
+        foreach(AudioSource audioSource in seSourceList)
+        {
+            audioSource.volume = newVolume;
+        }
+    }
+
     public void PlayBGM(int id)
     {
         int index = this.ConvertIdIntoIndex(this.audioData.bgm_Data, id);
         bgmSource.clip = this.audioData.bgm_Data[index].clip;
-        bgmSource.volume = this.audioData.bgm_Data[index].volume;
+        //bgmSource.volume = this.audioData.bgm_Data[index].volume;
         bgmSource.Play();
     }
 
