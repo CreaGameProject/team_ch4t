@@ -13,8 +13,6 @@ namespace Pool
         protected override void Awake()
         {
             base.Awake();
-            
-            DontDestroyOnLoad(this);
         }
 
         private void Start()
