@@ -14,7 +14,7 @@
       "secret_count": null,
       "name": "うい",
       "file": "chara_ui_400",
-      "text": "ねえねえ、あなたって部長さんとどれくらい仲良しなの…？\r\n初対面！？わ、わたしもだよ！！\r\n不思議な人だね…リバーシ好きって初めて聞いたよ…"
+      "text": "ねえねえ、あなたって部長さんとどれくらい仲良しなの？\n初対面！？わ、わたしもだよ！！\n不思議な人だね…リバーシ好きって初めて聞いたよ…"
     },
     {
       "event_number": 3,
@@ -174,7 +174,7 @@
       "secret_count": 1,
       "name": "うい",
       "file": "chara_ui_800",
-      "text": "そんなに気にしてるってわけでもないよ！ただ…やっぱり…\r\nかわいくないかなあって…\r"
+      "text": "傷のこと、そんなに気にしてるってわけでもないよ！\r\nただ…やっぱり…\r\nかわいくないかなあって…"
     },
     {
       "event_number": 23,
@@ -182,7 +182,7 @@
       "secret_count": 1,
       "name": "うい",
       "file": "chara_ui_000",
-      "text": "でもでも、かっこよくもあるよね！勲章みたいで！\nあ～…そんなつらい顔しないで…"
+      "text": "この傷、かっこよくもあるよね！勲章みたいで！\nあ～…そんなつらい顔しないで…"
     },
     {
       "event_number": 24,
@@ -214,7 +214,7 @@
       "secret_count": 1,
       "name": "うい",
       "file": "chara_ui_210",
-      "text": "実は前から副部長さんとお話ししたいなぁって思ってたんだ～\nせっかくだし、クラスメイトみんなと仲良くなりたいじゃん"
+      "text": "実は前から副部長さんとお話ししたいなぁって思ってたんだ～\nクラスメイトみんなと仲良くなりたいじゃん"
     },
     {
       "event_number": 28,
@@ -310,7 +310,7 @@
       "secret_count": 1,
       "name": null,
       "file": null,
-      "text": "しゃべるぬいぐるみと魔物。\r\nふと、この世界を守っているという魔法少女のことが頭をよぎる。\r"
+      "text": "しゃべるぬいぐるみと魔物。\nふと、この世界を守っているという魔法少女のことが頭をよぎる。"
     },
     {
       "event_number": 40,
@@ -358,15 +358,15 @@
       "secret_count": 1,
       "name": "うい",
       "file": "chara_ui_510",
-      "text": "私ね、魔法少女ルビアなの。"
+      "text": "私ね、魔法少女なの。"
     },
     {
       "event_number": 46,
       "type": "CUT_IN_TALK",
       "secret_count": 1,
-      "name": null,
-      "file": "chara_ui_111",
-      "text": "彼女の姿がみるみるうちに変わっていった。"
+      "name": "うい",
+      "file": "chara_ui_410",
+      "text": "ルビアって…知ってる…？"
     },
     {
       "event_number": 47,
@@ -374,10 +374,26 @@
       "secret_count": 1,
       "name": null,
       "file": "chara_ui_111",
-      "text": "テレビで何度も見た魔法少女が目の前にいる。"
+      "text": "彼女の姿がみるみるうちに変わっていった。"
     },
     {
       "event_number": 48,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": "chara_ui_111",
+      "text": "テレビで何度も見た魔法少女が目の前にいる。"
+    },
+    {
+      "event_number": 49,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_001",
+      "text": "えへへ、びっくりした？\r\n本当は誰にも言っちゃいけないんだけど…\r\n副部長ならヒミツを守ってくれそうだし…いいかな…？"
+    },
+    {
+      "event_number": 50,
       "type": "TALK",
       "secret_count": 2,
       "name": "うい",
@@ -385,7 +401,7 @@
       "text": "私のこと知ってた…？最強の魔法少女、ルビアちゃん！って！\r\n実は私負けなしなんだぁ、すごいでしょ！\r"
     },
     {
-      "event_number": 49,
+      "event_number": 51,
       "type": "TALK",
       "secret_count": 2,
       "name": "うい",
@@ -393,7 +409,71 @@
       "text": "ルビアの正体知ってる人ってなかなかいなくてさ…\r\nこんなに私のこと話せるの新鮮だからうれしいなぁ…\r"
     },
     {
-      "event_number": 50,
+      "event_number": 52,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_211",
+      "text": "私が普段戦ってる、おっきい怪獣みたいなの\r\n間近で見るとかわいい顔してたりするんだよ"
+    },
+    {
+      "event_number": 53,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_501",
+      "text": "蛇みたいなお姉さんと戦ったことがあってね。\r\nすっごく強くて怖かったの、負けるかもって…\r\nでもかっこよかったなぁあの人…"
+    },
+    {
+      "event_number": 54,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_001",
+      "text": "プップってどこかの王子様とかなのかな…？\r\n私もよくわからないんだけど、\r\nあの怪物たちから狙われてるみたい…"
+    },
+    {
+      "event_number": 55,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_611",
+      "text": "魔法少女ってやっぱりちょっぴり忙しくって…\r\nでもでも、勉強には支障出さないよ！\r\n教科書読みながらだって倒せるもん！"
+    },
+    {
+      "event_number": 56,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_111",
+      "text": "どの戦いも負けられないよ、私が最強だもん。\r\n私が勝てなかった相手は誰が倒すんだろうね"
+    },
+    {
+      "event_number": 57,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_201",
+      "text": "プップってね、てるてる坊主みたいな体してるの。\r\nふわふわ～って空を移動できるんだよ。かわいいでしょ～"
+    },
+    {
+      "event_number": 58,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_101",
+      "text": "夜間パトロールみたいなこともするんだよ～\r\n私がいると誰も悪いことできないから\r\nほとんどお散歩だけどね"
+    },
+    {
+      "event_number": 59,
+      "type": "TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_001",
+      "text": "それ、何かメモ取ってるの？\r\nコマを置いた手順とか？勉強熱心なんだね～"
+    },
+    {
+      "event_number": 60,
       "type": "CUT_IN",
       "secret_count": 2,
       "name": null,
@@ -401,7 +481,7 @@
       "text": null
     },
     {
-      "event_number": 51,
+      "event_number": 61,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": "うい",
@@ -409,7 +489,7 @@
       "text": "副部長さん、内緒のお話、してもいい…？"
     },
     {
-      "event_number": 52,
+      "event_number": 62,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": null,
@@ -417,52 +497,92 @@
       "text": "突然の不安げな表情に背筋が伸びる。"
     },
     {
-      "event_number": 53,
+      "event_number": 63,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": "うい",
       "file": "chara_ui_811",
-      "text": "あ～…そんなに緊張しなくていいんだよ！\r\nなんか、ええっと、なんていえばいいのかなぁ…"
+      "text": "あ～…そんなに緊張しなくていいんだよ！\r\nなんか、えぇっと、なんて言えばいいのかなぁ…"
     },
     {
-      "event_number": 54,
+      "event_number": 64,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": null,
       "file": "chara_ui_811",
-      "text": "打って変わって恥じらうようにもじもじとし始めた。\r\nいったい何を話そうとしているのだろうか…\r"
+      "text": "心の奥底に秘めた思いを絞り出すかのように話を続ける。"
     },
     {
-      "event_number": 55,
+      "event_number": 65,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": "うい",
-      "file": "chara_ui_811",
+      "file": "chara_ui_secret",
       "text": "わたし…その…\r\n負けたいの……\r"
     },
     {
-      "event_number": 56,
+      "event_number": 66,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": null,
-      "file": "chara_ui_811",
+      "file": "chara_ui_secret",
       "text": "思わぬ発言に理解が追い付かず、沈黙が流れる。"
     },
     {
-      "event_number": 57,
+      "event_number": 67,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": "うい",
-      "file": "chara_ui_401",
+      "file": "chara_ui_secret4",
       "text": "ち、ちがうの！　やんなっちゃったとか\r\n痛いのが好きとかそういうんじゃなくって！！　\r"
     },
     {
-      "event_number": 58,
+      "event_number": 68,
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": "うい",
-      "file": "chara_ui_711",
+      "file": "chara_ui_secret3",
       "text": "考えちゃうの…負けたらどうなるのかなぁ…って\r\n私が一番強いから、負けられないのも分かってる…\r\nでも…だからこそ…"
+    },
+    {
+      "event_number": 69,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_secret",
+      "text": "そんな私でも絶対に勝てないって思うくらい\r\n圧倒的な力の前に屈服してみたい…って…"
+    },
+    {
+      "event_number": 70,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": null,
+      "file": "chara_ui_secret2",
+      "text": "うずうずと胸に秘めたものについて\r\nゆっくり、丁寧に、打ち明ける優依。\r\nまるで初恋について話すような空気感にむずがゆくなる。"
+    },
+    {
+      "event_number": 71,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_secret3",
+      "text": "副部長さんいい人だから…\r\nヒミツにしなくちゃいけない想いも\r\n話したくなっちゃった"
+    },
+    {
+      "event_number": 72,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_secret3",
+      "text": "負けないよ、これからも\r\nでも、また聞いてくれる…？"
+    },
+    {
+      "event_number": 73,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": null,
+      "file": "chara_ui_secret3",
+      "text": "もちろんと頷いた。"
     }
   ]
 }
