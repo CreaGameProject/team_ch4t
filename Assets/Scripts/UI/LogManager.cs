@@ -15,7 +15,7 @@ public class LogManager : MonoBehaviour
     private GameObject scrollView;
     private ScrollRect scrollRect;
 
-    [SerializeField] private DialogueModel _model;
+    [SerializeField] private DialogueModelBase _model;
 
     // Start is called before the first frame update
     void Start()
