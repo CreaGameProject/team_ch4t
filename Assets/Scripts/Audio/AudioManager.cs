@@ -18,13 +18,15 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
+        bgmSource = gameObject.AddComponent<AudioSource>();
+        bgmSource.loop = true;
+
         for (var i = 0; i < seSourceList.Length; ++i)
         {
             seSourceList[i] = gameObject.AddComponent<AudioSource>();
         }
-        bgmSource = gameObject.AddComponent<AudioSource>();
-        bgmSource.loop = true;
+        
     }
 
     [SerializeField] private AudioData audioData;
@@ -112,7 +114,7 @@ public class AudioManager : MonoBehaviour
     {
         int index = this.ConvertIdIntoIndex(this.audioData.bgm_Data, id);
         bgmSource.clip = this.audioData.bgm_Data[index].clip;
-        bgmSource.volume = this.audioData.bgm_Data[index].volume;
+        //bgmSource.volume = this.audioData.bgm_Data[index].volume;
         bgmSource.Play();
     }
 
