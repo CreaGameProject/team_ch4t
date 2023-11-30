@@ -42,11 +42,11 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 51669e512969e6e44a6e69eefd63e3c9, type: 3}
     volume: 1
     memo: 
-  - id: 0
+  - id: 1
     clip: {fileID: 8300000, guid: 69b61b0a54145e1429725a2d2618ff35, type: 3}
     volume: 1
     memo: 
-  - id: 0
+  - id: 2
     clip: {fileID: 8300000, guid: baec06e160c1314489514fc8153b8d28, type: 3}
     volume: 1
     memo: 
