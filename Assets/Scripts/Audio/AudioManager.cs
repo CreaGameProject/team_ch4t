@@ -18,6 +18,13 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        for (var i = 0; i < seSourceList.Length; ++i)
+        {
+            seSourceList[i] = gameObject.AddComponent<AudioSource>();
+        }
+        bgmSource = gameObject.AddComponent<AudioSource>();
+        bgmSource.loop = true;
     }
 
     [SerializeField] private AudioData audioData;
@@ -26,14 +33,9 @@ public class AudioManager : MonoBehaviour
     private AudioSource bgmSource;
 
     // Start is called before the first frame update
+    
     void Start()
     {
-        for (var i = 0; i < seSourceList.Length; ++i)
-        {
-            seSourceList[i] = gameObject.AddComponent<AudioSource>();
-        }
-        bgmSource = gameObject.AddComponent<AudioSource>();
-
         CheckOverlap(this.audioData.se_Data, "se_Data");
         CheckOverlap(this.audioData.bgm_Data, "bgm_Data");
     }
@@ -100,9 +102,9 @@ public class AudioManager : MonoBehaviour
     public void PlayBGM(int id)
     {
         int index = this.ConvertIdIntoIndex(this.audioData.bgm_Data, id);
-        this.bgmSource.clip = this.audioData.bgm_Data[index].clip;
-        this.bgmSource.volume = this.audioData.bgm_Data[index].volume;
-        this.bgmSource.Play();
+        bgmSource.clip = this.audioData.bgm_Data[index].clip;
+        bgmSource.volume = this.audioData.bgm_Data[index].volume;
+        bgmSource.Play();
     }
 
     public void StopBGM()
