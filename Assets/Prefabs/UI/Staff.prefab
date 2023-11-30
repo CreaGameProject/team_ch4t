@@ -32,10 +32,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 131962465435651653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -17}
-  m_SizeDelta: {x: -100, y: 40}
+  m_AnchorMin: {x: 0.35826612, y: 0.22229233}
+  m_AnchorMax: {x: 1, y: 0.47319752}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5071794122517961216
 CanvasRenderer:
@@ -92,10 +92,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23
+  m_fontSize: 35.1
   m_fontSizeBase: 23
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -205,10 +205,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 131962465435651653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 80}
+  m_SizeDelta: {x: 0, y: -18.599998}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &6318275477652017741
 CanvasRenderer:
@@ -294,10 +294,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 131962465435651653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 17}
-  m_SizeDelta: {x: -100, y: 40}
+  m_AnchorMin: {x: 0.35826612, y: 0.5958728}
+  m_AnchorMax: {x: 1, y: 0.72900003}
+  m_AnchoredPosition: {x: 0, y: -0.29855907}
+  m_SizeDelta: {x: 0, y: 0.59711814}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7738266205072768432
 CanvasRenderer:
@@ -354,10 +354,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 19.2
   m_fontSizeBase: 16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
