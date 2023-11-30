@@ -54,7 +54,7 @@ public class LogManager : MonoBehaviour
         {
             case "うい": sb = Instantiate(uiLogNode, nodeGroup.transform); break;
             case "部長": sb = Instantiate(bossLogNode, nodeGroup.transform); break;
-            case "プップ": sb = Instantiate(puppuLogNode, nodeGroup.transform); break;
+            case "プップ": case "？？？": sb = Instantiate(puppuLogNode, nodeGroup.transform); break;
             case "": sb = Instantiate(narratorLogNode, nodeGroup.transform); break;
         }
         sb.GetComponent<LogNode>().SetContent(log);
