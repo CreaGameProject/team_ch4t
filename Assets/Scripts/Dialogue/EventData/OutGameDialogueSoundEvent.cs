@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class OutGameDialogueSoundEvent : MonoBehaviour
+public class OutGameDialogueSoundEvent : AbstractDialogueEvent
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private int _eventID;
+    public int EventID => _eventID;
 
-    // Update is called once per frame
-    void Update()
+    private string _filePath;
+    public string FilePath => _filePath;
+    public OutGameDialogueSoundEvent(int eventNumber, DialogueEventType dialogueEventType, int eventID, string filePath) : base(eventNumber, dialogueEventType)
     {
-        
+        _eventID = eventID;
+        _filePath = Helper.SoundFilePath + filePath;
     }
 }

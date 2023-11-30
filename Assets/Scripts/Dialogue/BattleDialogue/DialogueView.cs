@@ -166,7 +166,7 @@ public class DialogueView : MonoBehaviour
 
         await UniTask.WhenAll(
             characterRect.DOAnchorPos(new Vector2(1500, 0), 0.0f).ToUniTask(cancellationToken: token),
-            backgroundRect.DOAnchorPos(new Vector2(200, 375), 0.0f).ToUniTask(cancellationToken: token),
+            backgroundRect.DOAnchorPos(new Vector2(300, 375), 0.0f).ToUniTask(cancellationToken: token),
             backgroundRect.DOSizeDelta(new Vector2(0, 2500), 0.0f).ToUniTask(cancellationToken: token)
         );
 
