@@ -138,8 +138,6 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        ChangeRestTurn(this.restTurn);
-
         await SetPresetOnBoard();
 
         await Game();
@@ -188,9 +186,9 @@ public class Board : MonoBehaviour
             }
 
             // プレイヤーの手数を減らす
-            // ヒミツマスを裏返してかつ、最後のプリセットかつ、手数が１のときは減らさない
+            // ヒミツマスを裏返したのが、最後のプリセットのときは減らさない
             Debug.Log(string.Format("presetIndex : {0} | presets.Count : {1}", this.presetIndex, this.presets.Count));
-            if (this.presetIndex + 1 != this.presets.Count && this.restTurn != 1)
+            if ((didFlipSecretCell) || !(this.presetIndex + 1 == this.presets.Count))
             {
                 this.restTurn--;
 
