@@ -27,6 +27,7 @@ public class Gameover : MonoBehaviour
 
     public void LoadRetryScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        SceneManager.LoadScene("ReversiBasic");
     }
 }
