@@ -405,8 +405,64 @@
       "type": "CUT_IN_TALK",
       "secret_count": 2,
       "name": "うい",
-      "file": "chara_ui_211",
-      "text": "仮テキストです！"
+      "file": "chara_ui_411",
+      "text": "副部長さん、内緒のお話、してもいい…？"
+    },
+    {
+      "event_number": 52,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": null,
+      "file": "chara_ui_411",
+      "text": "突然の不安げな表情に背筋が伸びる。"
+    },
+    {
+      "event_number": 53,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_811",
+      "text": "あ～…そんなに緊張しなくていいんだよ！\r\nなんか、ええっと、なんていえばいいのかなぁ…"
+    },
+    {
+      "event_number": 54,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": null,
+      "file": "chara_ui_811",
+      "text": "打って変わって恥じらうようにもじもじとし始めた。\r\nいったい何を話そうとしているのだろうか…\r"
+    },
+    {
+      "event_number": 55,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_811",
+      "text": "わたし…その…\r\n負けたいの……\r"
+    },
+    {
+      "event_number": 56,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": null,
+      "file": "chara_ui_811",
+      "text": "思わぬ発言に理解が追い付かず、沈黙が流れる。"
+    },
+    {
+      "event_number": 57,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_401",
+      "text": "ち、ちがうの！　やんなっちゃったとか\r\n痛いのが好きとかそういうんじゃなくって！！　\r"
+    },
+    {
+      "event_number": 58,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_711",
+      "text": "考えちゃうの…負けたらどうなるのかなぁ…って\r\n私が一番強いから、負けられないのも分かってる…\r\nでも…だからこそ…"
     }
   ]
 }

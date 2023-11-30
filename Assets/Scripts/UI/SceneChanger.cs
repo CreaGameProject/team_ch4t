@@ -9,7 +9,12 @@ public class SceneChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Board.instance.OnGameOverExecuted += OnGameOverExecutedHandler;
+        if (Board.instance != null)
+        {
+            Debug.Log("ÅySceneChanger - StartÅzBoard.instance != null");
+            Board.instance.OnGameOverExecuted += OnGameOverExecutedHandler;
+        }
+        
     }
 
     // Update is called once per frame
