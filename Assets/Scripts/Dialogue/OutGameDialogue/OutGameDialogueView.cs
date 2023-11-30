@@ -8,6 +8,7 @@ public class OutGameDialogueView : DialogueViewBase
 {
     [SerializeField] private Image background;
     [SerializeField] private Image fadeImage;
-    
-    
+    [SerializeField] private GameObject ItemBackground;
+    [SerializeField] private Image itemImage;
+
 }
