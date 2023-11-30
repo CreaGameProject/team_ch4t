@@ -77,6 +77,6 @@ public class Kalte : MonoBehaviour
 
     private void OnChangeHimituNumberExecutedHandler(int howManyHimituDidGet)
     {
-        AddNextSecretText(howManyHimituDidGet);
+        AddNextSecretText(howManyHimituDidGet - 1);
     }
 }
