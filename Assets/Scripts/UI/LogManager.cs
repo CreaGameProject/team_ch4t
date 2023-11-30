@@ -43,18 +43,18 @@ public class LogManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ‰ï˜bƒƒO‚É”­Œ¾‚ğ’Ç‰Á
+    /// ä¼šè©±ãƒ­ã‚°ã«ç™ºè¨€ã‚’è¿½åŠ 
     /// </summary>
-    /// <param name="name">”­Œ¾Ò</param>
-    /// <param name="log">”­Œ¾</param>
+    /// <param name="name">ç™ºè¨€è€…</param>
+    /// <param name="log">ç™ºè¨€</param>
     public void AddLog(string name, string log)
     {
         GameObject sb = null;
         switch (name)
         {
-            case "‚¤‚¢": sb = Instantiate(uiLogNode, nodeGroup.transform); break;
-            case "•”’·": sb = Instantiate(bossLogNode, nodeGroup.transform); break;
-            case "ƒvƒbƒv": case "HHH": sb = Instantiate(puppuLogNode, nodeGroup.transform); break;
+            case "ã†ã„": sb = Instantiate(uiLogNode, nodeGroup.transform); break;
+            case "éƒ¨é•·": sb = Instantiate(bossLogNode, nodeGroup.transform); break;
+            case "ãƒ—ãƒƒãƒ—": case "ï¼Ÿï¼Ÿï¼Ÿ": sb = Instantiate(puppuLogNode, nodeGroup.transform); break;
             case "": sb = Instantiate(narratorLogNode, nodeGroup.transform); break;
         }
         sb.GetComponent<LogNode>().SetContent(log);
