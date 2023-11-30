@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -17,7 +15,7 @@ public class LogManager : MonoBehaviour
     private GameObject scrollView;
     private ScrollRect scrollRect;
 
-    private BackLogData presenter;
+    [SerializeField] private DialogueModel _model;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +36,9 @@ public class LogManager : MonoBehaviour
             Destroy(n.gameObject);
         }
 
-        for (int i = 0; i < presenter.logDataList.Count; i++)
+        for (int i = 0; i < _model.BackLogData.logDataList.Count; i++)
         {
-            AddLog(presenter.logDataList[i].speaker, presenter.logDataList[i].dialogue);
+            AddLog(_model.BackLogData.logDataList[i].speaker, _model.BackLogData.logDataList[i].dialogue);
         }
     }
 
@@ -54,10 +52,10 @@ public class LogManager : MonoBehaviour
         GameObject sb = null;
         switch (name)
         {
-            case "ui": sb = Instantiate(uiLogNode, nodeGroup.transform); break;
-            case "boss": sb = Instantiate(bossLogNode, nodeGroup.transform); break;
-            case "puppu": sb = Instantiate(puppuLogNode, nodeGroup.transform); break;
-            case "narrator": sb = Instantiate(narratorLogNode, nodeGroup.transform); break;
+            case "‚¤‚¢": sb = Instantiate(uiLogNode, nodeGroup.transform); break;
+            case "•”’·": sb = Instantiate(bossLogNode, nodeGroup.transform); break;
+            case "ƒvƒbƒv": sb = Instantiate(puppuLogNode, nodeGroup.transform); break;
+            case "": sb = Instantiate(narratorLogNode, nodeGroup.transform); break;
         }
         sb.GetComponent<LogNode>().SetContent(log);
         StartCoroutine(AnimateScrollView());
