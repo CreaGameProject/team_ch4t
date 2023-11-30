@@ -29,6 +29,8 @@ public class Board : MonoBehaviour
         {
             instance = this;
         }
+
+        //ChangeRestTurn(this.restTurn);
     }
 
     //第一次元⇒x座標、右に行けば増える
@@ -63,7 +65,7 @@ public class Board : MonoBehaviour
     [SerializeField] private Turn.Type turn = Turn.Type.neutral;
     public Turn.Type getTurn { get { return this.turn; } }
 
-    [Header("手数（０になるとゲームオーバー）")] public int restTurn;
+    [Header("手数（０になるとゲームオーバー）")] public int restTurn = 20;
     public int getPresetRestTurn { get { return this.restTurn; } } // todo : getRestTurn に変更する
 
     [Header("プリセットインデックス")]
@@ -138,7 +140,7 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        ChangeRestTurn(this.restTurn);
+        ChangeRestTurn(this.restTurn); // 機能してない
 
         await SetPresetOnBoard();
 
@@ -149,6 +151,8 @@ public class Board : MonoBehaviour
     {
         // ゲームスタート
         Debug.Log("<b><color=#F26E3E>【 Board 】GAME START! </color></b>");
+
+        ChangeRestTurn(this.restTurn); // 機能してる
 
         int code = 1; // ゲーム終了
 

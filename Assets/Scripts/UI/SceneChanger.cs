@@ -28,6 +28,15 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+#else
+        Application.Quit();//ゲームプレイ終了
+#endif
+    }
+
     // 引数：gameResult：対局の結果
     // ※ gameResult => None : 初期状態
     // ※ gameResult => Player_WIN : プレイヤーの勝ち
