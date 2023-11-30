@@ -66,7 +66,16 @@ public class DialogueView : MonoBehaviour
     
     public async UniTask StartCutInTalkDialogue(string characterName, string filePath, string dialogue)
     {
-        cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+        if (filePath == Helper.CharacterFilePath)
+        {
+            cutInTalkCharacterImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            cutInTalkCharacterImage.gameObject.SetActive(true);
+            cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+        }
+
         cutInTalkNameText.text = characterName;
         
         await TypeText(cutInTalkDialogueText, dialogue);
@@ -76,7 +85,6 @@ public class DialogueView : MonoBehaviour
         await WaitUntilMouseClick();
         
         cutInTalkNextImage.gameObject.SetActive(false);
-
     }
 
     public void CloseCutInTalkDialogue()
