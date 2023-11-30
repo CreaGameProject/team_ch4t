@@ -12,5 +12,6 @@ public class Helper
     public const string OutGameDialogueJsonPath = "JSON/outgame_event";
     public const string CharacterFilePath = "Sprites/Characters/";
     public const string ItemFilePath = "Sprites/Characters/";
+    public const string BackgroundPath = "Sprites/UI/";
     public const string SoundFilePath = "Sound/";
 }

@@ -128,7 +128,7 @@
       "name": "プップ",
       "file": "chara_puppu_basic",
       "name_sub": "部長",
-      "file_sub": "chara_boss_simle",
+      "file_sub": "chara_boss_smile",
       "talker": 1,
       "text": "最後に音のテストもするわね。\nチャイムを鳴らすよ。"
     },
@@ -137,7 +137,7 @@
       "type": "SOUND",
       "event_id": 1,
       "name": null,
-      "file": "se_chime",
+      "file": "6",
       "name_sub": null,
       "file_sub": null,
       "talker": null,

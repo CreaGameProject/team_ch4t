@@ -8,6 +8,6 @@ public class OutGameDialogueBlackoutEvent : AbstractDialogueEvent
     public OutGameDialogueBlackoutEvent(int eventNumber, DialogueEventType dialogueEventType, int eventID, string filePath) : base(eventNumber, dialogueEventType)
     {
         _eventID = eventID;
-        _filePath = Helper.ItemFilePath + filePath;
+        _filePath = Helper.BackgroundPath + filePath;
     }
 }
