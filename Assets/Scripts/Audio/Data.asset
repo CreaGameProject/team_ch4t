@@ -14,19 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   se_Data:
   - id: 0
-    clip: {fileID: 8300000, guid: 0232a33ff9a777544a1d8f04162abe02, type: 3}
+    clip: {fileID: 8300000, guid: 9f85e3d27cc39e54cbae66a3b0b26f99, type: 3}
     volume: 1
     memo: 
   - id: 1
-    clip: {fileID: 8300000, guid: 6cee290d4af54c147886dce84037ccf7, type: 3}
+    clip: {fileID: 8300000, guid: 1589abe3f483cbd47a226e2724562172, type: 3}
     volume: 1
     memo: 
   - id: 2
     clip: {fileID: 8300000, guid: e76104f6d13400f4d80c07096690ad63, type: 3}
     volume: 0.3
     memo: "\u77F3\u3092\u3072\u3063\u304F\u308A\u8FD4\u3057\u305F\u3068\u304D\u306E\u97F3"
+  - id: 3
+    clip: {fileID: 8300000, guid: 4fdf1571c9305ab42b68bdd56568a110, type: 3}
+    volume: 1
+    memo: "\u30AB\u30EB\u30C6\u3092\u958B\u304F\u3068\u304D\u306E\u97F3"
   bgm_Data:
   - id: 0
-    clip: {fileID: 8300000, guid: e7a9e74d275b8a149921fbf689a010a3, type: 3}
-    volume: 0
-    memo: 
+    clip: {fileID: 8300000, guid: 51669e512969e6e44a6e69eefd63e3c9, type: 3}
+    volume: 1
+    memo: "\u30D0\u30C8\u30EB"
+  - id: 1
+    clip: {fileID: 8300000, guid: 69b61b0a54145e1429725a2d2618ff35, type: 3}
+    volume: 1
+    memo: COM
+  - id: 2
+    clip: {fileID: 8300000, guid: baec06e160c1314489514fc8153b8d28, type: 3}
+    volume: 1
+    memo: "\u30EA\u30B6\u30EB\u30C8"

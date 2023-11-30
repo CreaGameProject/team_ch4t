@@ -360,6 +360,7 @@ MonoBehaviour:
   bossLogNode: {fileID: 0}
   puppuLogNode: {fileID: 0}
   scrollView: {fileID: 3356126831912604356}
+  _model: {fileID: 0}
 --- !u!1 &3356126831912604356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1465177346800165922, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 410.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1465177346800165922, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1606,7 +1607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1703448851808140239, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1703448851808140239, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1638,7 +1639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6220067625757700792, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 435.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6220067625757700792, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.y
