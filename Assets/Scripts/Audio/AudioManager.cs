@@ -28,9 +28,10 @@ public class AudioManager : MonoBehaviour
     }
 
     [SerializeField] private AudioData audioData;
-    
-    private AudioSource[] seSourceList = new AudioSource[20];
+
     private AudioSource bgmSource;
+    private AudioSource[] seSourceList = new AudioSource[20];
+    
 
     // Start is called before the first frame update
     
@@ -80,7 +81,7 @@ public class AudioManager : MonoBehaviour
         int index = this.ConvertIdIntoIndex(this.audioData.se_Data, id);
         var seSource = GetUnusedAudioSource();
         seSource.clip = this.audioData.se_Data[index].clip;
-        seSource.volume = this.audioData.se_Data[index].volume;
+        //seSource.volume = this.audioData.se_Data[index].volume;
         seSource.Play();
     }
 
@@ -97,6 +98,14 @@ public class AudioManager : MonoBehaviour
     public void UnPauseSE()
     {
         //this.seSource.UnPause();
+    }
+
+    public void SetSEVolume(float newVolume)
+    {
+        foreach(AudioSource audioSource in seSourceList)
+        {
+            audioSource.volume = newVolume;
+        }
     }
 
     public void PlayBGM(int id)

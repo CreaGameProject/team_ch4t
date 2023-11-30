@@ -11,6 +11,8 @@ public class AudioSlider : MonoBehaviour
     private AudioSource seSource;
     private AudioSource bgmSource;
 
+    GameObject audioManager = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,7 @@ public class AudioSlider : MonoBehaviour
         bgmSlider = GameObject.Find("BGMSlider").GetComponent<Slider>();
 
         // AudioManagerオブジェクトを取得
-        GameObject audioManager = GameObject.Find("AudioManager");
+        audioManager = GameObject.Find("AudioManager");
         
         // AudioManagerが存在し、AudioSourceが2つ以上あるか確認
         if (audioManager != null)
@@ -29,8 +31,9 @@ public class AudioSlider : MonoBehaviour
             // AudioSourceが2つ以上ある場合にのみ代入
             if (components.Length >= 2)
             {
-                this.seSource = components[0];
-                this.bgmSource = components[1];
+                this.bgmSource = components[0];
+                this.seSource = components[1];
+                
 
                 seSlider.value = seSource.volume;
                 bgmSlider.value = bgmSource.volume;
@@ -61,6 +64,7 @@ public class AudioSlider : MonoBehaviour
     // 音量を変更
     private void UpdateSEVolume(float newVolume)
     {
+        audioManager.GetComponent<AudioManager>().SetSEVolume(newVolume);
         seSource.volume = newVolume;
         Debug.Log("SEの音量を" + newVolume + "に変更");
     }
