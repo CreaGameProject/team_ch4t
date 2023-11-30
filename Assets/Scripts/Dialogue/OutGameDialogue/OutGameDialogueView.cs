@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using TMPro;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class OutGameDialogueView : MonoBehaviour
+public class OutGameDialogueView : DialogueViewBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private Image background;
+    [SerializeField] private Image fadeImage;
+    
+    
 }
