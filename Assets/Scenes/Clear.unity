@@ -1210,6 +1210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c21244ef18a84afcb916a2abe78b7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _model: {fileID: 0}
+  _view: {fileID: 0}
 --- !u!114 &1362253338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,6 +1224,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744321a1605fc4de38d3431430edd38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 0}
+  fadeImage: {fileID: 0}
+  itemBackground: {fileID: 0}
+  itemImage: {fileID: 0}
+  nameText: {fileID: 0}
+  dialogueText: {fileID: 0}
+  characterImageLeft: {fileID: 0}
+  characterImageCenter: {fileID: 0}
+  characterImageRight: {fileID: 0}
+  dialogueNextImage: {fileID: 0}
+  activeColor: {r: 0, g: 0, b: 0, a: 0}
+  inactiveColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1362253339
 MonoBehaviour:
   m_ObjectHideFlags: 0

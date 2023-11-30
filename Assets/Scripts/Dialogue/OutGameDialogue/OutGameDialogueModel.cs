@@ -61,7 +61,8 @@ public class OutGameDialogueModel : DialogueModelBase
                             dialogueJson.event_number,
                             dialogueEventType,
                             dialogueJson.event_id,
-                            dialogueJson.file);
+                            dialogueJson.file,
+                            dialogueJson.text);
                         dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
                         break;
                     case DialogueEventType.BLACKOUT:

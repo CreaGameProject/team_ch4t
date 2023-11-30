@@ -5,9 +5,12 @@ public class OutGameDialogueSoundEvent : AbstractDialogueEvent
 
     private string _filePath;
     public string FilePath => _filePath;
-    public OutGameDialogueSoundEvent(int eventNumber, DialogueEventType dialogueEventType, int eventID, string filePath) : base(eventNumber, dialogueEventType)
+    private string _text;
+    public string Text => _text;
+    public OutGameDialogueSoundEvent(int eventNumber, DialogueEventType dialogueEventType, int eventID, string filePath, string text) : base(eventNumber, dialogueEventType)
     {
         _eventID = eventID;
-        _filePath = Helper.SoundFilePath + filePath;
+        _filePath = filePath;
+        _text = text;
     }
 }
