@@ -29,6 +29,8 @@ public class Board : MonoBehaviour
         {
             instance = this;
         }
+
+        ChangeRestTurn(this.restTurn);
     }
 
     //第一次元⇒x座標、右に行けば増える
