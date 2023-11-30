@@ -3,25 +3,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-public class DialogueModel : MonoBehaviour
+public class DialogueModel : DialogueModelBase
 {
     private DialogueJsonHolder dialogueData;
     public List<DialogueTalkEvent> DialogueTalkEvents = new List<DialogueTalkEvent>();
     public List<DialogueCutInEvent> DialogueCutInEvents = new List<DialogueCutInEvent>();
     public List<DialogueCutInTalkEvent> DialogueCutInTalkEvents = new List<DialogueCutInTalkEvent>();
     
-    private BackLogData _backLogData;
-    public BackLogData BackLogData => _backLogData;
     
     void Awake()
     {
         PrefixDialogueEventList();
     }
-
-    private void Start()
-    {
-        _backLogData = new BackLogData();
-    }
+    
 
     private void PrefixDialogueEventList()
     {
@@ -61,15 +55,5 @@ public class DialogueModel : MonoBehaviour
         }
     }
 
-    public void AddBackLogData(string characterName, string dialogue)
-    {
-        var logData = new BackLogData.LogData
-        {
-            speaker = characterName,
-            dialogue = dialogue
-        };
-
-        _backLogData.logDataList.Add(logData);
-        //Debug.Log($"バックログにspeaker: {logData.speaker}, dialogue: {logData.dialogue} を追加しました。");
-    }
+    
 }
