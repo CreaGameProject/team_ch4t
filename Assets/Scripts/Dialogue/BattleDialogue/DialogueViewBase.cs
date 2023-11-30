@@ -1,18 +1,18 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using TMPro;
 using UniRx;
 using UnityEngine;
 
-public class OutGameDialogueView : MonoBehaviour
+public class DialogueViewBase : MonoBehaviour
 {
     private int _talkSpeed = 50;
-
-    private Sprite LoadSprite(string filePath)
+    
+    protected Sprite LoadSprite(string filePath)
     {
         return Resources.Load<Sprite>(filePath);
     }
-
-    private async UniTask TypeText(TextMeshProUGUI textMeshProUGUI, string text)
+    
+    protected async UniTask TypeText(TextMeshProUGUI textMeshProUGUI, string text)
     {
         textMeshProUGUI.text = "";
         string stockString = "";
@@ -61,17 +61,23 @@ public class OutGameDialogueView : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// キャラクターが話終えたときに呼び出される
+    /// </summary>
+    public delegate void OnCharacterTalkExecutedDelegate(string characterName, string dialogue);
+
     public event DialogueView.OnCharacterTalkExecutedDelegate OnCharacterTalkExecuted;
 
-    private void SaveToBackLog(string characterName, string dialogue)
+    protected void SaveToBackLog(string characterName, string dialogue)
     {
         if (OnCharacterTalkExecuted != null) { OnCharacterTalkExecuted(characterName, dialogue); }
     }
-
+    
     /// <summary>
     /// マウスクリックで次の文章を表示する
     /// </summary>
-    private UniTask WaitUntilMouseClick()
+    protected UniTask WaitUntilMouseClick()
     {
         var clickStream = Observable.EveryUpdate()
             .Where(_ => Input.GetMouseButtonDown(0))
