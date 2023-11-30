@@ -2,12 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OutGameDialogueModel : MonoBehaviour
+public class OutGameDialogueModel : DialogueModelBase
 {
-    private List<AbstractDialogueEvent> dialogueEvents = new List<AbstractDialogueEvent>();
-    private List<List<AbstractDialogueEvent>> dialogueEventsList = new List<List<AbstractDialogueEvent>>(); 
-    private BackLogData _backLogData;
-    public BackLogData BackLogData => _backLogData;
+    public List<List<AbstractDialogueEvent>> dialogueEventsList = new List<List<AbstractDialogueEvent>>();
     
     private void Awake()
     {
@@ -16,6 +13,7 @@ public class OutGameDialogueModel : MonoBehaviour
 
     private void PrefixDialogueEventList()
     {
+        var maxEventID = 0;
         var jsonFile = Resources.Load<TextAsset>(Helper.OutGameDialogueJsonPath);
         
         if (jsonFile != null)
@@ -27,10 +25,17 @@ public class OutGameDialogueModel : MonoBehaviour
             {
                 DialogueEventType dialogueEventType = Enum.Parse<DialogueEventType>(dialogueJson.type);
 
+                if (maxEventID <= dialogueJson.event_id)
+                {
+                    maxEventID = dialogueJson.event_id;
+                    dialogueEventsList.Add(new List<AbstractDialogueEvent>());
+                }
+
+                AbstractDialogueEvent dialogueEvent;
                 switch (dialogueEventType)
                 {
                     case DialogueEventType.TALK:
-                        var dialogueTalk = new OutGameDialogueTalkEvent(
+                        dialogueEvent = new OutGameDialogueTalkEvent(
                             dialogueJson.event_number,
                             dialogueEventType,
                             dialogueJson.event_id,
@@ -40,17 +45,32 @@ public class OutGameDialogueModel : MonoBehaviour
                             dialogueJson.file_sub,
                             dialogueJson.talker,
                             dialogueJson.text
-                            );
-                        dialogueEventsList[dialogueTalk.EventID].Add(dialogueTalk);
-                        //DialogueTalkEvents.Add(dialogueTalk);
+                        );
+                        dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
                         break;
-                    case DialogueEventType.CUT_IN:
-                        //var dialogueCutIn = new DialogueCutInEvent(dialogueJson.event_number, dialogueEventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file);
-                        //DialogueCutInEvents.Add(dialogueCutIn);
+                    case DialogueEventType.ITEM:
+                        dialogueEvent = new OutGameDialogueItemEvent(
+                            dialogueJson.event_number,
+                            dialogueEventType,
+                            dialogueJson.event_id,
+                            dialogueJson.file);
+                        dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
                         break;
-                    case DialogueEventType.CUT_IN_TALK:
-                        //var dialogueCutInTalk = new DialogueCutInTalkEvent(dialogueJson.event_number, dialogueEventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file, dialogueJson.text);
-                        //DialogueCutInTalkEvents.Add(dialogueCutInTalk);
+                    case DialogueEventType.SOUND:
+                        dialogueEvent = new OutGameDialogueSoundEvent(
+                            dialogueJson.event_number,
+                            dialogueEventType,
+                            dialogueJson.event_id,
+                            dialogueJson.file);
+                        dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
+                        break;
+                    case DialogueEventType.BLACKOUT:
+                        dialogueEvent = new OutGameDialogueBlackoutEvent(
+                            dialogueJson.event_number,
+                            dialogueEventType,
+                            dialogueJson.event_id,
+                            dialogueJson.file);
+                        dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
                         break;
                     default:
                         break;
@@ -61,17 +81,5 @@ public class OutGameDialogueModel : MonoBehaviour
         {
             Debug.LogError("JSONファイルが割り当てられていません。");
         }
-    }
-    
-    public void AddBackLogData(string characterName, string dialogue)
-    {
-        var logData = new BackLogData.LogData
-        {
-            speaker = characterName,
-            dialogue = dialogue
-        };
-
-        _backLogData.logDataList.Add(logData);
-        //Debug.Log($"バックログにspeaker: {logData.speaker}, dialogue: {logData.dialogue} を追加しました。");
     }
 }

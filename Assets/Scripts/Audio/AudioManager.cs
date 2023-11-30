@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -20,16 +21,18 @@ public class AudioManager : MonoBehaviour
     }
 
     [SerializeField] private AudioData audioData;
-
-    [SerializeField] private AudioSource seSource;
-    [SerializeField] private AudioSource bgmSource;
+    
+    private AudioSource[] seSourceList = new AudioSource[20];
+    private AudioSource bgmSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        AudioSource[] tmp = this.GetComponents<AudioSource>();
-        this.seSource = tmp[0];
-        this.bgmSource = tmp[1];
+        for (var i = 0; i < seSourceList.Length; ++i)
+        {
+            seSourceList[i] = gameObject.AddComponent<AudioSource>();
+        }
+        bgmSource = gameObject.AddComponent<AudioSource>();
 
         CheckOverlap(this.audioData.se_Data, "se_Data");
         CheckOverlap(this.audioData.bgm_Data, "bgm_Data");
@@ -67,28 +70,31 @@ public class AudioManager : MonoBehaviour
 
         return -1;
     }
+    
+    private AudioSource GetUnusedAudioSource() => seSourceList.FirstOrDefault(a => a.isPlaying == false);
 
     public void PlaySE(int id)
     {
         int index = this.ConvertIdIntoIndex(this.audioData.se_Data, id);
-        this.seSource.clip = this.audioData.se_Data[index].clip;
-        this.seSource.volume = this.audioData.se_Data[index].volume;
-        this.seSource.Play();
+        var seSource = GetUnusedAudioSource();
+        seSource.clip = this.audioData.se_Data[index].clip;
+        seSource.volume = this.audioData.se_Data[index].volume;
+        seSource.Play();
     }
 
     public void StopSE()
     {
-        this.seSource.Stop();
+        //this.seSource.Stop();
     }
 
     public void PauseSE()
     {
-        this.seSource.Pause();
+        //this.seSource.Pause();
     }
 
     public void UnPauseSE()
     {
-        this.seSource.UnPause();
+        //this.seSource.UnPause();
     }
 
     public void PlayBGM(int id)
