@@ -2020,7 +2020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 484308908589842154, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: windowScaleRatio
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 558601801486703460, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_Name

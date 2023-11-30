@@ -53,7 +53,7 @@ public class Kalte : MonoBehaviour
             rt.DOAnchorPos(new Vector3(0,0,0), animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(Quaternion.identity, animationTime);
             backGround.DOFade(0.85f, animationTime);
-            AudioManager.instance_AudioManager.PlaySE(2);
+            AudioManager.instance_AudioManager.PlaySE(3);
             isExpand = true;
         }
     }
@@ -66,7 +66,7 @@ public class Kalte : MonoBehaviour
             rt.DOAnchorPos(defaultWindowsPosition, animationTime).SetEase(Ease.InOutCirc);
             rt.DORotateQuaternion(defaultWindowsRotation, animationTime);
             backGround.DOFade(0, animationTime);
-            AudioManager.instance_AudioManager.PlaySE(2);
+            AudioManager.instance_AudioManager.PlaySE(3);
             isExpand = false;
         }
     }

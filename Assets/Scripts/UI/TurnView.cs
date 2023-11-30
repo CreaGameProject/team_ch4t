@@ -10,8 +10,10 @@ public class TurnView : MonoBehaviour
     private Sprite yourTurnImg;
     [SerializeField]
     private Sprite partnerImg;
+    [SerializeField]
     private Image turnImage;
-    Turn.Type turn;
+
+    //Turn.Type turn;
 
     // Start is called before the first frame update
     void Start()
@@ -23,14 +25,18 @@ public class TurnView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // 手番（現在のターン）が変更されたときに実行される
     // 引数：type：変更された後の手番（現在のターン）：
     private void OnChangeTurnExecutedHandler(Turn.Type type)
     {
-        switch (turn)
+        Debug.Log("【TurnView】OnChangeTurnExecutedHandler(Turn.Type type) | " + type);
+
+        //turn = type;
+
+        switch (type)
         {
             case Turn.Type.player:
                 turnImage.sprite = yourTurnImg;
