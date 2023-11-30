@@ -131,19 +131,19 @@ public class DialogueView : MonoBehaviour
                 else if (c == '、')
                 {
                     textMeshProUGUI.text += c;
-                    AudioManager.instance_AudioManager.PlaySE(0);
+                    AudioManager.instance_AudioManager.PlaySE(4);
                     await UniTask.Delay(_talkSpeed * 5); 
                 }
                 else if (c == '。' || c == '？' || c == '！' || c == '.')
                 {
                     textMeshProUGUI.text += c;
-                    AudioManager.instance_AudioManager.PlaySE(0);
+                    AudioManager.instance_AudioManager.PlaySE(4);
                     await UniTask.Delay(_talkSpeed * 10); 
                 }
                 else
                 {
                     textMeshProUGUI.text += c;
-                    AudioManager.instance_AudioManager.PlaySE(0);
+                    AudioManager.instance_AudioManager.PlaySE(4);
                     await UniTask.Delay(_talkSpeed); 
                 }
             }
@@ -179,6 +179,8 @@ public class DialogueView : MonoBehaviour
         var backgroundRect = cutInBackgroundMask.GetComponent<RectTransform>();
         var characterRect = cutInCharacterImage.GetComponent<RectTransform>();
         cutInUI.SetActive(true);
+        
+        AudioManager.instance_AudioManager.PlaySE(5);
 
         await UniTask.WhenAll(
             characterRect.DOAnchorPos(new Vector2(1500, 0), 0.0f).ToUniTask(cancellationToken: token),
