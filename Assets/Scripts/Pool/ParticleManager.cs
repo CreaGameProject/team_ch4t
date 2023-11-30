@@ -37,7 +37,7 @@ namespace Pool
             }
 
             var effect = pool.Rent(); //ObjectPoolから1つ取得
-            effect.PlayParticle(position).Subscribe(__ => { pool.Return(effect); }); //エフェクトを再生し、再生終了したらpoolに返却する
+            effect.PlayParticle(position).Subscribe(__ => { pool.Return(effect); }).AddTo(this); //エフェクトを再生し、再生終了したらpoolに返却する
         }
     }
 }
