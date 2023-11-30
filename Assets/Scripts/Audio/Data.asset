@@ -50,3 +50,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: baec06e160c1314489514fc8153b8d28, type: 3}
     volume: 1
     memo: 
+  - id: 3
+    clip: {fileID: 8300000, guid: a0b4173c78b9137468fa898d0ae23051, type: 3}
+    volume: 1
+    memo: "\u30BF\u30A4\u30C8\u30EB\u7528BGM"
