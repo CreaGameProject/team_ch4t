@@ -2002,10 +2002,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7335348975645289292, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8761764761520332716, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
