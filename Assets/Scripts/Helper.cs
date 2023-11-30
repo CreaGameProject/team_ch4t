@@ -9,5 +9,8 @@ public class Helper
     }
 
     public const string BattleDialogueJsonPath = "JSON/text_event";
+    public const string OutGameDialogueJsonPath = "JSON/outgame_event";
     public const string CharacterFilePath = "Sprites/Characters/";
+    public const string ItemFilePath = "Sprites/Characters/";
+    public const string SoundFilePath = "Sound/";
 }
