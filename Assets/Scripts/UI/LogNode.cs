@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing.Printing;
 using UnityEngine;
 using TMPro;
 

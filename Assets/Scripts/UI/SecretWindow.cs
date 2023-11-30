@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using System.Diagnostics.Eventing.Reader;
 
 public class SecretWindow: MonoBehaviour
 {
