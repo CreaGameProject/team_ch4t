@@ -226,6 +226,8 @@ public class Board : MonoBehaviour
             // ターンが変わった時の演出
             ChangeTurn(this.turn);
 
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+
             // 盤面をコンソールに表示する
             ViewBoard(Turn.Type.computer, true);
 
@@ -242,6 +244,8 @@ public class Board : MonoBehaviour
             {
                 Debug.Log("<b><color=#ED1454>【 Board - ChangeTurn 】石を置ける場所がないのでパスしました。</color></b>");
             }
+
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
 
             // ゲームが継続するか調べる
             // Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
