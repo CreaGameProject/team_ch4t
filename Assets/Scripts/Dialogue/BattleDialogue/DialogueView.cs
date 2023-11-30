@@ -57,7 +57,15 @@ public class DialogueView : MonoBehaviour
         battleDialogueText.text = "";
         
         cutInTalkUI.SetActive(true);
-        cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+        if (filePath == Helper.CharacterFilePath)
+        {
+            cutInTalkCharacterImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            cutInTalkCharacterImage.gameObject.SetActive(true);
+            cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+        }
         cutInTalkNameText.text = characterName;
         
         cutInTalkNextImage.gameObject.SetActive(false);
