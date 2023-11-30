@@ -38,7 +38,7 @@
       "secret_count": null,
       "name": "うい",
       "file": "chara_ui_200",
-      "text": "私、パズルゲーム得意だよ！リバーシはそんなにやらないけど…\nスマホでできるゲームでハマってるのがあるの。一緒にやる？"
+      "text": "私、パズルゲーム得意だよ！リバーシはそんなにだけど…\r\nスマホでできるゲームでハマってるのがあるの。\r\n一緒にやる？"
     },
     {
       "event_number": 6,
@@ -62,7 +62,7 @@
       "secret_count": null,
       "name": "うい",
       "file": "chara_ui_410",
-      "text": "靴箱の手紙、あなたにも届いたんだ。\n私、果たし状かなにかが届いたのかと思ってびっくりしちゃった…\n"
+      "text": "靴箱の手紙、あなたにも届いたんだ。\n私、果たし状かなにかが届いたのかと思ってびっくりしちゃった…"
     },
     {
       "event_number": 9,
@@ -70,7 +70,7 @@
       "secret_count": null,
       "name": "うい",
       "file": "chara_ui_310",
-      "text": "面接って言われたからなんか緊張しちゃって…\n部長さんもちょっと遊ぶだけだよ～って言ってくれればよかったのに…\n"
+      "text": "面接って言われたからなんか緊張しちゃって…\r\n部長さんもちょっと遊ぶだけだよ～って\r\n言ってくれればよかったのに…"
     },
     {
       "event_number": 10,
@@ -78,13 +78,13 @@
       "secret_count": null,
       "name": "うい",
       "file": "chara_ui_200",
-      "text": "副部長さんって私のこと知ってた…？\n…よかった～！私そんなに目立つ方じゃないから、もしかしてって…\n"
+      "text": "副部長さんって私のこと知ってた…？\n…よかった～！私そんなに目立つ方じゃないから、もしかしてって…"
     },
     {
       "event_number": 11,
       "type": "CUT_IN",
       "secret_count": null,
-      "name": "うい",
+      "name": null,
       "file": "chara_ui_wind",
       "text": null
     },
@@ -141,7 +141,7 @@
       "type": "CUT_IN_TALK",
       "secret_count": null,
       "name": "うい",
-      "file": "chara_ui_711",
+      "file": "chara_ui_710",
       "text": "この傷ね、昔いろいろあったの。\r"
     },
     {
@@ -149,7 +149,7 @@
       "type": "CUT_IN_TALK",
       "secret_count": null,
       "name": "うい",
-      "file": "chara_ui_712",
+      "file": "chara_ui_710",
       "text": "とっさに友達を庇ってできちゃった傷なんだ。"
     },
     {
@@ -157,7 +157,7 @@
       "type": "CUT_IN_TALK",
       "secret_count": null,
       "name": null,
-      "file": "chara_ui_713",
+      "file": "chara_ui_710",
       "text": "彼女の物憂げな表情に胸が詰まる。"
     },
     {
@@ -165,7 +165,7 @@
       "type": "CUT_IN_TALK",
       "secret_count": null,
       "name": null,
-      "file": "chara_ui_714",
+      "file": "chara_ui_710",
       "text": "こちらからこれ以上詮索するのはやめておこう。"
     },
     {
@@ -214,7 +214,7 @@
       "secret_count": 1,
       "name": "うい",
       "file": "chara_ui_210",
-      "text": "実は前から副部長さんとお話ししたいなぁって思ってたんだ～\r\nせっかくだし、クラスメイトみんなと仲良くなりたいじゃん"
+      "text": "実は前から副部長さんとお話ししたいなぁって思ってたんだ～\nせっかくだし、クラスメイトみんなと仲良くなりたいじゃん"
     },
     {
       "event_number": 28,
@@ -228,20 +228,156 @@
       "event_number": 29,
       "type": "CUT_IN",
       "secret_count": 1,
-      "name": "うい",
-      "file": "chara_ui_611",
+      "name": null,
+      "file": "chara_puppu_angry2",
       "text": null
     },
     {
       "event_number": 30,
       "type": "CUT_IN_TALK",
       "secret_count": 1,
-      "name": "うい",
-      "file": "chara_ui_611",
-      "text": "仮テキストだよ！"
+      "name": null,
+      "file": null,
+      "text": "突然優依のカバンが動き始める。"
     },
     {
       "event_number": 31,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": null,
+      "text": "異変に気づいた次の瞬間、カバンの中からネズミのようなぬいぐるみが飛び出した。"
+    },
+    {
+      "event_number": 32,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "？？？",
+      "file": "chara_puppu_angry2",
+      "text": "ルビア！　大変だ！　\r\n近くに魔物の気配を感じるよ！　\r"
+    },
+    {
+      "event_number": 33,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": "chara_puppu_angry2",
+      "text": "突然現れたぬいぐるみが話し始める。\n僕には状況が全く理解できなかった。"
+    },
+    {
+      "event_number": 34,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_400",
+      "text": "わわっ！　プップ！　\r\n勝手に出てきちゃダメだよ！　\r"
+    },
+    {
+      "event_number": 35,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "プップ",
+      "file": "chara_puppu_angry2",
+      "text": "そんなこと言ってる場合じゃないよ！　\r\n町が危ないかもしれないんだ！　\r"
+    },
+    {
+      "event_number": 36,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_410",
+      "text": "うぅ…しょうがないなぁ…\r\nえっと…副部長さん。ちょっとだけ待っててね。\r"
+    },
+    {
+      "event_number": 37,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": null,
+      "text": "すると優依は急いで部室を出て行ってしまった。\r"
+    },
+    {
+      "event_number": 38,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": null,
+      "text": "あまりに突然のことに開いた口が塞がらなかった。\r"
+    },
+    {
+      "event_number": 39,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": null,
+      "text": "しゃべるぬいぐるみと魔物。\r\nふと、この世界を守っているという魔法少女のことが頭をよぎる。\r"
+    },
+    {
+      "event_number": 40,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": null,
+      "text": "…………………\r"
+    },
+    {
+      "event_number": 41,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": null,
+      "text": "わけもわからないまま3分くらい過ぎただろうか。\r\n彼女が部室に戻ってきた。\r"
+    },
+    {
+      "event_number": 42,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_410",
+      "text": "お待たせしちゃってごめんね。再開しよっか。"
+    },
+    {
+      "event_number": 43,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_710",
+      "text": "…………………\r"
+    },
+    {
+      "event_number": 44,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_410",
+      "text": "そういうわけにも…いかない…よね…？"
+    },
+    {
+      "event_number": 45,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": "うい",
+      "file": "chara_ui_510",
+      "text": "私ね、魔法少女ルビアなの。"
+    },
+    {
+      "event_number": 46,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": "chara_ui_111",
+      "text": "彼女の姿がみるみるうちに変わっていった。"
+    },
+    {
+      "event_number": 47,
+      "type": "CUT_IN_TALK",
+      "secret_count": 1,
+      "name": null,
+      "file": "chara_ui_111",
+      "text": "テレビで何度も見た魔法少女が目の前にいる。"
+    },
+    {
+      "event_number": 48,
       "type": "TALK",
       "secret_count": 2,
       "name": "うい",
@@ -249,12 +385,28 @@
       "text": "私のこと知ってた…？最強の魔法少女、ルビアちゃん！って！\r\n実は私負けなしなんだぁ、すごいでしょ！\r"
     },
     {
-      "event_number": 32,
+      "event_number": 49,
       "type": "TALK",
       "secret_count": 2,
       "name": "うい",
       "file": "chara_ui_801",
       "text": "ルビアの正体知ってる人ってなかなかいなくてさ…\r\nこんなに私のこと話せるの新鮮だからうれしいなぁ…\r"
+    },
+    {
+      "event_number": 50,
+      "type": "CUT_IN",
+      "secret_count": 2,
+      "name": null,
+      "file": null,
+      "text": null
+    },
+    {
+      "event_number": 51,
+      "type": "CUT_IN_TALK",
+      "secret_count": 2,
+      "name": "うい",
+      "file": "chara_ui_211",
+      "text": "仮テキストです！"
     }
   ]
 }
