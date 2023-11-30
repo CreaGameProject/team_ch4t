@@ -1,0 +1,158 @@
+{
+  "dialogueEvents": [
+    {
+      "event_number": 1,
+      "type": "TALK",
+      "event_id": "0",
+      "name": "うい",
+      "file": "chara_ui_610",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic",
+      "talker": "0",
+      "text": "こんにちは！"
+    },
+    {
+      "event_number": 2,
+      "type": "TALK",
+      "event_id": "0",
+      "name": "うい",
+      "file": "chara_ui_610",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic2",
+      "talker": 1,
+      "text": "部長だよ。"
+    },
+    {
+      "event_number": 3,
+      "type": "TALK",
+      "event_id": "0",
+      "name": "うい",
+      "file": "chara_ui_200",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic",
+      "talker": "0",
+      "text": "切り替えはうまくいってるかな？"
+    },
+    {
+      "event_number": 4,
+      "type": "TALK",
+      "event_id": "0",
+      "name": "うい",
+      "file": "chara_ui_200",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic2",
+      "talker": 1,
+      "text": "<color=#9c3444>色変換</color>もうまくいってそうだね。\n次はアイテムの表示のテストをするよ。"
+    },
+    {
+      "event_number": 5,
+      "type": "ITEM",
+      "event_id": "0",
+      "name": null,
+      "file": "icon_boss",
+      "name_sub": null,
+      "file_sub": null,
+      "talker": null,
+      "text": null
+    },
+    {
+      "event_number": 6,
+      "type": "TALK",
+      "event_id": "0",
+      "name": "うい",
+      "file": "chara_ui_610",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic",
+      "talker": "0",
+      "text": "うまく表示できたみたいだね！"
+    },
+    {
+      "event_number": 7,
+      "type": "TALK",
+      "event_id": "0",
+      "name": "うい",
+      "file": "chara_ui_610",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic",
+      "talker": 1,
+      "text": "次はシーン遷移をしてみましょう。"
+    },
+    {
+      "event_number": 8,
+      "type": "BLACKOUT",
+      "event_id": "0",
+      "name": null,
+      "file": "pict_backGround",
+      "name_sub": null,
+      "file_sub": null,
+      "talker": null,
+      "text": "テキストのテストキャラクターだよ"
+    },
+    {
+      "event_number": 9,
+      "type": "TALK",
+      "event_id": 1,
+      "name": "プップ",
+      "file": "chara_puppu_basic",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic2",
+      "talker": 1,
+      "text": "次のシーンに来たわ。"
+    },
+    {
+      "event_number": 10,
+      "type": "TALK",
+      "event_id": 1,
+      "name": "プップ",
+      "file": "chara_puppu_angry",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_basic",
+      "talker": "0",
+      "text": "プップだよ！\n私のアイテムも見せるね！"
+    },
+    {
+      "event_number": 11,
+      "type": "ITEM",
+      "event_id": 1,
+      "name": null,
+      "file": "icon_puppu",
+      "name_sub": null,
+      "file_sub": null,
+      "talker": null,
+      "text": null
+    },
+    {
+      "event_number": 12,
+      "type": "TALK",
+      "event_id": 1,
+      "name": "プップ",
+      "file": "chara_puppu_basic",
+      "name_sub": "部長",
+      "file_sub": "chara_boss_simle",
+      "talker": 1,
+      "text": "最後に音のテストもするわね。\nチャイムを鳴らすよ。"
+    },
+    {
+      "event_number": 13,
+      "type": "SOUND",
+      "event_id": 1,
+      "name": null,
+      "file": "se_chime",
+      "name_sub": null,
+      "file_sub": null,
+      "talker": null,
+      "text": "キーンコーンカーンコーン"
+    },
+    {
+      "event_number": 14,
+      "type": "BLACKOUT",
+      "event_id": 1,
+      "name": null,
+      "file": "pict_backGround",
+      "name_sub": null,
+      "file_sub": null,
+      "talker": null,
+      "text": null
+    }
+  ]
+}
