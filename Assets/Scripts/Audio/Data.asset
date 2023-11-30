@@ -23,7 +23,7 @@ MonoBehaviour:
     memo: 
   - id: 2
     clip: {fileID: 8300000, guid: e76104f6d13400f4d80c07096690ad63, type: 3}
-    volume: 1
+    volume: 0.3
     memo: "\u77F3\u3092\u3072\u3063\u304F\u308A\u8FD4\u3057\u305F\u3068\u304D\u306E\u97F3"
   bgm_Data:
   - id: 0
