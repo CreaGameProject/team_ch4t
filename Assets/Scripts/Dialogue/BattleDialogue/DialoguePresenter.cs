@@ -22,6 +22,8 @@ public class DialoguePresenter : MonoBehaviour
             _model.DialogueTalkEvents[0].CharacterName,
             _model.DialogueTalkEvents[0].FilePath
             );
+        
+        AudioManager.instance_AudioManager.PlayBGM(0);
     }
 
     private void CharacterTalkExecutedEventHandler(string characterName, string dialogue)
@@ -87,7 +89,6 @@ public class DialoguePresenter : MonoBehaviour
         var cutInEvent = selectedCutInEvents[0];
         
         await _view.StartCutIn(
-            cutInEvent.FilePath,
             token
         );
     }

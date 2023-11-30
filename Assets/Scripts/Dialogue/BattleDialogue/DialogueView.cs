@@ -115,19 +115,19 @@ public class DialogueView : MonoBehaviour
                 else if (c == '、')
                 {
                     textMeshProUGUI.text += c;
-                    // TODO: 話した時の効果音を入れる
+                    AudioManager.instance_AudioManager.PlaySE(0);
                     await UniTask.Delay(_talkSpeed * 5); 
                 }
                 else if (c == '。' || c == '？' || c == '！' || c == '.')
                 {
                     textMeshProUGUI.text += c;
-                    // TODO: 話した時の効果音を入れる
+                    AudioManager.instance_AudioManager.PlaySE(0);
                     await UniTask.Delay(_talkSpeed * 10); 
                 }
                 else
                 {
                     textMeshProUGUI.text += c;
-                    // TODO: 話した時の効果音を入れる
+                    AudioManager.instance_AudioManager.PlaySE(0);
                     await UniTask.Delay(_talkSpeed); 
                 }
             }
@@ -158,7 +158,7 @@ public class DialogueView : MonoBehaviour
         return clickStream;
     }
 
-    public async UniTask StartCutIn(string filePath, CancellationToken token)
+    public async UniTask StartCutIn(CancellationToken token)
     {
         var backgroundRect = cutInBackgroundMask.GetComponent<RectTransform>();
         var characterRect = cutInCharacterImage.GetComponent<RectTransform>();
@@ -172,7 +172,7 @@ public class DialogueView : MonoBehaviour
 
         await UniTask.WhenAll(
             characterRect.DOAnchorPos(new Vector2(-400, 0), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token),
-            backgroundRect.DOSizeDelta(new Vector2(1500, 2500), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token)
+            backgroundRect.DOSizeDelta(new Vector2(2000, 2500), 0.5f).SetEase(Ease.OutCubic).ToUniTask(cancellationToken: token)
         );
 
         await UniTask.Delay(700);
