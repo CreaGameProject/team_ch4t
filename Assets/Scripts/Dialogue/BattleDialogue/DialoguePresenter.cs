@@ -20,7 +20,7 @@ public class DialoguePresenter : MonoBehaviour
         
         _view.PrefixBattleDialogue(
             _model.DialogueTalkEvents[0].CharacterName,
-            Helper.CharacterFilePath +  _model.DialogueTalkEvents[0].FilePath
+            _model.DialogueTalkEvents[0].FilePath
             );
     }
 
@@ -74,7 +74,7 @@ public class DialoguePresenter : MonoBehaviour
         // TODO: 本番環境に差し替え
         await _view.StartBattleDialogue(
             talkEvent.CharacterName,
-            Helper.CharacterFilePath + talkEvent.FilePath,
+            talkEvent.FilePath,
             talkEvent.Text
         );
     }
@@ -87,7 +87,7 @@ public class DialoguePresenter : MonoBehaviour
         var cutInEvent = selectedCutInEvents[0];
         
         await _view.StartCutIn(
-            Helper.CharacterFilePath + cutInEvent.FilePath,
+            cutInEvent.FilePath,
             token
         );
     }
@@ -102,7 +102,7 @@ public class DialoguePresenter : MonoBehaviour
 
         await _view.PrefixCutInTalkDialogue(
             cutInTalkEvent.CharacterName,
-            Helper.CharacterFilePath + cutInTalkEvent.FilePath
+            cutInTalkEvent.FilePath
         );
     }
 
@@ -116,7 +116,7 @@ public class DialoguePresenter : MonoBehaviour
         {
             await _view.StartCutInTalkDialogue(
                 cutInTalkEvent.CharacterName,
-                Helper.CharacterFilePath + cutInTalkEvent.FilePath,
+                cutInTalkEvent.FilePath,
                 cutInTalkEvent.Text
             );
         }

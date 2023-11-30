@@ -34,20 +34,20 @@ public class DialogueModel : MonoBehaviour
 
             foreach (var dialogueJson in dialogueData.dialogueEvents)
             {
-                EventType eventType = Enum.Parse<EventType>(dialogueJson.type);
+                DialogueEventType dialogueEventType = Enum.Parse<DialogueEventType>(dialogueJson.type);
 
-                switch (eventType)
+                switch (dialogueEventType)
                 {
-                    case EventType.TALK:
-                        var dialogueTalk = new DialogueTalkEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file, dialogueJson.text);
+                    case DialogueEventType.TALK:
+                        var dialogueTalk = new DialogueTalkEvent(dialogueJson.event_number, dialogueEventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file, dialogueJson.text);
                         DialogueTalkEvents.Add(dialogueTalk);
                         break;
-                    case EventType.CUT_IN:
-                        var dialogueCutIn = new DialogueCutInEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file);
+                    case DialogueEventType.CUT_IN:
+                        var dialogueCutIn = new DialogueCutInEvent(dialogueJson.event_number, dialogueEventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file);
                         DialogueCutInEvents.Add(dialogueCutIn);
                         break;
-                    case EventType.CUT_IN_TALK:
-                        var dialogueCutInTalk = new DialogueCutInTalkEvent(dialogueJson.event_number, eventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file, dialogueJson.text);
+                    case DialogueEventType.CUT_IN_TALK:
+                        var dialogueCutInTalk = new DialogueCutInTalkEvent(dialogueJson.event_number, dialogueEventType, dialogueJson.secret_count, dialogueJson.name, dialogueJson.file, dialogueJson.text);
                         DialogueCutInTalkEvents.Add(dialogueCutInTalk);
                         break;
                     default:

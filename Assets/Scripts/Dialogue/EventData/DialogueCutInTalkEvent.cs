@@ -1,4 +1,4 @@
-public class DialogueTalkEvent : AbstractDialogueEvent
+public class DialogueCutInTalkEvent: AbstractDialogueEvent
 {
     private int _secretCount;
     public int SecretCount => _secretCount;
@@ -9,12 +9,12 @@ public class DialogueTalkEvent : AbstractDialogueEvent
     private string _text;
     public string Text => _text;
 
-    public DialogueTalkEvent(int eventNumber, EventType eventType, int secretCount, string characterName, string filePath, string text)
-        : base(eventNumber, eventType)
+    public DialogueCutInTalkEvent(int eventNumber, DialogueEventType dialogueEventType, int secretCount, string characterName, string filePath, string text)
+        : base(eventNumber, dialogueEventType)
     {
         _secretCount = secretCount;
         _characterName = characterName;
-        _filePath = filePath;
+        _filePath = Helper.CharacterFilePath + filePath;
         _text = text;
     }
 }

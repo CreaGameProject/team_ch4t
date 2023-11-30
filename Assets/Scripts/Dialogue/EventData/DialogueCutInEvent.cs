@@ -7,11 +7,11 @@ public class DialogueCutInEvent : AbstractDialogueEvent
     private string _filePath;
     public string FilePath => _filePath;
 
-    public DialogueCutInEvent(int eventNumber, EventType eventType, int secretCount, string characterName, string filePath)
-        : base(eventNumber, eventType)
+    public DialogueCutInEvent(int eventNumber, DialogueEventType dialogueEventType, int secretCount, string characterName, string filePath)
+        : base(eventNumber, dialogueEventType)
     {
         _secretCount = secretCount;
         _characterName = characterName;
-        _filePath = filePath;
+        _filePath = Helper.CharacterFilePath + filePath;
     }
 }
