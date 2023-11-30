@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using System.Diagnostics.Eventing.Reader;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class Kalte : MonoBehaviour
@@ -79,6 +77,6 @@ public class Kalte : MonoBehaviour
 
     private void OnChangeHimituNumberExecutedHandler(int howManyHimituDidGet)
     {
-        AddNextSecretText(howManyHimituDidGet);
+        AddNextSecretText(howManyHimituDidGet - 1);
     }
 }
