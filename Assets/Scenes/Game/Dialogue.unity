@@ -2781,10 +2781,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 158096289}
     - target: {fileID: 8443279670414714673, guid: 7fe6a86ba8a14b140baa6daef98b67a1, type: 3}
-      propertyPath: _talkSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8443279670414714673, guid: 7fe6a86ba8a14b140baa6daef98b67a1, type: 3}
       propertyPath: background
       value: 
       objectReference: {fileID: 361395873}

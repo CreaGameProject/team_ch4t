@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744321a1605fc4de38d3431430edd38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _talkSpeed: 50
+  _talkSpeed: 1
   background: {fileID: 0}
   fadeImage: {fileID: 0}
   itemBackground: {fileID: 0}
