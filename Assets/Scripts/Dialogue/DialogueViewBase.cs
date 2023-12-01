@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DialogueViewBase : MonoBehaviour
 {
-    private int _talkSpeed = 50;
+    [SerializeField] private int _talkSpeed = 50;
     
     protected Sprite LoadSprite(string filePath)
     {
@@ -67,7 +67,7 @@ public class DialogueViewBase : MonoBehaviour
     /// </summary>
     public delegate void OnCharacterTalkExecutedDelegate(string characterName, string dialogue);
 
-    public event DialogueView.OnCharacterTalkExecutedDelegate OnCharacterTalkExecuted;
+    public event OnCharacterTalkExecutedDelegate OnCharacterTalkExecuted;
 
     protected void SaveToBackLog(string characterName, string dialogue)
     {
