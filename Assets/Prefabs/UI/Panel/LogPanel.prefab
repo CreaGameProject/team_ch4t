@@ -1207,6 +1207,7 @@ GameObject:
   - component: {fileID: 6088142461885371651}
   - component: {fileID: 9152767856969667022}
   - component: {fileID: 7305577718015389656}
+  - component: {fileID: 9044524854026538660}
   m_Layer: 5
   m_Name: CloseBackGroundButton
   m_TagString: Untagged
@@ -1340,6 +1341,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 9044524854026538660}
+        m_TargetAssemblyTypeName: ButtonSePlayer, Assembly-CSharp
+        m_MethodName: PlayPressedButtonSe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9044524854026538660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7050395227999052516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46866f229ce62794ab43d68e1b1cfce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7654900448564055759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,7 +1600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1465177346800165922, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 404.25
       objectReference: {fileID: 0}
     - target: {fileID: 1465177346800165922, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1607,7 +1632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1703448851808140239, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 1703448851808140239, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1639,7 +1664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6220067625757700792, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 435.25
       objectReference: {fileID: 0}
     - target: {fileID: 6220067625757700792, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.y
