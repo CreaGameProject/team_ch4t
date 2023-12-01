@@ -48,10 +48,13 @@ public class Result : MonoBehaviour
     /// </summary>
     public void GoToResultView()
     {
+        /*
         Sequence fadeAnim = DOTween.Sequence();
         fadeAnim.Append(fadeInOutImage.DOFade(1, fadeDuration))
                 .AppendCallback(() => transform.localScale = Vector3.one)
                 .Append(fadeInOutImage.DOFade(0, fadeDuration));
+                */
+        transform.localScale = Vector3.one;
     }
 
     /// <summary>
@@ -59,10 +62,13 @@ public class Result : MonoBehaviour
     /// </summary>
     public void GoToTalkView()
     {
+        /*
         Sequence fadeAnim = DOTween.Sequence();
         backGround.SetActive(true);
         fadeAnim.Append(fadeInOutImage.DOFade(1, fadeDuration))
                 .AppendCallback(() => transform.localScale = Vector3.zero)
                 .Append(fadeInOutImage.DOFade(0, fadeDuration));
+                }*/
+        transform.localScale = Vector3.zero;
     }
 }
