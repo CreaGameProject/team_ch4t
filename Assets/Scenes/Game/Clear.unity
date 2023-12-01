@@ -213,7 +213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6538632424697424071, guid: a85a3a89bc8d86f46bd0bcced47fa0e9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6825903119657074592, guid: a85a3a89bc8d86f46bd0bcced47fa0e9, type: 3}
       propertyPath: m_Pivot.x
@@ -2750,6 +2750,10 @@ PrefabInstance:
       propertyPath: itemImage
       value: 
       objectReference: {fileID: 158096289}
+    - target: {fileID: 8443279670414714673, guid: 7fe6a86ba8a14b140baa6daef98b67a1, type: 3}
+      propertyPath: _talkSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8443279670414714673, guid: 7fe6a86ba8a14b140baa6daef98b67a1, type: 3}
       propertyPath: background
       value: 

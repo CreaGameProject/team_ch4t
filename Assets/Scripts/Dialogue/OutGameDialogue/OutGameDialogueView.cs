@@ -1,7 +1,7 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,9 +36,12 @@ public class OutGameDialogueView : DialogueViewBase
 
     private async UniTask StartDuoDialogue(string characterName, string filePath, string characterNameSub, string filePathSub, int speaker,string dialogue)
     {
-        characterImageLeft.gameObject.SetActive(true);
-        characterImageRight.gameObject.SetActive(true);
+        characterImageLeft.gameObject.SetActive(filePath != Helper.CharacterFilePath);
+        characterImageRight.gameObject.SetActive(filePathSub != Helper.CharacterFilePath);
         characterImageCenter.gameObject.SetActive(false);
+        
+        characterImageLeft.sprite = LoadSprite(filePath);
+        characterImageRight.sprite = LoadSprite(filePathSub);
         
         if (speaker == 0)
         {
@@ -47,7 +50,6 @@ public class OutGameDialogueView : DialogueViewBase
             characterImageLeft.color = activeColor;
             characterImageRight.color = inactiveColor;
             
-            characterImageLeft.sprite = LoadSprite(filePath);
             await TypeText(dialogueText, dialogue);
             SaveToBackLog(characterName, dialogue);
             
@@ -62,7 +64,6 @@ public class OutGameDialogueView : DialogueViewBase
             characterImageLeft.color = inactiveColor;
             characterImageRight.color = activeColor;
             
-            characterImageRight.sprite = LoadSprite(filePathSub);
             await TypeText(dialogueText, dialogue);
             SaveToBackLog(characterNameSub, dialogue);
             
@@ -76,8 +77,9 @@ public class OutGameDialogueView : DialogueViewBase
     {
         characterImageLeft.gameObject.SetActive(false);
         characterImageRight.gameObject.SetActive(false);
-        characterImageCenter.gameObject.SetActive(true);
-        
+
+        characterImageCenter.gameObject.SetActive(filePath != Helper.CharacterFilePath);
+
         PrefixDialogue(characterName);
         
         characterImageCenter.sprite = LoadSprite(filePath);
@@ -117,10 +119,31 @@ public class OutGameDialogueView : DialogueViewBase
         SaveToBackLog("", dialogue);
     }
 
-    public async UniTask PlayBlackout(string filePath)
+    public async UniTask PlayFadeIn(string filePath, CancellationToken token)
     {
-        await fadeImage.DOFade(1.0f, 0.5f).ToUniTask();
+        fadeImage.gameObject.SetActive(true);
         background.sprite = LoadSprite(filePath);
-        await fadeImage.DOFade(0.0f, 0.5f).ToUniTask();
+        await fadeImage.DOFade(0.0f, 1f)
+            .OnComplete(() => {fadeImage.gameObject.SetActive(false);})
+            .ToUniTask(cancellationToken: token);
+    }
+
+    public async UniTask PlayFadeOut(CancellationToken token)
+    {
+        fadeImage.gameObject.SetActive(true);
+        await fadeImage.DOFade(1.0f, 1f)
+            .ToUniTask(cancellationToken: token);
+    }
+    
+    /// <summary>
+    /// EventType.ENDが実行完了したときに呼ばれる
+    /// </summary>
+    public delegate void OnDialogueEndDelegate();
+
+    public event OnDialogueEndDelegate OnDialogueEnd;
+
+    public void OnEnd()
+    {
+        if (OnDialogueEnd != null) { OnDialogueEnd(); }
     }
 }
