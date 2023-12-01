@@ -6,5 +6,7 @@ public enum DialogueEventType
     CUT_IN_TALK,
     ITEM,
     SOUND,
-    BLACKOUT,
+    FADE_IN,
+    FADE_OUT,
+    END
 }

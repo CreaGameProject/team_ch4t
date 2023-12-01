@@ -65,12 +65,26 @@ public class OutGameDialogueModel : DialogueModelBase
                             dialogueJson.text);
                         dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
                         break;
-                    case DialogueEventType.BLACKOUT:
-                        dialogueEvent = new OutGameDialogueBlackoutEvent(
+                    case DialogueEventType.FADE_IN:
+                        dialogueEvent = new OutGameDialogueFadeInEvent(
                             dialogueJson.event_number,
                             dialogueEventType,
                             dialogueJson.event_id,
                             dialogueJson.file);
+                        dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
+                        break;
+                    case DialogueEventType.FADE_OUT:
+                        dialogueEvent = new OutGameDialogueFadeOutEvent(
+                            dialogueJson.event_number,
+                            dialogueEventType,
+                            dialogueJson.event_id);
+                        dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
+                        break;
+                    case DialogueEventType.END:
+                        dialogueEvent = new OutGameDialogueEndEvent(
+                            dialogueJson.event_number,
+                            dialogueEventType,
+                            dialogueJson.event_id);
                         dialogueEventsList[dialogueJson.event_id].Add(dialogueEvent);
                         break;
                     default:
