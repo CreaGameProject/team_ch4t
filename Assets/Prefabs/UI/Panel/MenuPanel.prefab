@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 6935225634457045807}
   - component: {fileID: 697969288630538584}
   - component: {fileID: 3362871296590364905}
+  - component: {fileID: 640175762620206912}
   m_Layer: 5
   m_Name: CloseBackGroundButton
   m_TagString: Untagged
@@ -208,6 +209,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 640175762620206912}
+        m_TargetAssemblyTypeName: ButtonSePlayer, Assembly-CSharp
+        m_MethodName: PlayPressedButtonSe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &640175762620206912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366615829905504577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46866f229ce62794ab43d68e1b1cfce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8421953791885944124
 GameObject:
   m_ObjectHideFlags: 0
