@@ -20,7 +20,8 @@ public class Result : MonoBehaviour
         transform.localScale = Vector3.zero;
         fadeInOutImage = fadeInOut.GetComponent<Image>();
         backGround.SetActive(false);
-        
+
+        /*
         Computer.Opponent opponent = Board.instance.getOpponent;
         switch (opponent)
         {
@@ -31,6 +32,9 @@ public class Result : MonoBehaviour
                 kaltes[1].SetActive(true);
                 break;
         }
+        */
+
+        kaltes[0].SetActive(true);
     }
 
     // Update is called once per frame
