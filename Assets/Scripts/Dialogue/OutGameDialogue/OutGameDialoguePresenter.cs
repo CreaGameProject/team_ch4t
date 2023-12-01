@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class OutGameDialoguePresenter : MonoBehaviour
@@ -9,31 +12,39 @@ public class OutGameDialoguePresenter : MonoBehaviour
     private async void Start()
     {
         _view.OnCharacterTalkExecuted += CharacterTalkExecutedEventHandler;
+        _view.OnDialogueEnd += DialogueEndEventHandler;
+    }
 
-        foreach (var dialogueEvents in _model.dialogueEventsList)
+    public async UniTask PlayDialogue(int eventID, CancellationToken token)
+    {
+        var dialogueEvents = _model.dialogueEventsList[eventID];
+        foreach (var dialogueEvent in dialogueEvents)
         {
-            foreach (var dialogueEvent in dialogueEvents)
+            switch (dialogueEvent.DialogueEventType)
             {
-                switch (dialogueEvent.DialogueEventType)
-                {
-                    case DialogueEventType.TALK:
-                        OutGameDialogueTalkEvent talkEvent = (OutGameDialogueTalkEvent)dialogueEvent;
-                        await _view.StartDialogue(talkEvent.CharacterName, talkEvent.FilePath,
-                            talkEvent.CharacterNameSub, talkEvent.FilePathSub, talkEvent.TalkerNumber, talkEvent.Text);
-                        break;
-                    case DialogueEventType.ITEM:
-                        OutGameDialogueItemEvent itemEvent = (OutGameDialogueItemEvent)dialogueEvent;
-                        await _view.ShowItem(itemEvent.FilePath);
-                        break;
-                    case DialogueEventType.SOUND:
-                        OutGameDialogueSoundEvent soundEvent = (OutGameDialogueSoundEvent)dialogueEvent;
-                        await _view.PlaySound(soundEvent.FilePath, soundEvent.Text);
-                        break;
-                    case DialogueEventType.BLACKOUT:
-                        OutGameDialogueBlackoutEvent blackoutEvent = (OutGameDialogueBlackoutEvent)dialogueEvent;
-                        await _view.PlayBlackout(blackoutEvent.FilePath);
-                        break;
-                }
+                case DialogueEventType.TALK:
+                    OutGameDialogueTalkEvent talkEvent = (OutGameDialogueTalkEvent)dialogueEvent;
+                    await _view.StartDialogue(talkEvent.CharacterName, talkEvent.FilePath,
+                        talkEvent.CharacterNameSub, talkEvent.FilePathSub, talkEvent.TalkerNumber, talkEvent.Text);
+                    break;
+                case DialogueEventType.ITEM:
+                    OutGameDialogueItemEvent itemEvent = (OutGameDialogueItemEvent)dialogueEvent;
+                    await _view.ShowItem(itemEvent.FilePath);
+                    break;
+                case DialogueEventType.SOUND:
+                    OutGameDialogueSoundEvent soundEvent = (OutGameDialogueSoundEvent)dialogueEvent;
+                    await _view.PlaySound(soundEvent.FilePath, soundEvent.Text);
+                    break;
+                case DialogueEventType.FADE_IN:
+                    OutGameDialogueFadeInEvent fadeInEvent = (OutGameDialogueFadeInEvent)dialogueEvent;
+                    await _view.PlayFadeIn(fadeInEvent.FilePath, token);
+                    break;
+                case DialogueEventType.FADE_OUT:
+                    await _view.PlayFadeOut(token);
+                    break;
+                case DialogueEventType.END:
+                    _view.OnEnd();
+                    break;
             }
         }
     }
@@ -41,5 +52,14 @@ public class OutGameDialoguePresenter : MonoBehaviour
     private void CharacterTalkExecutedEventHandler(string characterName, string dialogue)
     {
         _model.AddBackLogData(characterName, dialogue);
+    }
+
+    private void DialogueEndEventHandler()
+    {
+        // TODO: ENDイベントの内容の変更
+        /*var cts = new CancellationTokenSource();
+        var token = cts.Token;
+        PlayDialogue(_model.dialogueEventsList[1], token);
+        */
     }
 }
