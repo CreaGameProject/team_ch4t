@@ -2346,9 +2346,69 @@ PrefabInstance:
       propertyPath: m_lineSpacing
       value: 341.7
       objectReference: {fileID: 0}
+    - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 400552904}
+    - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetIsInputLocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Player, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8010589667127190025, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_lineSpacing
       value: 341.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 400552904}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetIsInputLocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Player, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529028268947765262, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
