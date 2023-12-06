@@ -12,6 +12,7 @@ public class Cell : MonoBehaviour
         black = 2, //黒石が置かれている
         proposed = 3, //石を置ける場所
         secret = 4, //ヒミツマス
+        hole = 5, //穴
     }
 
     [System.Serializable]

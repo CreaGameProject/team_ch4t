@@ -22,8 +22,6 @@ public class Stone : MonoBehaviour
             this.transform.rotation = Quaternion.AngleAxis(180, Vector3.forward);
         }
 
-        
-
         //await Generate();
     }
 
