@@ -501,7 +501,7 @@ public class Board : MonoBehaviour
         {
             for (int x = 0; x < newBoard.GetLength(0); x++)
             {
-                await UpdateCell((x, y), newBoard[x, y].Item1);
+                await UpdateCell((x, y), newBoard[x, y].Item1, 0.1f);
                 //await UpdateCell((x, y), newBoard[x, y].Item1, 4.0f / numberOfCell);
             }
         }
@@ -600,10 +600,12 @@ public class Board : MonoBehaviour
             default: break;
         }
 
+        float stoneYposition = 1.0f;
+
         // empty => anything without empty : 石を生成する
         if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type != Cell.Type.empty)
         {
-            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
+            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, stoneYposition, 3.5f - indexOnBoard.Item2);
 
             GameObject g = null;
 
@@ -642,7 +644,7 @@ public class Board : MonoBehaviour
             Destroy(white);
 
             // ヒミツマスを生成
-            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
+            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, stoneYposition, 3.5f - indexOnBoard.Item2);
             GameObject g = Instantiate(this.secretStone, pos, Quaternion.identity);
             Stone stone = g.GetComponent<Stone>();
             stone.color = color;
