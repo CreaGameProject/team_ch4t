@@ -42,12 +42,14 @@ public class Stone : MonoBehaviour
 
         this.transform.localScale = Vector3.zero;
 
-        // yŒø‰Ê‰¹Ä¶‰ÓŠz¶¬
-        AudioManager.instance_AudioManager.PlaySE(2);
-
         stoneObject.SetActive(true);
 
         await this.transform.DOScale(originScale, time).AsyncWaitForCompletion();
+
+        await this.transform.DOMoveY(0, time).AsyncWaitForCompletion();
+
+        // yŒø‰Ê‰¹Ä¶‰ÓŠz¶¬
+        AudioManager.instance_AudioManager.PlaySE(2);
     }
 
     // ”jŠüƒAƒjƒ[ƒVƒ‡ƒ“
