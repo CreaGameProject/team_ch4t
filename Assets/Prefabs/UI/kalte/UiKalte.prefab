@@ -53,10 +53,6 @@ MonoBehaviour:
   animationTime: 0.3
   windowScaleRatio: 1.5
   backGround: {fileID: 1170207436245236612}
-  secretText:
-  - {fileID: 4080432369012208263}
-  - {fileID: 6039032595341964779}
-  - {fileID: 2695240100833925335}
   rt: {fileID: 2647430925965634109}
 --- !u!1 &2484717529260026461
 GameObject:
