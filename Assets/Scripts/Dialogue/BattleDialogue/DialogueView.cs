@@ -77,6 +77,7 @@ public class DialogueView : DialogueViewBase
         {
             cutInTalkCharacterImage.gameObject.SetActive(true);
             cutInTalkCharacterImage.sprite = LoadSprite(filePath);
+            battleCharacterImage.sprite = LoadSprite(filePath); // カットイン終了後画像を同期させるために
         }
 
         cutInTalkNameText.text = characterName;
@@ -96,11 +97,12 @@ public class DialogueView : DialogueViewBase
         battleDialogueUI.SetActive(true);
     }
 
-    public async UniTask StartCutIn(CancellationToken token)
+    public async UniTask StartCutIn(string filePath, CancellationToken token)
     {
         var backgroundRect = cutInBackgroundMask.GetComponent<RectTransform>();
         var characterRect = cutInCharacterImage.GetComponent<RectTransform>();
         cutInUI.SetActive(true);
+        cutInCharacterImage.sprite = LoadSprite(filePath);
         
         AudioManager.instance_AudioManager.PlaySE(5);
 
