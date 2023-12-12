@@ -51,7 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4150ceef37a9214d8e7865b84cb1354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 0.3
+  openWindowAnimationTime: 0.3
+  expandAnimationTime: 0.21
   windowScaleRatio: 1.5
   backGround: {fileID: 1170207436245236612}
   rt: {fileID: 2647430925965634109}
@@ -686,7 +687,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6197235704534822686}
         m_TargetAssemblyTypeName: Kalte, Assembly-CSharp
         m_MethodName: CloseWindow
         m_Mode: 1
