@@ -2213,7 +2213,7 @@ PrefabInstance:
     - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1594209192}
+      objectReference: {fileID: 0}
     - target: {fileID: 7161756357052136644, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -2313,7 +2313,7 @@ PrefabInstance:
     - target: {fileID: 8925716273267937157, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1594209192}
+      objectReference: {fileID: 0}
     - target: {fileID: 8925716273267937157, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -7205,15 +7205,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7335348975645289292, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7335348975645289292, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7335348975645289292, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7335348975645289292, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -8622,6 +8622,18 @@ PrefabInstance:
     - target: {fileID: 1319602557032248736, guid: e3f5fdf6e451f4c5fac9ef1d966fe027, type: 3}
       propertyPath: m_Name
       value: BattleDialogueUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8617059077497910686, guid: e3f5fdf6e451f4c5fac9ef1d966fe027, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8615d69344db65e4eac357c5eb8f769d, type: 2}
+    - target: {fileID: 8617059077497910686, guid: e3f5fdf6e451f4c5fac9ef1d966fe027, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5521047908497367500, guid: 8615d69344db65e4eac357c5eb8f769d, type: 2}
+    - target: {fileID: 8617059077497910686, guid: e3f5fdf6e451f4c5fac9ef1d966fe027, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8858125380672731747, guid: e3f5fdf6e451f4c5fac9ef1d966fe027, type: 3}
       propertyPath: m_Pivot.x

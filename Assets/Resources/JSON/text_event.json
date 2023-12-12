@@ -389,7 +389,7 @@
       "type": "CUT_IN_TALK",
       "secret_count": 1,
       "name": "うい",
-      "file": "chara_ui_001",
+      "file": "chara_ui_101",
       "text": "えへへ、びっくりした？\r\n本当は誰にも言っちゃいけないんだけど…\r\n副部長ならヒミツを守ってくれそうだし…いいかな…？"
     },
     {
@@ -477,7 +477,7 @@
       "type": "CUT_IN",
       "secret_count": 2,
       "name": null,
-      "file": null,
+      "file": "chara_ui_501",
       "text": null
     },
     {
