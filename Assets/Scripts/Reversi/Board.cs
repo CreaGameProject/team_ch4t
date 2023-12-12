@@ -418,7 +418,7 @@ public class Board : MonoBehaviour
             {
                 switch (board[x, y].Item1)
                 {
-                    case Cell.Type.empty: line += "＃"; break;
+                    case Cell.Type.empty: line += '＃'; break;
                     case Cell.Type.white: line += "●"; break;
                     case Cell.Type.black: line += "○"; break;
                     case Cell.Type.proposed: line += "☆"; break;
@@ -1567,4 +1567,17 @@ public class Board : MonoBehaviour
 
         return mostDifficultToTurnOverCells;
     }
+
+    // 仮想でボードを更新する
+    // ＃ ● ○ ◆ □
+    char[,] charBoard = new char[8, 8] { { '＃', '＃', '＃', '＃', '＃', '＃', '＃', '＃'},
+                                         { '＃', '＃', '＃', '＃', '＃', '＃', '＃', '＃'},
+                                         { '＃', '＃', '＃', '＃', '＃', '＃', '＃', '＃'},
+                                         { '＃', '＃', '＃', '●', '○', '＃', '＃', '＃'},
+                                         { '＃', '＃', '＃', '○', '●', '◆', '＃', '＃'},
+                                         { '＃', '＃', '＃', '＃', '＃', '＃', '＃', '＃'},
+                                         { '＃', '＃', '＃', '＃', '＃', '＃', '＃', '＃'},
+                                         { '＃', '＃', '＃', '＃', '＃', '＃', '＃', '＃'} };
+
+    
 }
