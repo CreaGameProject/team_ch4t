@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Kalte : MonoBehaviour
 {
     [SerializeField]
-    private float animationTime = 0.3f;
+    private float openWindowAnimationTime = 0.3f;
+    [SerializeField]
+    private float expandAnimationTime = 0.21f;
     [SerializeField]
     private float windowScaleRatio = 2;
     [SerializeField]
     private Image backGround;
     [SerializeField]
     private RectTransform rt;
+    [SerializeField]
+    private float expandRate = 1.1f;
+
     private Vector2 defaultWindowsSize;
     private Vector2 defaultWindowsPosition;
     private Quaternion defaultWindowsRotation;
@@ -25,7 +31,6 @@ public class Kalte : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rt = GetComponent<RectTransform>();
         defaultAnchorMax = rt.anchorMax;
         defaultAnchorMin = rt.anchorMin;
         defaultWindowsSize = rt.localScale;
@@ -45,10 +50,10 @@ public class Kalte : MonoBehaviour
     {
         if (!isExpand)
         {
-            rt.DOScale(Vector3.one * windowScaleRatio, animationTime).SetEase(Ease.InOutCirc);
-            rt.DOAnchorPos(Vector3.zero, animationTime).SetEase(Ease.InOutCirc);
-            rt.DORotateQuaternion(Quaternion.identity, animationTime);
-            backGround.DOFade(0.85f, animationTime);
+            rt.DOScale(Vector3.one * windowScaleRatio, openWindowAnimationTime).SetEase(Ease.InOutCirc);
+            rt.DOAnchorPos(Vector3.zero, openWindowAnimationTime).SetEase(Ease.InOutCirc);
+            rt.DORotateQuaternion(Quaternion.identity, openWindowAnimationTime);
+            backGround.DOFade(0.85f, openWindowAnimationTime);
             AudioManager.instance_AudioManager.PlaySE(3);
             isExpand = true;
 
@@ -59,12 +64,22 @@ public class Kalte : MonoBehaviour
     {
         if (isExpand)
         {
-            rt.DOScale(defaultWindowsSize, animationTime).SetEase(Ease.InOutCirc);
-            rt.DOAnchorPos(defaultWindowsPosition, animationTime).SetEase(Ease.InOutCirc);
-            rt.DORotateQuaternion(defaultWindowsRotation, animationTime);
-            backGround.DOFade(0, animationTime);
+            rt.DOScale(defaultWindowsSize, openWindowAnimationTime).SetEase(Ease.InOutCirc);
+            rt.DOAnchorPos(defaultWindowsPosition, openWindowAnimationTime).SetEase(Ease.InOutCirc);
+            rt.DORotateQuaternion(defaultWindowsRotation, openWindowAnimationTime);
+            backGround.DOFade(0, openWindowAnimationTime);
             AudioManager.instance_AudioManager.PlaySE(3);
             isExpand = false;
         }
+    }
+
+    public void ExpandKalte()
+    {
+        if(!isExpand) rt.DOScale(expandRate, expandAnimationTime);
+    }
+
+    public void ShrinkKalte()
+    {
+        if(!isExpand) rt.DOScale(defaultWindowsSize, expandAnimationTime);
     }
 }
