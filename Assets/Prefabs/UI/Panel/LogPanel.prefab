@@ -700,7 +700,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8615d69344db65e4eac357c5eb8f769d, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -764,7 +764,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4073599839412056243
@@ -998,7 +998,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4561950314978521543}
   m_HandleRect: {fileID: 7975809948884068960}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1600,7 +1600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1465177346800165922, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 404.25
+      value: 701.50006
       objectReference: {fileID: 0}
     - target: {fileID: 1465177346800165922, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1650,6 +1650,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2695166707141684471, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2695166707141684471, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 6220067625757700792, guid: ab5b3a283ca69284998f5721d9c0d1d3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

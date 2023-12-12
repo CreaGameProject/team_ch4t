@@ -89,6 +89,7 @@ public class DialoguePresenter : MonoBehaviour
         var cutInEvent = selectedCutInEvents[0];
         
         await _view.StartCutIn(
+            cutInEvent.FilePath,
             token
         );
     }
