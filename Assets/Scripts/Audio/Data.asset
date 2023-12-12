@@ -30,7 +30,7 @@ MonoBehaviour:
     volume: 1
     memo: "\u30AB\u30EB\u30C6\u3092\u958B\u304F\u3068\u304D\u306E\u97F3"
   - id: 4
-    clip: {fileID: 8300000, guid: 7702a86c149e6c648bfed4c60c12c033, type: 3}
+    clip: {fileID: 8300000, guid: bf12ddb5aea6a48458f735951bb68d9a, type: 3}
     volume: 1
     memo: "\u30C6\u30AD\u30B9\u30C8"
   - id: 5
