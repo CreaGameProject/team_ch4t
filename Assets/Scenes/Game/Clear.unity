@@ -688,7 +688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5065305314246436821, guid: 00efe12e20920ff479e353df000e239d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2254,11 +2254,7 @@ PrefabInstance:
     - target: {fileID: 5264098693560494934, guid: 808875d6b34458b49a7501f9b1cdb2f4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1960690162}
-    - target: {fileID: 5264098693560494934, guid: 808875d6b34458b49a7501f9b1cdb2f4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: OpenPanel
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1793090434}
     - target: {fileID: 5425004611631273519, guid: 808875d6b34458b49a7501f9b1cdb2f4, type: 3}
       propertyPath: m_SizeDelta.x
       value: 400
