@@ -36,7 +36,6 @@ public class ResultSceneView : MonoBehaviour
 
     private void ReportButtonClicked(bool isReport)
     {
-        
         if (OnClicked != null) { OnClicked(isReport); }
     }
 }

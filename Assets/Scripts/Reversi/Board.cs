@@ -12,8 +12,8 @@ using Random = UnityEngine.Random;
 public class Preset
 {
     //[Header("手数（０になるとゲームオーバー）")] public int turn;
-
-    [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・● ⇒ プレイヤーの石\n・○ ⇒ コンピュータの石\n・◆ ⇒ ヒミツマス")]
+    
+    [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・● ⇒ プレイヤーの石\n・○ ⇒ コンピュータの石\n・◆ ⇒ ヒミツマス\n・□ ⇒ 穴")]
     [TextArea(9, 9)] public string board;
 
     //[Header("メモ")] public string memo;
@@ -55,6 +55,9 @@ public class Board : MonoBehaviour
     [Header("ヒミツのプレハブ")]
     [SerializeField] private GameObject secretStone = null;
 
+    [Header("ボードマスのオブジェクト")]
+    [SerializeField] private GameObject[] boardCells = new GameObject[64];
+
     [Header("ボード上のオブジェクト")]
     [SerializeField] private GameObject[] boardObjects = new GameObject[64];
 
@@ -72,7 +75,7 @@ public class Board : MonoBehaviour
     [SerializeField] private int presetIndex = 0;
     public int getHowManyHimituDidGet { get { return this.presetIndex; } }
 
-
+    [Header("プリセットコピペ用")] public string copi = "＃ ● ○ ◆ □";
     [Header("盤面と手数のプリセット")]
     [SerializeField] private List<Preset> presets = new List<Preset>();
 
@@ -420,6 +423,7 @@ public class Board : MonoBehaviour
                     case Cell.Type.black: line += "○"; break;
                     case Cell.Type.proposed: line += "☆"; break;
                     case Cell.Type.secret: line += "◆"; break;
+                    case Cell.Type.hole: line += "□"; break;
                     default: line += "？"; break;
                 }
             }
@@ -481,6 +485,7 @@ public class Board : MonoBehaviour
                 case '〇': cell = (Cell.Type.black, Cell.Color.black); break; // 漢数字
                 case '●': cell = (Cell.Type.white, Cell.Color.white); break;
                 case '◆': cell = (Cell.Type.secret, Cell.Color.white); break;
+                case '□': cell = (Cell.Type.hole, Cell.Color.white); break;
                 default: Debug.Log(string.Format("プリセット読み込みエラー：意図しない文字 {0} が含まれています。", boardString[i])); break;
             }
 
@@ -501,7 +506,7 @@ public class Board : MonoBehaviour
         {
             for (int x = 0; x < newBoard.GetLength(0); x++)
             {
-                await UpdateCell((x, y), newBoard[x, y].Item1);
+                await UpdateCell((x, y), newBoard[x, y].Item1, 0.1f);
                 //await UpdateCell((x, y), newBoard[x, y].Item1, 4.0f / numberOfCell);
             }
         }
@@ -600,10 +605,34 @@ public class Board : MonoBehaviour
             default: break;
         }
 
-        // empty => anything without empty : 石を生成する
-        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type != Cell.Type.empty)
+        float stoneYposition = 1.0f;
+
+        // hole => not hole : 盤面の穴を塞ぐ（ボードセルを表示する）
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.hole && type != Cell.Type.hole)
         {
-            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
+            GameObject g = this.boardCells[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
+            await g.GetComponent<BoardCell>().ShowCell(0.525f);
+
+            // Cell.Color.empty　がバグりそう
+            this.board[indexOnBoard.Item1, indexOnBoard.Item2] = (Cell.Type.empty, Cell.Color.empty);
+        }
+
+        // not hole => hole : 盤面に穴を空ける（ボードセルを非表示にする）
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 != Cell.Type.hole && type == Cell.Type.hole)
+        {
+            GameObject g = this.boardCells[indexOnBoard.Item1 + indexOnBoard.Item2 * 8];
+            await g.GetComponent<BoardCell>().HideCell(0.525f);
+
+            // Cell.Color.empty　がバグりそう
+            this.board[indexOnBoard.Item1, indexOnBoard.Item2] = (Cell.Type.hole, Cell.Color.empty);
+        }
+
+        
+
+        // empty => anything without empty and hole : 石を生成する
+        if (this.board[indexOnBoard.Item1, indexOnBoard.Item2].Item1 == Cell.Type.empty && type != Cell.Type.empty && type != Cell.Type.hole)
+        {
+            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, stoneYposition, 3.5f - indexOnBoard.Item2);
 
             GameObject g = null;
 
@@ -642,7 +671,7 @@ public class Board : MonoBehaviour
             Destroy(white);
 
             // ヒミツマスを生成
-            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, 0, 3.5f - indexOnBoard.Item2);
+            Vector3 pos = new Vector3(-3.5f + indexOnBoard.Item1, stoneYposition, 3.5f - indexOnBoard.Item2);
             GameObject g = Instantiate(this.secretStone, pos, Quaternion.identity);
             Stone stone = g.GetComponent<Stone>();
             stone.color = color;
@@ -902,7 +931,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (Y = y - 1; Y > -1; Y--)
                 {
-                    if (this.board[originIndex.Item1, Y].Item1 == Cell.Type.empty || this.board[originIndex.Item1, Y].Item2 == myColor) { break; }
+                    if (this.board[originIndex.Item1, Y].Item1 == Cell.Type.empty || this.board[originIndex.Item1, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[originIndex.Item1, Y].Item2 == oppositeColor)
                     {
@@ -934,7 +963,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (Y = y + 1; Y < 8; Y++)
                 {
-                    if (this.board[originIndex.Item1, Y].Item1 == Cell.Type.empty || this.board[originIndex.Item1, Y].Item2 == myColor) { break; }
+                    if (this.board[originIndex.Item1, Y].Item1 == Cell.Type.empty || this.board[originIndex.Item1, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[originIndex.Item1, Y].Item2 == oppositeColor)
                     {
@@ -966,12 +995,14 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1; X > -1; X--)
                 {
-                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor) { break; }
+                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, originIndex.Item2].Item2 == oppositeColor)
                     {
                         //場外判定
                         if (X - 1 < 0) { break; }
+
+                        
 
                         numberOfCellsToFlip++;
 
@@ -998,7 +1029,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1; X < 8; X++)
                 {
-                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor) { break; }
+                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, originIndex.Item2].Item2 == oppositeColor)
                     {
@@ -1030,7 +1061,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1, Y = y - 1; X < 8 && Y > -1; X++, Y--)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
@@ -1062,7 +1093,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1, Y = y + 1; X < 8 && Y < 8; X++, Y++)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
@@ -1094,7 +1125,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1, Y = y - 1; X > -1 && Y > -1; X--, Y--)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
@@ -1126,7 +1157,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1, Y = y + 1; X > -1 && Y < 8; X--, Y++)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
@@ -1164,7 +1195,7 @@ public class Board : MonoBehaviour
         return proposedCells;
     }
 
-    //設置可能な座標（index）を調べて、配列で返す
+    //ヒミツマスの有無を調べて、ヒミツマスの座標を配列で返す
     public List<(int, int)> GetSecretCell()
     {
         // 候補地
@@ -1174,7 +1205,6 @@ public class Board : MonoBehaviour
         {
             for (int y = 0; y < 8; y++)
             {
-                //自分の色を起点に検索する
                 if (this.board[x, y].Item1 == Cell.Type.secret) 
                 {
                     secretCells.Add((x, y));
@@ -1215,7 +1245,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (Y = y - 1; Y > -1; Y--)
                 {
-                    if (board[originIndex.Item1, Y].Item1 == Cell.Type.empty || board[originIndex.Item1, Y].Item2 == myColor) { break; }
+                    if (board[originIndex.Item1, Y].Item1 == Cell.Type.empty || board[originIndex.Item1, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[originIndex.Item1, Y].Item2 == oppositeColor)
                     {
@@ -1248,7 +1278,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (Y = y + 1; Y < 8; Y++)
                 {
-                    if (board[originIndex.Item1, Y].Item1 == Cell.Type.empty || board[originIndex.Item1, Y].Item2 == myColor) { break; }
+                    if (board[originIndex.Item1, Y].Item1 == Cell.Type.empty || board[originIndex.Item1, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[originIndex.Item1, Y].Item2 == oppositeColor)
                     {
@@ -1281,7 +1311,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1; X > -1; X--)
                 {
-                    if (board[X, originIndex.Item2].Item1 == Cell.Type.empty || board[X, originIndex.Item2].Item2 == myColor) { break; }
+                    if (board[X, originIndex.Item2].Item1 == Cell.Type.empty || board[X, originIndex.Item2].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[X, originIndex.Item2].Item2 == oppositeColor)
                     {
@@ -1314,7 +1344,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1; X < 8; X++)
                 {
-                    if (board[X, originIndex.Item2].Item1 == Cell.Type.empty || board[X, originIndex.Item2].Item2 == myColor) { break; }
+                    if (board[X, originIndex.Item2].Item1 == Cell.Type.empty || board[X, originIndex.Item2].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[X, originIndex.Item2].Item2 == oppositeColor)
                     {
@@ -1347,7 +1377,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1, Y = y - 1; X < 8 && Y > -1; X++, Y--)
                 {
-                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[X, Y].Item2 == oppositeColor)
                     {
@@ -1380,7 +1410,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1, Y = y + 1; X < 8 && Y < 8; X++, Y++)
                 {
-                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[X, Y].Item2 == oppositeColor)
                     {
@@ -1413,7 +1443,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1, Y = y - 1; X > -1 && Y > -1; X--, Y--)
                 {
-                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[X, Y].Item2 == oppositeColor)
                     {
@@ -1446,7 +1476,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1, Y = y + 1; X > -1 && Y < 8; X--, Y++)
                 {
-                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor) { break; }
+                    if (board[X, Y].Item1 == Cell.Type.empty || board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (board[X, Y].Item2 == oppositeColor)
                     {

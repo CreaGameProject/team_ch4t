@@ -123,6 +123,7 @@ public class OutGameDialogueView : DialogueViewBase
     {
         fadeImage.gameObject.SetActive(true);
         background.sprite = LoadSprite(filePath);
+        PrefixDialogue("");
         await fadeImage.DOFade(0.0f, 1f)
             .OnComplete(() => {fadeImage.gameObject.SetActive(false);})
             .ToUniTask(cancellationToken: token);
