@@ -1019,7 +1019,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1; X > -1; X--)
                 {
-                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
+                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor || this.board[X, originIndex.Item2].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, originIndex.Item2].Item2 == oppositeColor)
                     {
@@ -1053,7 +1053,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1; X < 8; X++)
                 {
-                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
+                    if (this.board[X, originIndex.Item2].Item1 == Cell.Type.empty || this.board[X, originIndex.Item2].Item2 == myColor || this.board[X, originIndex.Item2].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, originIndex.Item2].Item2 == oppositeColor)
                     {
@@ -1085,7 +1085,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1, Y = y - 1; X < 8 && Y > -1; X++, Y--)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[X, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
@@ -1117,7 +1117,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x + 1, Y = y + 1; X < 8 && Y < 8; X++, Y++)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[X, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
@@ -1149,7 +1149,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1, Y = y - 1; X > -1 && Y > -1; X--, Y--)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[X, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
@@ -1181,7 +1181,7 @@ public class Board : MonoBehaviour
                 numberOfCellsToFlip = 0;
                 for (X = x - 1, Y = y + 1; X > -1 && Y < 8; X--, Y++)
                 {
-                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[originIndex.Item1, Y].Item1 == Cell.Type.hole) { break; }
+                    if (this.board[X, Y].Item1 == Cell.Type.empty || this.board[X, Y].Item2 == myColor || this.board[X, Y].Item1 == Cell.Type.hole) { break; }
 
                     if (this.board[X, Y].Item2 == oppositeColor)
                     {
