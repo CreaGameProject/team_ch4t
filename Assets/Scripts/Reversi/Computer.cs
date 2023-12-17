@@ -14,7 +14,7 @@ public class Computer : MonoBehaviour
 {
     [SerializeField] private Board board = null;
 
-    [SerializeField] private Cell.Color myColor = Cell.Color.white;
+    private Cell.Color myColor = Cell.Color.white;
 
     [System.Serializable]
     public enum Opponent
@@ -26,6 +26,9 @@ public class Computer : MonoBehaviour
     [SerializeField] private Opponent opponent = Opponent.Yukihira_ui;
 
     public Opponent getOpponent { get { return this.opponent; } }
+
+    [Header("N 手先まで思考する（部長AIのみ有効）")] // default => 1
+    [SerializeField] private int foresight = 1;
     
 
     async public UniTask Action()
@@ -108,63 +111,76 @@ public class Computer : MonoBehaviour
                     }
 
                     int[] predict = new int[proposedCells.Count];
-                    // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
-                    for (int i = 0; i < proposedCells.Count; i++)
+
+                    for (int n = 0; n < this.foresight; n++)
                     {
-                        //Debug.Log("proposedCells[j] : " + proposedCells[i]);
+                        Debug.Log(string.Format("{0} 手先を読んでいます...", n + 1));
 
-                        ((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(virtualBoard, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
+                        (Cell.Type, Cell.Color)[,] v_board = virtualBoard;
 
-                        (Cell.Type, Cell.Color)[,] virtualBoard_predict_1 = predict_computer.Item1;
-
-                        virtualBoard_predict_1[proposedCells[i].Item1.Item1, proposedCells[i].Item1.Item2] = UpdateCell(Cell.Type.white);
-
-                        ViewBoard(Turn.Type.player, true, virtualBoard_predict_1);
-
-                        // => => プレイヤーが置ける場所を探す
-
-                        List<((int, int), int)> proposedCells_player = GetProposedCell(Cell.Color.black, virtualBoard_predict_1);
-
-                        for (int j = 0; j < proposedCells_player.Count; j++)
+                        // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
+                        for (int i = 0; i < proposedCells.Count; i++)
                         {
-                            //Debug.Log("proposedCells_player[j] : " + proposedCells_player[j]);
+                            //Debug.Log("proposedCells[j] : " + proposedCells[i]);
 
-                            // => => => プレイヤーが置ける場所に石を置いた場合の盤面を計算する
+                            ((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(v_board, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
+                            //((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(virtualBoard, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
 
-                            ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_predict_1, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
+                            (Cell.Type, Cell.Color)[,] virtualBoard_predict_1 = predict_computer.Item1;
 
-                            (Cell.Type, Cell.Color)[,] virtualBoard_predict_2 = predict_player.Item1;
+                            virtualBoard_predict_1[proposedCells[i].Item1.Item1, proposedCells[i].Item1.Item2] = UpdateCell(Cell.Type.white);
 
-                            bool didFlipSecret = predict_player.Item2;
+                            ViewBoard(Turn.Type.player, true, virtualBoard_predict_1);
 
-                            if (didFlipSecret)
+                            // => => プレイヤーが置ける場所を探す
+
+                            List<((int, int), int)> proposedCells_player = GetProposedCell(Cell.Color.black, virtualBoard_predict_1);
+
+                            for (int j = 0; j < proposedCells_player.Count; j++)
                             {
-                                predict[i] += 1;
+                                //Debug.Log("proposedCells_player[j] : " + proposedCells_player[j]);
+
+                                // => => => プレイヤーが置ける場所に石を置いた場合の盤面を計算する
+
+                                ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_predict_1, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
+
+                                (Cell.Type, Cell.Color)[,] virtualBoard_predict_2 = predict_player.Item1;
+
+                                bool didFlipSecret = predict_player.Item2;
+
+                                if (didFlipSecret)
+                                {
+                                    predict[i] += 1;
+                                }
+
+                                v_board = virtualBoard_predict_2;
                             }
+
+
                         }
-
-                        //Debug.Log("predict[i] : " + predict[i]);
-
-                        int min = 999;
-                        List<int> index = new List<int>();
-                        for (int p = 0; p < predict.Length; p++)
-                        {
-                            if (min == predict[p])
-                            {
-                                index.Add(p);
-                            }
-
-                            if (min > predict[p])
-                            {
-                                index.Clear();
-                                min = predict[p];
-                                index.Add(p);
-                            }
-                        }
-
-                        cellIndex = proposedCells[index[Random.Range(0, index.Count)]].Item1;
-
                     }
+                    
+
+                    int min = 999;
+                    List<int> index = new List<int>();
+                    for (int p = 0; p < predict.Length; p++)
+                    {
+                        Debug.Log(string.Format("predict[{0}] => {1}", p, predict[p]));
+
+                        if (min == predict[p])
+                        {
+                            index.Add(p);
+                        }
+
+                        if (min > predict[p])
+                        {
+                            index.Clear();
+                            min = predict[p];
+                            index.Add(p);
+                        }
+                    }
+
+                    cellIndex = proposedCells[index[Random.Range(0, index.Count)]].Item1;
                 }
             }
 
