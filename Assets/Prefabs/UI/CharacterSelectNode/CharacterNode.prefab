@@ -325,6 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5825473274098366169}
   - component: {fileID: 6207449606471557237}
+  - component: {fileID: 8786295380299618568}
   m_Layer: 5
   m_Name: CharacterNode
   m_TagString: Untagged
@@ -367,6 +368,18 @@ MonoBehaviour:
   opponent: 0
   button: {fileID: 1677656694194731684}
   text: {fileID: 9074771862472627203}
+--- !u!225 &8786295380299618568
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4615404010219575703}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4882394164659213760
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +549,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.11764706}
     m_PressedColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.19607843}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.27450982}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
