@@ -19,7 +19,8 @@ public class DialogueViewBase : MonoBehaviour
         textMeshProUGUI.text = "";
         string stockString = "";
         bool isStock = false;
-
+        isSkip = false;
+        
         foreach (char c in text)
         {
             // isSkip = await WaitForClick().Forget();
@@ -75,8 +76,6 @@ public class DialogueViewBase : MonoBehaviour
                 }
             }
         }
-
-        isSkip = false;
     }
     
     /// <summary>
