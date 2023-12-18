@@ -73,6 +73,9 @@ public class Board : MonoBehaviour
 
     [Header("プリセットインデックス")]
     [SerializeField] private int presetIndex = 0;
+
+    private int tmp_RestTurn = 0;
+
     public int getHowManyHimituDidGet { get { return this.presetIndex; } }
 
     [Header("プリセットコピペ用")] public string copi = "＃ ● ○ ◆ □";
@@ -125,6 +128,15 @@ public class Board : MonoBehaviour
     {
         Debug.Log("<b><color=#ef476f>【Board - OnChangeHimituNumber】現在取得しているヒミツの数が変わったら実行される</color></b>");
         if (OnChangeHimituNumberExecuted != null) { OnChangeHimituNumberExecuted(howManyHimituDidGet); }
+    }
+
+    // 両者とも石の設置が不可能になった時に呼ばれる
+    public delegate UniTask ImpossiblePlaceStonesExecutedDelegate();
+    public event ImpossiblePlaceStonesExecutedDelegate ImpossiblePlaceStonesExecuted;
+    async public UniTask ImpossiblePlaceStones()
+    {
+        Debug.Log("<b><color=#ef476f>【Board - ImpossiblePlaceStones】両者とも石の設置が不可能になった時に呼ばれる</color></b>");
+        if (ImpossiblePlaceStonesExecuted != null) { await ImpossiblePlaceStonesExecuted(); }
     }
 
 
@@ -224,7 +236,25 @@ public class Board : MonoBehaviour
             // ゲームが継続するか調べる
             //Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
             code = ContinuationJudgment(this.presetIndex);
-            if (210 % code == 0 && code != 2) { break; }
+            if (210 % code == 0 && code != 2) 
+            {
+                if (code % 3 == 0) // 両者とも石の設置が不可能になった時
+                {
+                    // 手数を元に戻す
+                    this.restTurn = this.tmp_RestTurn;
+                    ChangeRestTurn(this.restTurn);
+
+                    // ターンカウンターを元に戻す
+                    this.turnCounter = 0;
+
+                    // プリセットを元に戻す
+                    await SetPresetOnBoard();
+                }
+                else
+                {
+                    break;
+                }
+            }
 
             // ヒミツマスを裏返したらプレイヤーから始まる
             if (didFlipSecretCell) { continue; }
@@ -259,7 +289,25 @@ public class Board : MonoBehaviour
             // ゲームが継続するか調べる
             // Debug.Log("【Board】TurnUnit() | ゲームが継続するか調べる");
             code = ContinuationJudgment(this.presetIndex);
-            if (210 % code == 0 && code != 2) { break; }
+            if (210 % code == 0 && code != 2) 
+            {
+                if (code % 3 == 0) // 両者とも石の設置が不可能になった時
+                {
+                    // 手数を元に戻す
+                    this.restTurn = this.tmp_RestTurn;
+                    ChangeRestTurn(this.restTurn);
+
+                    // ターンカウンターを元に戻す
+                    this.turnCounter = 0;
+
+                    // プリセットを元に戻す
+                    await SetPresetOnBoard();
+                }
+                else
+                {
+                    break;
+                }
+            }
 
             // ヒミツマスを設置する
             //Debug.Log("【Board】TurnUnit() | ヒミツマスを設置する");
@@ -469,6 +517,9 @@ public class Board : MonoBehaviour
     // 盤面をプリセットに上書きする
     async private UniTask SetPresetOnBoard()
     {
+
+        this.tmp_RestTurn = this.restTurn;
+
         // プリセットを読み込み
         (Cell.Type, Cell.Color)[,] newBoard = new (Cell.Type, Cell.Color)[8, 8];
         string boardString = this.presets[presetIndex].board;
