@@ -34,6 +34,7 @@ public class DialogueView : DialogueViewBase
         // TODO: イメージはあらかじめ読み込まれている状態にしたい。
         PrefixBattleDialogue(characterName, filePath);
 
+        WaitForClick().Forget();
         await TypeText(battleDialogueText, dialogue);
         SaveToBackLog(characterName, dialogue);
     }
@@ -82,6 +83,7 @@ public class DialogueView : DialogueViewBase
 
         cutInTalkNameText.text = characterName;
         
+        WaitForClick().Forget();
         await TypeText(cutInTalkDialogueText, dialogue);
         SaveToBackLog(characterName, dialogue);
         

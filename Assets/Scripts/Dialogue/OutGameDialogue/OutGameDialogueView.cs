@@ -50,6 +50,7 @@ public class OutGameDialogueView : DialogueViewBase
             characterImageLeft.color = activeColor;
             characterImageRight.color = inactiveColor;
             
+            WaitForClick().Forget();
             await TypeText(dialogueText, dialogue);
             SaveToBackLog(characterName, dialogue);
             
@@ -64,6 +65,7 @@ public class OutGameDialogueView : DialogueViewBase
             characterImageLeft.color = inactiveColor;
             characterImageRight.color = activeColor;
             
+            WaitForClick().Forget();
             await TypeText(dialogueText, dialogue);
             SaveToBackLog(characterNameSub, dialogue);
             
@@ -83,6 +85,8 @@ public class OutGameDialogueView : DialogueViewBase
         PrefixDialogue(characterName);
         
         characterImageCenter.sprite = LoadSprite(filePath);
+        
+        WaitForClick().Forget();
         await TypeText(dialogueText, dialogue);
         SaveToBackLog(characterName, dialogue);
         
@@ -114,6 +118,8 @@ public class OutGameDialogueView : DialogueViewBase
     {
         PrefixDialogue("");
         AudioManager.instance_AudioManager.PlaySE(int.Parse(filePath));
+        
+        WaitForClick().Forget();
         await TypeText(dialogueText, dialogue);
         await WaitUntilMouseClick();
         SaveToBackLog("", dialogue);
