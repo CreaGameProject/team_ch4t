@@ -36,6 +36,7 @@ public class Kalte : MonoBehaviour
         defaultWindowsSize = rt.localScale;
         defaultWindowsPosition = rt.anchoredPosition;
         defaultWindowsRotation = rt.rotation;
+        backGround.gameObject.SetActive(true);
         backGround.DOFade(0, 0.01f);
         centerDifference = new Vector2(Screen.width / 2 - rt.anchoredPosition.x, Screen.height / 2 - rt.anchoredPosition.y);
     }
