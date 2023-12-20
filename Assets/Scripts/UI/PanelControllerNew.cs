@@ -12,15 +12,17 @@ public class PanelControllerNew : MonoBehaviour
     [Header("Windowの周囲押下で閉じるか")]
     public bool canClose = true;
     [Header("Windowを開くボタン")]
-    public GameObject windowOpener;
+    public List<GameObject> windowOpener = new List<GameObject>();
     [Header("Windowを閉じるボタン")]
     public List<GameObject> windowCloser = new List<GameObject>();
+    [Header("Windowを閉じる背景ボタン")]
+    public GameObject backWindowCloser;
     [Header("Windowの背景")]
     public GameObject backgroundPanel;
     [Header("Window")]
     public GameObject windowPanel;
     [Header("Windowの構成要素全て")]
-    public GameObject panelGroup;
+    public GameObject panel;
 
     private RectTransform windowRect;
     private Vector3 defaultScale;
@@ -30,7 +32,7 @@ public class PanelControllerNew : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        panelGroup.SetActive(true);
+        panel.SetActive(true);
 
         windowRect = windowPanel.GetComponent<RectTransform>();
         defaultScale = windowRect.localScale;
@@ -40,18 +42,23 @@ public class PanelControllerNew : MonoBehaviour
         backImage.color = Color.clear;
 
         // Windowを開くためのボタン
-        if(windowOpener != null) { windowOpener.GetComponent<Button>().onClick.AddListener(OpenPanel); }
+        if (windowOpener != null)
+        {
+            foreach(GameObject g in windowOpener) g.GetComponent<Button>().onClick.AddListener(OpenPanel);
+        }
 
         // Windowを閉じるためのボタン
-        foreach (GameObject g in windowCloser)
+        if (windowCloser != null)
         {
-            g.SetActive(false);
-            g.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                if (canClose) { ClosePanel(); } else { DontClosePanel(); }
-                GetComponent<ButtonSePlayer>().PlayPressedButtonSe();
-            });
+            foreach (GameObject g in windowCloser) g.GetComponent<Button>().onClick.AddListener(ClosePanel);
         }
+
+        // Windowを閉じるための背景ボタン
+        backWindowCloser.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            if (canClose) { ClosePanel(); } else { DontClosePanel(); }
+        });
+        backWindowCloser.SetActive(false);
     }
 
     // Update is called once per frame
@@ -65,7 +72,7 @@ public class PanelControllerNew : MonoBehaviour
     /// </summary>
     public void OpenPanel()
     {
-        foreach (GameObject g in windowCloser) { g.SetActive(true); }
+        backWindowCloser.SetActive(true);
         isAnimate = true;
         windowRect.DOScale(defaultScale, animationTime).SetEase(Ease.OutBack);
         backImage.DOFade(0.8f, animationTime).OnComplete(() => isAnimate = false);
@@ -76,7 +83,7 @@ public class PanelControllerNew : MonoBehaviour
     /// </summary>
     public void ClosePanel()
     {
-        foreach (GameObject g in windowCloser) { g.SetActive(false); }
+        backWindowCloser.SetActive(false);
         isAnimate = true;
         windowRect.DOScale(0, animationTime).SetEase(Ease.InBack);
         backImage.DOFade(0, animationTime).OnComplete(() => isAnimate = false);
