@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 
 [RequireComponent(typeof(EventTrigger))]
 
@@ -16,6 +18,20 @@ public class ExpandButtonAnimation : MonoBehaviour
     void Start()
     {
         rt = GetComponent<RectTransform>();
+
+        if(GetComponent<EventTrigger>() == null) { gameObject.AddComponent<EventTrigger>(); }
+
+        EventTrigger enterTrigger = gameObject.GetComponent<EventTrigger>();
+        EventTrigger.Entry enterEntry = new EventTrigger.Entry();
+        enterEntry.eventID = EventTriggerType.PointerEnter;
+        enterEntry.callback.AddListener((eventDate) => { ExpandButton(); });
+        enterTrigger.triggers.Add(enterEntry);
+
+        EventTrigger exitTrigger = gameObject.GetComponent<EventTrigger>();
+        EventTrigger.Entry exitEntry = new EventTrigger.Entry();
+        exitEntry.eventID = EventTriggerType.PointerExit;
+        exitEntry.callback.AddListener((eventDate) => { ShrinkButton(); });
+        exitTrigger.triggers.Add(exitEntry);
     }
 
     // Update is called once per frame

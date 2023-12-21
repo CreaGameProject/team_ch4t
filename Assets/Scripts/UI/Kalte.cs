@@ -23,22 +23,16 @@ public class Kalte : MonoBehaviour
     private Vector2 defaultWindowsSize;
     private Vector2 defaultWindowsPosition;
     private Quaternion defaultWindowsRotation;
-    private Vector2 centerDifference;
-    private Vector2 defaultAnchorMax;
-    private Vector2 defaultAnchorMin;
     private bool isExpand;
 
     // Start is called before the first frame update
     void Start()
     {
-        defaultAnchorMax = rt.anchorMax;
-        defaultAnchorMin = rt.anchorMin;
         defaultWindowsSize = rt.localScale;
         defaultWindowsPosition = rt.anchoredPosition;
         defaultWindowsRotation = rt.rotation;
         backGround.gameObject.SetActive(true);
         backGround.DOFade(0, 0.01f);
-        centerDifference = new Vector2(Screen.width / 2 - rt.anchoredPosition.x, Screen.height / 2 - rt.anchoredPosition.y);
     }
 
     // Update is called once per frame
@@ -76,7 +70,7 @@ public class Kalte : MonoBehaviour
 
     public void ExpandKalte()
     {
-        if(!isExpand) rt.DOScale(expandRate, expandAnimationTime);
+        if(!isExpand) rt.DOScale(expandRate * defaultWindowsSize, expandAnimationTime);
     }
 
     public void ShrinkKalte()
