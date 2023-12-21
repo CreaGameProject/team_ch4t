@@ -11,8 +11,11 @@ GameObject:
   - component: {fileID: 4651373914959591174}
   - component: {fileID: 7052772234322948168}
   - component: {fileID: 8888513264439937234}
+  - component: {fileID: 2508893065492563661}
   - component: {fileID: 2170693289277793648}
   - component: {fileID: 2230482105108173948}
+  - component: {fileID: 3156659547184331847}
+  - component: {fileID: 8992527540528994661}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -77,6 +80,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2508893065492563661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225482929510010267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!114 &2170693289277793648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,3 +150,29 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3156659547184331847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225482929510010267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 578908394de68f84abd519c3b8c45969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationTime: 0.21
+  expandRate: 1.2
+--- !u!114 &8992527540528994661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225482929510010267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46866f229ce62794ab43d68e1b1cfce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

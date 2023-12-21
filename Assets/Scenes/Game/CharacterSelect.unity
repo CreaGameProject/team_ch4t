@@ -488,7 +488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6901288217855086525, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 25.150002
       objectReference: {fileID: 0}
     - target: {fileID: 7335348975645289292, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -504,7 +504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7335348975645289292, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 25.150002
       objectReference: {fileID: 0}
     - target: {fileID: 8761764761520332716, guid: 89a026f58584cc040bfeb878bde4477d, type: 3}
       propertyPath: m_Pivot.x
@@ -1984,6 +1984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e78b350c8c5462049949b8afbe7fb1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterNode: []
+  characterSelectView: {fileID: 308443144}
 --- !u!114 &1931769892
 MonoBehaviour:
   m_ObjectHideFlags: 0
