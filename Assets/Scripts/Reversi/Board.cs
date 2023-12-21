@@ -240,6 +240,8 @@ public class Board : MonoBehaviour
             {
                 if (code % 3 == 0) // 両者とも石の設置が不可能になった時
                 {
+                    await ImpossiblePlaceStones();
+
                     // 手数を元に戻す
                     this.restTurn = this.tmp_RestTurn;
                     ChangeRestTurn(this.restTurn);
@@ -293,6 +295,8 @@ public class Board : MonoBehaviour
             {
                 if (code % 3 == 0) // 両者とも石の設置が不可能になった時
                 {
+                    await ImpossiblePlaceStones();
+
                     // 手数を元に戻す
                     this.restTurn = this.tmp_RestTurn;
                     ChangeRestTurn(this.restTurn);
