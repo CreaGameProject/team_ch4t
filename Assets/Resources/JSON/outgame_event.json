@@ -394,7 +394,7 @@
       "name_sub": null,
       "file_sub": null,
       "talker": null,
-      "text": "君のクラスのかわいこちゃん！　\r\n雪平優依（ゆきひらうい）ちゃんだよ♪"
+      "text": "君のクラスのかわいこちゃん！　\n雪平優依（ゆきひらうい）ちゃんだよ♪"
     },
     {
       "event_number": 37,
@@ -675,7 +675,7 @@
       "event_number": 62,
       "type": "TALK",
       "event_id": "0",
-      "name": "うい",
+      "name": null,
       "file": "chara_ui_110",
       "name_sub": null,
       "file_sub": null,
@@ -994,7 +994,7 @@
       "event_number": 91,
       "type": "TALK",
       "event_id": 3,
-      "name": "部長",
+      "name": null,
       "file": "chara_boss_basic",
       "name_sub": null,
       "file_sub": null,
@@ -1005,7 +1005,7 @@
       "event_number": 92,
       "type": "TALK",
       "event_id": 3,
-      "name": "部長",
+      "name": null,
       "file": "chara_boss_angry",
       "name_sub": null,
       "file_sub": null,
@@ -1120,7 +1120,7 @@
       "name_sub": null,
       "file_sub": null,
       "talker": null,
-      "text": "そのままにされたボードを片付けながら、何とも言えない気持ちを嚙み締める。"
+      "text": "そのままにされたボードを片付けながら、何とも言えない気持ちをかみ締める。"
     },
     {
       "event_number": 103,

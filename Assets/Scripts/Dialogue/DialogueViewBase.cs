@@ -45,11 +45,11 @@ public class DialogueViewBase : MonoBehaviour
                     AudioManager.instance_AudioManager.PlaySE(4);
                     await UniTask.Delay(_talkSpeed * 5); 
                 }
-                else if (c == '。' || c == '？' || c == '！' || c == '.')
+                else if (c == '。' || c == '？' || c == '！' || c == '.' || c == '…')
                 {
                     textMeshProUGUI.text += c;
                     AudioManager.instance_AudioManager.PlaySE(4);
-                    await UniTask.Delay(_talkSpeed * 10); 
+                    await UniTask.Delay(_talkSpeed * 10);
                 }
                 else
                 {
