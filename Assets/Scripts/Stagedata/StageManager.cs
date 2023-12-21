@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
+    private const int NumStages = 2; // ステージ数
+
+    private int currentStageNumber = 1; // 今のステージ番号
+    private int totalReports = 0;   // トータルの報告数
+    private bool[] hasReported = new bool[NumStages + 1]; // 各ステージの報告状況
+
+    private const string CurrentStageKey = "CurrentStage";
+    private const string TotalReportsKey = "TotalReports";
+    private const string IsFirstClearKey = "IsFirstClear";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,30 +25,65 @@ public class StageManager : MonoBehaviour
     {
         
     }
-    
-    // 勝利時に呼び出してください
-    public void nextStage()
+
+    // ステージクリア時の処理(ステージ番号, 報告するかどうか)
+    public void HandleStageClear(int currentStageNum, bool report)
     {
-        int StageUnlock = PlayerPrefs.GetInt("StageUnlock");
-        int NowScene = SceneManager.GetActiveScene().buildIndex;   // 現在のシーン番号を取得
-        if(StageUnlock < NowScene) //  今のステージ番号が解放済みステージ番号よりも大きい場合（初めてクリアした場合）
+        if (IsFirstCleared())
         {
-            PlayerPrefs.SetInt("StageUnlock", NowScene);   // 解放済みステージ番号を更新
-        }
-        
-        /*
-        if (NowScene < SceneManager.sceneCountInBuildSettings)
-        {
-            if(StageUnlock < NowScene)
+            if (report)
             {
-                PlayerPrefs.SetInt("StageUnlock", NowScene);
+                hasReported[currentStageNum] = true;
+                totalReports++;
             }
-            SceneManager.LoadScene(NowScene);
+            else
+            {
+                hasReported[currentStageNum] = false;
+            }
+            SaveData();
         }
         else
         {
-            SceneManager.LoadScene(0);  // すべてクリア済みのためタイトル画面に遷移
+
         }
-        */
+    }
+
+    // 初回クリアかどうか
+    bool IsFirstCleared()
+    {
+        return PlayerPrefs.GetInt(GetIsFirstClearKey(currentStageNumber), 0) == 1;
+    }
+
+    // データの保存
+    public void SaveData()
+    {
+        PlayerPrefs.SetInt(CurrentStageKey, currentStageNumber);
+        PlayerPrefs.SetInt(TotalReportsKey, totalReports);
+        PlayerPrefs.SetInt(GetIsFirstClearKey(currentStageNumber), 1);
+        PlayerPrefs.Save();
+
+        Debug.Lod("現在のステージ番号: " + currentStageNumber);
+        Debug.Lod("トータルの報告数: " + totalReports);
+        for (int i = 0; i < NumStages; i++)
+        {
+            Debug.Lod($"ステージ{i + 1}の報告状況: " + hasReported[i]);
+        }
+    }
+
+    // データの読み込み
+    public void LoadData()
+    {
+        currentStageNumber = PlayerPrefs.GetInt(CurrentStageKey, currentStageNumber);
+        totalReports = PlayerPrefs.GetInt(TotalReportsKey, totalReports);
+        for (int i = 0; i < NumStages; i++)
+        {
+            hasReported[i] = PlayerPrefs.GetInt(GetIsFirstClearKey(i + 1), 0) == 1;
+        }
+    }
+
+    // IsFirstClearKeyの取得
+    private string GetIsFirstClearKey(int stageNumber)
+    {
+        return $"{IsFirstClearKey}_{stageNumber}";
     }
 }
