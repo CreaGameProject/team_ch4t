@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 6577331177398215416}
   - component: {fileID: 3533797144839030812}
   - component: {fileID: 2860822110142964577}
+  - component: {fileID: 4818764924975810523}
   m_Layer: 5
   m_Name: ConfirmationResetWindow
   m_TagString: Untagged
@@ -377,6 +378,20 @@ MonoBehaviour:
   backgroundPanel: {fileID: 7036010501877592655}
   windowPanel: {fileID: 8162512807854603257}
   panel: {fileID: 3262443533196837319}
+--- !u!114 &4818764924975810523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3945490931542462835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 631af5d4f5b2793449cab0beb75e414e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpWindowLock: 0
+  yesButton: {fileID: 1254808041715385117}
 --- !u!1 &6255267263860689745
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +817,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2311773162614455670, guid: b0d4ff5d51b2b7547a078548a736fb35, type: 3}
   m_PrefabInstance: {fileID: 2331122600148783661}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1254808041715385117 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3544393257179877680, guid: b0d4ff5d51b2b7547a078548a736fb35, type: 3}
+  m_PrefabInstance: {fileID: 2331122600148783661}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741048168960177278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b51ad44ad13c4975ad0bdfaf1d97382e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7741048168960177278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5419085911626344019, guid: b0d4ff5d51b2b7547a078548a736fb35, type: 3}
