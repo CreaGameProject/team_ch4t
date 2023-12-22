@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 4464699768942201744}
   - component: {fileID: 5402847121482368960}
   - component: {fileID: 5238464761407933567}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WindowGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5234047100244468326}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ButtonGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1710,7 +1710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9061469144473017812}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OptionWindowGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

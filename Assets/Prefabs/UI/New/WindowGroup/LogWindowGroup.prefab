@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5211469801805218442}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ButtonGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4036920689710712161}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LogWindowGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ GameObject:
   - component: {fileID: 2735354758048049841}
   - component: {fileID: 5843581525546081689}
   - component: {fileID: 6683246572483749149}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WindowGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
