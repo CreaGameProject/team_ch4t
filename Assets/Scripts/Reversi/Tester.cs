@@ -40,6 +40,9 @@ public class Tester : MonoBehaviour
         // セリフ表示スクリプトにこれを追加する
         Board.instance.OnSpeakComputerExecuted += OnSpeakComputerExecutedHandler;
         Board.instance.OnSecretCellPerformanceExecuted += OnSecretCellPerformanceExecutedHandler;
+
+        // 
+        Board.instance.ImpossiblePlaceStonesExecuted += ImpossiblePlaceStones;
     }
 
     // 残り手数が変更されたときに実行される
@@ -94,5 +97,24 @@ public class Tester : MonoBehaviour
         Debug.Log("【Tester】OnSpeakComputerExecutedHandler() | キャラクターが喋る処理を記述する");
 
         await UniTask.Yield();
+    }
+
+
+    public bool popUpWindowLock = false; // 「はい」ボタンを押したときに true に
+    async public UniTask ImpossiblePlaceStones()
+    {
+        await UniTask.Yield();
+
+        // ウィンドウをポップアップさせる処理
+
+        while (!popUpWindowLock)
+        {
+            // 100ミリ秒待機して再試行
+            await UniTask.Delay(10);
+        }
+
+        popUpWindowLock = false;
+
+        // 
     }
 }

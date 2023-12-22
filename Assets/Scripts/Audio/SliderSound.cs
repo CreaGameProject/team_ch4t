@@ -10,8 +10,6 @@ public class SliderSound : MonoBehaviour, IPointerUpHandler
 {
     [SerializeField]
     private Slider slider;
-    [SerializeField]
-    private ButtonSePlayer sePlayer;
 
     private bool isChanged = false;
 
@@ -20,8 +18,6 @@ public class SliderSound : MonoBehaviour, IPointerUpHandler
     {
         slider.onValueChanged.AddListener(OnValueChanged);
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -33,7 +29,7 @@ public class SliderSound : MonoBehaviour, IPointerUpHandler
     {
         if (isChanged)
         {
-            sePlayer.PlayHighlightedButtonSe();
+            AudioManager.instance_AudioManager.PlaySE(0);
             isChanged = false;
         }
     }

@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 public class DialogueModel : DialogueModelBase
 {
@@ -9,7 +10,7 @@ public class DialogueModel : DialogueModelBase
     public List<DialogueTalkEvent> DialogueTalkEvents = new List<DialogueTalkEvent>();
     public List<DialogueCutInEvent> DialogueCutInEvents = new List<DialogueCutInEvent>();
     public List<DialogueCutInTalkEvent> DialogueCutInTalkEvents = new List<DialogueCutInTalkEvent>();
-    
+    public List<DialogueTalkEvent> randomlyOrderedTalkEvents = new List<DialogueTalkEvent>();
     
     void Awake()
     {
@@ -55,5 +56,13 @@ public class DialogueModel : DialogueModelBase
         }
     }
 
-    
+    public void SetRandomlyOrderedTalkEvents()
+    {
+        var selectedTalkEvents = DialogueTalkEvents
+            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == Board.instance.getHowManyHimituDidGet)
+            .ToList();
+        
+        var randomOrder = new Random();
+        randomlyOrderedTalkEvents = selectedTalkEvents.OrderBy(x => randomOrder.Next()).ToList();
+    }
 }

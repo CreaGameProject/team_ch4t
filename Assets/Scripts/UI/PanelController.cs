@@ -8,27 +8,26 @@ public class PanelController : MonoBehaviour
 {
     [Header("ƒpƒlƒ‹‚ÌŠJ•ÂŽžŠÔ")]
     public float animationTime = 0.3f;
-    [Header("WIndowŠO”wŒiObject")]
+    [Header("WIndow‚Ì”wŒi")]
     public GameObject backPanel;
-    [Header("Window”wŒiObject")]
+    [Header("Window")]
     public GameObject windowPanel;
 
     private RectTransform windowRect;
     private Vector3 defaultScale = Vector3.zero;
-    private RectTransform backRect;
     private Image backImage;
     private bool isAnimate = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        windowPanel.SetActive(true);
+
         windowRect = windowPanel.GetComponent<RectTransform>();
         windowRect.localScale = Vector3.zero;
 
-        backRect = backPanel.GetComponent<RectTransform>();
         backImage = backPanel.GetComponent<Image>();
         backImage.color = Color.clear;
-        defaultScale = backRect.lossyScale;
     }
 
     // Update is called once per frame

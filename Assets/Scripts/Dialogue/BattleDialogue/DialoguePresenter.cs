@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -33,7 +31,7 @@ public class DialoguePresenter : MonoBehaviour
     
     private async UniTask SpeakComputerEventHandler()
     {
-        await StartRandomBattleDialogue(Board.instance.getHowManyHimituDidGet);
+        await StartRandomBattleDialogue();
     }
 
     private async UniTask SecretCellPerformanceEventHandler()
@@ -52,28 +50,25 @@ public class DialoguePresenter : MonoBehaviour
         cts.Cancel();
     }
 
-    private async UniTask StartRandomBattleDialogue(int secretCount)
+    private async UniTask StartRandomBattleDialogue()
     {
-        var selectedTalkEvents = _model.DialogueTalkEvents
-            .Where(dialogueTalkEvent => dialogueTalkEvent.SecretCount == secretCount)
-            .ToList();
         
-        var randomOrder = new Random();
-        var randomlyOrderedTalkEvents = selectedTalkEvents.OrderBy(x => randomOrder.Next()).ToList();
-
         // ランダムに1つの要素を抽出
-        var randomlySelectedTalkEvent = randomlyOrderedTalkEvents.FirstOrDefault();
-        
+        var randomlySelectedTalkEvent = _model.randomlyOrderedTalkEvents.FirstOrDefault();
         if (randomlySelectedTalkEvent != null)
         {
+            _model.randomlyOrderedTalkEvents.Remove(randomlySelectedTalkEvent);
             await StartBattleDialogue(randomlySelectedTalkEvent);
+        }
+        else
+        {
+            _model.SetRandomlyOrderedTalkEvents();
+            await StartRandomBattleDialogue();
         }
     }
 
-
     private async UniTask StartBattleDialogue(DialogueTalkEvent talkEvent)
     {
-        // TODO: 本番環境に差し替え
         await _view.StartBattleDialogue(
             talkEvent.CharacterName,
             talkEvent.FilePath,
