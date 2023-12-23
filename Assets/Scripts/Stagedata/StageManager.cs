@@ -7,14 +7,10 @@ public class StageManager : MonoBehaviour
     public static StageManager instance_StageManager;
     
     private const int NumStages = 2; // ステージ数
-
-    private int currentStageNum = 1; // 今のステージ番号(ゆき１、部長２)
+    private int openStageNum = 1;       // 開放されているステージ番号(ゆき１、部長２)
     private bool[] hasCleared = new bool[NumStages + 1];  // 各ステージのクリア状況(ゆき１、部長２)
     private bool[] hasReported = new bool[NumStages + 1]; // 各ステージの報告状況(ゆき１、部長２)
     private int totalReports = 0;   // トータルの報告数
-
-    private const string IsFirstClearKey = "IsFirstClear";
-
 
     private void Awake()
     {
@@ -47,16 +43,21 @@ public class StageManager : MonoBehaviour
         if (IsFirstCleared(currentStageNum))
         {
             Debug.Log("ステージ" + currentStageNum + "初回クリア");
+            hasCleared[currentStageNum] = true;
+
             if (report)
             {
-                hasCleared[currentStageNum] = true;
                 hasReported[currentStageNum] = true;
                 totalReports++;
             }
             else
             {
-                hasCleared[currentStageNum] = true;
                 hasReported[currentStageNum] = false;
+            }
+
+            if (currentStageNum == openStageNum)
+            {
+                openStageNum++;
             }
             SaveData();
         }
@@ -75,7 +76,7 @@ public class StageManager : MonoBehaviour
     // データの保存
     public void SaveData()
     {
-        PlayerPrefs.SetInt("CurrentStage", currentStageNum);
+        PlayerPrefs.SetInt("OpenStage", openStageNum);
         PlayerPrefs.SetInt("TotalReports", totalReports);
         for (int i = 1; i <= NumStages; i++)
         {
@@ -84,7 +85,6 @@ public class StageManager : MonoBehaviour
         }
         PlayerPrefs.Save();
 
-        Debug.Log("現在のステージ番号: " + currentStageNum);
         Debug.Log("トータルの報告数: " + totalReports);
         for (int i = 1; i <= NumStages; i++)
         {
@@ -96,15 +96,43 @@ public class StageManager : MonoBehaviour
     // データの読み込み
     public void LoadData()
     {
-        currentStageNum = PlayerPrefs.GetInt("CurrentStage", currentStageNum);
         totalReports = PlayerPrefs.GetInt("TotalReports", totalReports);
+        for (int i = 1; i <= NumStages; i++)
+        {
+            hasCleared[i] = PlayerPrefs.GetInt("HasCleared" + i, hasCleared[i] ? 1 : 0) == 1;
+            hasReported[i] = PlayerPrefs.GetInt("HasReported" + i, hasReported[i] ? 1 : 0) == 1;
+        }
+    }
+
+    // 開放されているステージ番号の取得
+    public int GetOpenStage()
+    {
+        return openStageNum = PlayerPrefs.GetInt("OpenStage", openStageNum);
+    }
+
+    // 合計報告数の取得
+    public int GetTotalReports()
+    {
+        return totalReports = PlayerPrefs.GetInt("TotalReports", totalReports);
+    }
+
+    // クリア状況の取得
+    public bool GetHasCleared(int currentStageNum)
+    {
+        return hasCleared[currentStageNum] = PlayerPrefs.GetInt("HasCleared" + currentStageNum, hasCleared[currentStageNum] ? 1 : 0) == 1;
+    }
+
+    // 報告状況の取得
+    public bool GetHasReported(int currentStageNum)
+    {
+        return hasReported[currentStageNum] = PlayerPrefs.GetInt("HasReported" + currentStageNum, hasReported[currentStageNum] ? 1 : 0) == 1;
     }
 
     // データのリセット
     public void ResetData()
     {
         PlayerPrefs.DeleteAll();
-        currentStageNum = 1;
+        openStageNum = 1;
         totalReports = 0;
         for (int i = 1; i <= NumStages; i++)
         {
