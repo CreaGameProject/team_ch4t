@@ -171,24 +171,29 @@ public class Computer : MonoBehaviour
                         }
                     }
 
-                    
-
                     Debug.Log(string.Format("AIが思考を開始します。"));
 
                     ViewBoard(Turn.Type.player, true, virtualBoard);
 
                     List<int> predict = new List<int>();
+
+
                     predict = await Recursive(virtualBoard, 1, this.foresight);
 
-                    /*for (int n = 0; n < this.foresight; n++)
+                    /*
+                    for (int n = 0; n < this.foresight; n++)
                     {
                         //Debug.Log(string.Format("{0} 手先を読んでいます...", n + 1));
 
                         (Cell.Type, Cell.Color)[,] v_board = virtualBoard;
 
+                        predict = new List<int> { proposedCells.Count };
+
                         // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
-                        for (int i = 0; i < predict.Length; i++)
+                        for (int i = 0; i < proposedCells.Count; i++)
                         {
+                            predict.Add(0);
+
                             //Debug.Log("proposedCells[j] : " + proposedCells[i]);
                             Debug.Log(string.Format("{0} 手先 パターン{1} を読んでいます...", n + 1, i + 1));
 
