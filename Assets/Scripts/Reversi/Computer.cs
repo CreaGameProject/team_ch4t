@@ -7,8 +7,7 @@ using Microsoft.VisualBasic;
 using UnityEditor;
 using System.ComponentModel;
 using Cysharp.Threading.Tasks;
-
-
+using System.Linq;
 
 public class Computer : MonoBehaviour
 {
@@ -30,6 +29,68 @@ public class Computer : MonoBehaviour
     [Header("N 手先まで思考する（部長AIのみ有効）")] // default => 1
     [SerializeField] private int foresight = 1;
     
+    // 再帰的に計算する（実行コスト高い）
+    async private UniTask<List<int>> Recursive((Cell.Type, Cell.Color)[,] virtualBoard, int n, int f)
+    {
+        await UniTask.Yield();
+
+        List<((int, int), int)> proposedCells_com = GetProposedCell(Cell.Color.white, virtualBoard);
+
+        List<int> predict = new List<int>();
+
+        //Debug.Log("proposedCells[j] : " + proposedCells[i]);
+        Debug.Log(string.Format("{0} 手先を試行中...", n));
+
+        // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
+        for (int i = 0; i < proposedCells_com.Count; i++)
+        {
+            
+
+            Debug.Log(string.Format("computerパターン : {0}", i));
+
+            predict.Add(0);
+
+            // 探索打ち切り
+            if (predict[i] > predict.Min()) { Debug.Log(string.Format("探索打ち切り")); predict[i] = 999999; continue; }
+
+            ((Cell.Type, Cell.Color)[,], bool) predict_com = Predict(virtualBoard, proposedCells_com[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
+            //((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(virtualBoard, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
+
+            (Cell.Type, Cell.Color)[,] virtualBoard_com = predict_com.Item1;
+
+            virtualBoard_com[proposedCells_com[i].Item1.Item1, proposedCells_com[i].Item1.Item2] = UpdateCell(Cell.Type.white);
+
+            ViewBoard(Turn.Type.player, true, virtualBoard_com);
+
+            // => => プレイヤーが置ける場所を探す
+
+            List<((int, int), int)> proposedCells_player = GetProposedCell(Cell.Color.black, virtualBoard_com);
+
+            for (int j = 0; j < proposedCells_player.Count; j++)
+            {
+                Debug.Log(string.Format("computerパターン : {0} | playerパターン : {1}", i, j));
+
+                ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_com, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
+
+                (Cell.Type, Cell.Color)[,] virtualBoard_player = predict_player.Item1;
+
+                ViewBoard(Turn.Type.computer, true, virtualBoard_player);
+
+                bool didFlipSecret = predict_player.Item2;
+
+                if (didFlipSecret) { predict[i] += 1; }
+
+                // 探索打ち切り
+                if (predict[i] > predict.Min()) { Debug.Log(string.Format("探索打ち切り")); predict[i] = 999999; continue; }
+
+                if (n != f) { await Recursive(virtualBoard_player, n + 1, f); }
+            }
+
+            
+        }
+
+        return predict;
+    }
 
     async public UniTask Action()
     {
@@ -73,7 +134,7 @@ public class Computer : MonoBehaviour
                 }
 
                 // 最も石を裏返せる位置に置く
-
+                /*
                 int maxLength = proposedCells[0].Item2;
                 List<(int, int)> maxCell = new List<(int, int)> { proposedCells[0].Item1 };
                 for (int i = 1; i < proposedCells.Count; i++)
@@ -91,7 +152,7 @@ public class Computer : MonoBehaviour
                 }
 
                 // 候補が複数ある場合はランダムで選ぶ
-                cellIndex = maxCell[Random.Range(0, maxCell.Count)];
+                cellIndex = maxCell[Random.Range(0, maxCell.Count)];*/
 
                 // 部長用
 
@@ -110,18 +171,26 @@ public class Computer : MonoBehaviour
                         }
                     }
 
-                    int[] predict = new int[proposedCells.Count];
+                    
 
-                    for (int n = 0; n < this.foresight; n++)
+                    Debug.Log(string.Format("AIが思考を開始します。"));
+
+                    ViewBoard(Turn.Type.player, true, virtualBoard);
+
+                    List<int> predict = new List<int>();
+                    predict = await Recursive(virtualBoard, 1, this.foresight);
+
+                    /*for (int n = 0; n < this.foresight; n++)
                     {
-                        Debug.Log(string.Format("{0} 手先を読んでいます...", n + 1));
+                        //Debug.Log(string.Format("{0} 手先を読んでいます...", n + 1));
 
                         (Cell.Type, Cell.Color)[,] v_board = virtualBoard;
 
                         // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
-                        for (int i = 0; i < proposedCells.Count; i++)
+                        for (int i = 0; i < predict.Length; i++)
                         {
                             //Debug.Log("proposedCells[j] : " + proposedCells[i]);
+                            Debug.Log(string.Format("{0} 手先 パターン{1} を読んでいます...", n + 1, i + 1));
 
                             ((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(v_board, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
                             //((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(virtualBoard, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
@@ -146,24 +215,27 @@ public class Computer : MonoBehaviour
 
                                 (Cell.Type, Cell.Color)[,] virtualBoard_predict_2 = predict_player.Item1;
 
+                                Debug.Log(string.Format("{0} 手先 パターン{1} の パターン{2} を読んでいます...", n + 1, i + 1, j + 1));
+
+                                ViewBoard(Turn.Type.player, true, virtualBoard_predict_2);
+
                                 bool didFlipSecret = predict_player.Item2;
 
-                                if (didFlipSecret)
-                                {
-                                    predict[i] += 1;
-                                }
+                                if (didFlipSecret) { predict[i] += 1; }
 
                                 v_board = virtualBoard_predict_2;
                             }
 
 
                         }
-                    }
+                    }*/
+
+                    Debug.Log("predict => " + predict);
                     
 
                     int min = 999;
                     List<int> index = new List<int>();
-                    for (int p = 0; p < predict.Length; p++)
+                    for (int p = 0; p < predict.Count; p++)
                     {
                         Debug.Log(string.Format("predict[{0}] => {1}", p, predict[p]));
 
