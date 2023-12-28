@@ -38,7 +38,7 @@ public class KalteSecret : MonoBehaviour
     {
         Board.instance.OnChangeHimituNumberExecuted += OnChangeHimituNumberExecutedHandler;
 
-        Computer.Opponent opponent = Board.instance.getOpponent;
+        Computer.Opponent opponent = Computer.opponent;
         image.GetComponent<Image>().sprite = kalteProfile[(int)opponent].kalteImage;
         birthdayText.GetComponent<TextMeshProUGUI>().text = kalteProfile[(int)opponent].birthday;
         profileText.GetComponent<TextMeshProUGUI>().text =

@@ -15,7 +15,7 @@ public class KalteManager : MonoBehaviour
     {
         Instantiate(kaltes[0], GetComponent<RectTransform>());
 
-        Computer.Opponent opponent = Board.instance.getOpponent;
+        Computer.Opponent opponent = Computer.opponent;
         switch (opponent)
         {
             case Computer.Opponent.Yukihira_ui:
