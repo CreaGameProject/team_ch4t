@@ -11,17 +11,29 @@ public class KalteSecret : MonoBehaviour
     [System.Serializable]
     class KalteProfile
     {
+        [Header("名前")]
+        public string name;
+        [Header("カルテ画像")]
         public Sprite kalteImage;
+        [Header("○月○日(○)")]
         public string birthday;
+        [Header("○年○組")]
         public string gradeAndClass;
+        [Header("身長")]
         public int height;
+        [Header("体重")]
         public int bodyWeight;
+        [Header("趣味")]
         public string hobby;
+        [Header("特技")]
         public string specialSkill;
+        [Header("秘密")]
         [TextArea(3,5)] public string[] secret = new string[3];
     }
 
 
+    [SerializeField]
+    private bool isShowed = false;
     [SerializeField]
     private GameObject image;
     [SerializeField]
@@ -50,7 +62,7 @@ public class KalteSecret : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             secretText[i].GetComponent<TextMeshProUGUI>().text = kalteProfile[(int)opponent].secret[i];
-            secretText[i].SetActive (false);
+            if(!isShowed) secretText[i].SetActive (false);
         }
     }
 
