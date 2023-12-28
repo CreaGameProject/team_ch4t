@@ -29,7 +29,6 @@ public class BoardResetWindow : MonoBehaviour
 
         // ウィンドウをポップアップさせる処理
         GetComponent<PanelControllerNew>()?.OpenPanel();
-        Debug.Log("リセットします！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
 
         while (!popUpWindowLock)
         {

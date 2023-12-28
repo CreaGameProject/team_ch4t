@@ -134,19 +134,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5407571050358178400}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8642474479483530557}
-        m_TargetAssemblyTypeName: ButtonSePlayer, Assembly-CSharp
-        m_MethodName: PlayPressedButtonSe
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &8642474479483530557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,7 +373,7 @@ GameObject:
   - component: {fileID: 3135230275321475460}
   - component: {fileID: 4585846657329079057}
   m_Layer: 5
-  m_Name: ProfileText2
+  m_Name: BirthdayText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -653,8 +641,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 753188626662309828}
   - {fileID: 6628364084228727722}
+  - {fileID: 753188626662309828}
   - {fileID: 9020110504244535721}
   - {fileID: 209655928548849078}
   - {fileID: 5488124729424288132}
@@ -1210,9 +1198,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 863280868610407303}
-  - component: {fileID: 4364091860566011713}
-  - component: {fileID: 33803774267555345}
-  - component: {fileID: 4257506843710524462}
+  - component: {fileID: 4659401847220491813}
+  - component: {fileID: 8622288531662993796}
   m_Layer: 5
   m_Name: Kalte
   m_TagString: Untagged
@@ -1240,7 +1227,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4364091860566011713
+--- !u!114 &4659401847220491813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1249,31 +1236,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7697649663341200348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4150ceef37a9214d8e7865b84cb1354, type: 3}
+  m_Script: {fileID: 11500000, guid: 60fdddcf78001134aba2161acf6470a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   openWindowAnimationTime: 0.3
   expandAnimationTime: 0.21
-  windowScaleRatio: 1.5
-  backGround: {fileID: 4311901524086449823}
-  rt: {fileID: 3424016858489510585}
+  windowScaleRatio: 2
   expandRate: 1.1
---- !u!114 &33803774267555345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7697649663341200348}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 844dfc4a9d41ce549b06af39485eb44e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kaltes:
-  - {fileID: 558601801486703460, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
-  - {fileID: 558601801486703460, guid: ba9d3eb4375acb64ea126b92670a7096, type: 3}
---- !u!114 &4257506843710524462
+  windowOpener: {fileID: 5320271734474495862}
+  windowCloser: {fileID: 436692118985204769}
+  backgroundPanel: {fileID: 4880668418275208836}
+  windowPanel: {fileID: 5320271734474495862}
+  panel: {fileID: 635966017908619460}
+--- !u!114 &8622288531662993796
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1282,16 +1257,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7697649663341200348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b581798e4b9dd6b42849e106a998cd95, type: 3}
+  m_Script: {fileID: 11500000, guid: 72f89519d352d5c4497b2f7891d231ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 0.3
-  canClose: 1
-  windowOpener:
-  - {fileID: 5320271734474495862}
-  windowCloser:
-  - {fileID: 436692118985204769}
-  backWindowCloser: {fileID: 436692118985204769}
-  backgroundPanel: {fileID: 4880668418275208836}
-  windowPanel: {fileID: 5320271734474495862}
-  panel: {fileID: 635966017908619460}
+  image: {fileID: 5320271734474495862}
+  birthdayText: {fileID: 3553341605768559022}
+  profileText: {fileID: 1995666832449239054}
+  secretText:
+  - {fileID: 5990963818158500904}
+  - {fileID: 5526969660776893932}
+  - {fileID: 5933470731958868295}
+  kalteProfile: []
