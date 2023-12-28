@@ -44,14 +44,12 @@ public class Computer : MonoBehaviour
         // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
         for (int i = 0; i < proposedCells_com.Count; i++)
         {
-            
+            int p = 0;
 
             Debug.Log(string.Format("computerパターン : {0}", i));
 
-            predict.Add(0);
-
             // 探索打ち切り
-            if (predict[i] > predict.Min()) { Debug.Log(string.Format("探索打ち切り")); predict[i] = 999999; continue; }
+            //if (predict.Contains(0)) { Debug.Log(string.Format("探索打ち切り")); continue; }
 
             ((Cell.Type, Cell.Color)[,], bool) predict_com = Predict(virtualBoard, proposedCells_com[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
             //((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(virtualBoard, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
@@ -68,6 +66,9 @@ public class Computer : MonoBehaviour
 
             for (int j = 0; j < proposedCells_player.Count; j++)
             {
+                // 探索打ち切り
+                //if (predict.Contains(0)) { Debug.Log(string.Format("探索打ち切り")); continue; }
+
                 Debug.Log(string.Format("computerパターン : {0} | playerパターン : {1}", i, j));
 
                 ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_com, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
@@ -81,7 +82,7 @@ public class Computer : MonoBehaviour
                 if (didFlipSecret) { predict[i] += 1; }
 
                 // 探索打ち切り
-                if (predict[i] > predict.Min()) { Debug.Log(string.Format("探索打ち切り")); predict[i] = 999999; continue; }
+                //if (predict[i] > predict.Min()) { Debug.Log(string.Format("探索打ち切り")); predict[i] = 999999; continue; }
 
                 if (n != f) { await Recursive(virtualBoard_player, n + 1, f); }
             }

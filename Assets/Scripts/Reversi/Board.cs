@@ -13,7 +13,7 @@ public class Preset
 {
     //[Header("手数（０になるとゲームオーバー）")] public int turn;
     
-    [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・● ⇒ プレイヤーの石\n・○ ⇒ コンピュータの石\n・◆ ⇒ ヒミツマス\n・□ ⇒ 穴")]
+    [Header("プリセット\n・＃ ⇒ 何も置かれていない\n・○ ⇒ プレイヤーの石\n・● ⇒ コンピュータの石\n・◆ ⇒ ヒミツマス\n・□ ⇒ 穴")]
     [TextArea(9, 9)] public string board;
 
     //[Header("メモ")] public string memo;
@@ -251,6 +251,9 @@ public class Board : MonoBehaviour
 
                     // プリセットを元に戻す
                     await SetPresetOnBoard();
+
+                    // プレイヤーから始める
+                    continue;
                 }
                 else
                 {
@@ -306,6 +309,9 @@ public class Board : MonoBehaviour
 
                     // プリセットを元に戻す
                     await SetPresetOnBoard();
+
+                    // プレイヤーから始める
+                    continue;
                 }
                 else
                 {
