@@ -9,8 +9,6 @@ public class Result : MonoBehaviour
     [SerializeField]
     private float fadeDuration = 2;
     [SerializeField]
-    private GameObject[] kaltes = new GameObject[2];
-    [SerializeField]
     private GameObject backGround;
     private Image fadeInOutImage;
 
@@ -32,9 +30,8 @@ public class Result : MonoBehaviour
                 kaltes[1].SetActive(true);
                 break;
         }
-        */
-
         kaltes[0].SetActive(true);
+        */
     }
 
     // Update is called once per frame

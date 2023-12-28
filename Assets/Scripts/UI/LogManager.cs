@@ -21,7 +21,7 @@ public class LogManager : MonoBehaviour
     void Start()
     {
         scrollRect = scrollView.GetComponent<ScrollRect>();
-        _model = GameObject.Find("DialogueManager").GetComponent<DialogueModelBase>();
+        if(_model == null) _model = GameObject.Find("OutGameDialogueManager").GetComponent<DialogueModelBase>();
     }
 
     // Update is called once per frame
