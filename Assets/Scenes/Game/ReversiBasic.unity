@@ -1378,7 +1378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 399508569}
   m_Layer: 5
-  m_Name: OldUI
+  m_Name: LegacyUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5601,7 +5601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 558601801486703460, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1705096434357393507, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7055,15 +7055,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3424016858489510585, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 760.3046
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4123722177428102088, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
       propertyPath: m_Name
       value: KalteGroup
-      objectReference: {fileID: 0}
-    - target: {fileID: 4123722177428102088, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5975361190303903069, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
       propertyPath: m_Pivot.x

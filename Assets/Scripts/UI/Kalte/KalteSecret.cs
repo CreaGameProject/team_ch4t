@@ -11,14 +11,14 @@ public class KalteSecret : MonoBehaviour
     [System.Serializable]
     class KalteProfile
     {
-        public Sprite kalteImage { get; }
-        public string birthday { get; }
-        public string gradeAndClass { get; }
-        public int height { get; }
-        public int bodyWeight { get; }
-        public string hobby { get; }
-        public string specialSkill { get; }
-        public string[] secret { get; } = new string[3];
+        public Sprite kalteImage;
+        public string birthday;
+        public string gradeAndClass;
+        public int height;
+        public int bodyWeight;
+        public string hobby;
+        public string specialSkill;
+        [TextArea] public string[] secret = new string[3];
     }
 
 
@@ -33,8 +33,6 @@ public class KalteSecret : MonoBehaviour
     [SerializeField]
     private List<KalteProfile> kalteProfile = new List<KalteProfile>();
 
-    [SerializeField] KalteProfile kakakak;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -45,8 +43,8 @@ public class KalteSecret : MonoBehaviour
         birthdayText.GetComponent<TextMeshProUGUI>().text = kalteProfile[(int)opponent].birthday;
         profileText.GetComponent<TextMeshProUGUI>().text =
             "<b>クラス</b> " + kalteProfile[(int)opponent].gradeAndClass + "\n" +
-            "<b>身長</b> " + kalteProfile[(int)opponent].height + "\n" +
-            "<b>体重</b> " + kalteProfile[(int)opponent].bodyWeight + "\n" +
+            "<b>身長</b> " + kalteProfile[(int)opponent].height + "cm\n" +
+            "<b>体重</b> " + kalteProfile[(int)opponent].bodyWeight + "kg\n" +
             "<b>趣味</b> " + kalteProfile[(int)opponent].hobby + "\n" +
             "<b>特技</b> " + kalteProfile[(int)opponent].specialSkill;
         for (int i = 0; i < 3; i++)
