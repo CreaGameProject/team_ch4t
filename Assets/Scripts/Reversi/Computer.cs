@@ -126,37 +126,29 @@ public class Computer : MonoBehaviour
             {
                 if (opponent == Opponent.Yukihira_ui)
                 {
+                    Debug.Log("！部長用AIの挙動です！");
 
+                    // 最も石を裏返せる位置に置く
+                    int maxLength = proposedCells[0].Item2;
+                    List<(int, int)> maxCell = new List<(int, int)> { proposedCells[0].Item1 };
+                    for (int i = 1; i < proposedCells.Count; i++)
+                    {
+                        if (maxLength < proposedCells[i].Item2)
+                        {
+                            maxLength = proposedCells[i].Item2;
+                            maxCell.Clear();
+                            maxCell.Add(proposedCells[i].Item1);
+                        }
+                        else if (maxLength == proposedCells[i].Item2)
+                        {
+                            maxCell.Add(proposedCells[i].Item1);
+                        }
+                    }
+
+                    // 候補が複数ある場合はランダムで選ぶ
+                    cellIndex = maxCell[Random.Range(0, maxCell.Count)];
                 }
                 else if (opponent == Opponent.Takahashi_shota)
-                {
-
-                }
-
-                // 最も石を裏返せる位置に置く
-                /*
-                int maxLength = proposedCells[0].Item2;
-                List<(int, int)> maxCell = new List<(int, int)> { proposedCells[0].Item1 };
-                for (int i = 1; i < proposedCells.Count; i++)
-                {
-                    if (maxLength < proposedCells[i].Item2)
-                    {
-                        maxLength = proposedCells[i].Item2;
-                        maxCell.Clear();
-                        maxCell.Add(proposedCells[i].Item1);
-                    }
-                    else if(maxLength == proposedCells[i].Item2)
-                    {
-                        maxCell.Add(proposedCells[i].Item1);
-                    }
-                }
-
-                // 候補が複数ある場合はランダムで選ぶ
-                cellIndex = maxCell[Random.Range(0, maxCell.Count)];*/
-
-                // 部長用
-
-                if (opponent == Opponent.Takahashi_shota)
                 {
                     Debug.Log("！部長用AIの挙動です！");
 
@@ -235,7 +227,7 @@ public class Computer : MonoBehaviour
                     }*/
 
                     Debug.Log("predict => " + predict);
-                    
+
 
                     int min = 999;
                     List<int> index = new List<int>();
