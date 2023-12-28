@@ -18,7 +18,7 @@ public class KalteSecret : MonoBehaviour
         public int bodyWeight;
         public string hobby;
         public string specialSkill;
-        [TextArea] public string[] secret = new string[3];
+        [TextArea(3,5)] public string[] secret = new string[3];
     }
 
 
