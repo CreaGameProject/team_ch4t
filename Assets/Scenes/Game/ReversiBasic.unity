@@ -1402,6 +1402,7 @@ RectTransform:
   - {fileID: 1010134110}
   - {fileID: 2131419917}
   - {fileID: 1792206338}
+  - {fileID: 1482152328}
   m_Father: {fileID: 627430144}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2718,7 +2719,6 @@ RectTransform:
   - {fileID: 1401629037}
   - {fileID: 1638949666}
   - {fileID: 8576172752177032901}
-  - {fileID: 1482152328}
   - {fileID: 5463822308498821861}
   - {fileID: 399508569}
   - {fileID: 1521874935}
@@ -5584,7 +5584,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 627430144}
+    m_TransformParent: {fileID: 399508569}
     m_Modifications:
     - target: {fileID: 305191322681991273, guid: 6c25b1f6c03027041ba6066c75481586, type: 3}
       propertyPath: m_lineSpacing
