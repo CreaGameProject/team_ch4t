@@ -47,7 +47,6 @@ public class Board : MonoBehaviour
 
     [Header("コンピュータ")]
     [SerializeField] private Computer computer = null;
-    public Computer.Opponent getOpponent { get { return this.computer.getOpponent; } }
 
     [Header("石のプレハブ")]
     [SerializeField] private GameObject normalStone = null;
