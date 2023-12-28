@@ -156,6 +156,8 @@ public class Board : MonoBehaviour
     {
         ChangeRestTurn(this.restTurn); // 機能してない
 
+        Debug.Log(string.Format("対戦相手 : {0}", Computer.opponent));
+
         await SetPresetOnBoard();
 
         await Game();

@@ -8,6 +8,7 @@ using UnityEditor;
 using System.ComponentModel;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+//using System;
 
 public class Computer : MonoBehaviour
 {
@@ -22,33 +23,57 @@ public class Computer : MonoBehaviour
         Takahashi_shota = 1,
     }
 
+    [SerializeField] private Opponent com = Opponent.Takahashi_shota;
+
     public static Opponent opponent = Opponent.Yukihira_ui;
+    //public static Opponent opponent = Opponent.Takahashi_shota;
+
+    private void Awake()
+    {
+        opponent = this.com;
+    }
 
     [Header("N 手先まで思考する（部長AIのみ有効）")] // default => 1
     [SerializeField] private int foresight = 1;
     
     // 再帰的に計算する（実行コスト高い）
-    async private UniTask<List<int>> Recursive((Cell.Type, Cell.Color)[,] virtualBoard, int n, int f)
+    async private UniTask<List<int>> Recursive((Cell.Type, Cell.Color)[,] virtualBoard, int p, int n, int f, int min)
     {
         await UniTask.Yield();
 
+        List<int> return_predict = new List<int>();
+
         List<((int, int), int)> proposedCells_com = GetProposedCell(Cell.Color.white, virtualBoard);
 
-        List<int> predict = new List<int>();
-
         //Debug.Log("proposedCells[j] : " + proposedCells[i]);
-        Debug.Log(string.Format("{0} 手先を試行中...", n));
+        Debug.Log(string.Format("<color=red><b>{0} 手先を試行中...</b></color>", n));
+        //Debug.Log(string.Format("<color=red><b>{0} 回目の呼び出し</b></color>", n));
 
         // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
         for (int i = 0; i < proposedCells_com.Count; i++)
         {
-            //int p = 0;
-            predict.Add(0);
 
+            int P = p;
+
+            //Debug.Log(string.Format("P : {0} | min : {1}", P, min));
             Debug.Log(string.Format("computerパターン : {0}", i));
 
-            // 探索打ち切り
-            //if (predict.Contains(0)) { Debug.Log(string.Format("探索打ち切り")); continue; }
+            if ((return_predict.Count != 0) ? return_predict.Contains(0) : false)
+            {
+                Debug.Log(string.Format("探索打ち切り - A | 最善手を発見済み"));
+                P += 1;
+                return_predict.Add(P);
+                break;
+            }
+            else if (P >= min)
+            {
+                Debug.Log(string.Format("探索打ち切り - A | 見込みなし"));
+                P += 1;
+                return_predict.Add(P);
+                break;
+            }            
+
+            //Debug.Log(string.Format("proposedCells_com[{0}] : {1}", i, proposedCells_com[i]));
 
             ((Cell.Type, Cell.Color)[,], bool) predict_com = Predict(virtualBoard, proposedCells_com[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
             //((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(virtualBoard, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
@@ -65,9 +90,6 @@ public class Computer : MonoBehaviour
 
             for (int j = 0; j < proposedCells_player.Count; j++)
             {
-                // 探索打ち切り
-                //if (predict.Contains(0)) { Debug.Log(string.Format("探索打ち切り")); continue; }
-
                 Debug.Log(string.Format("computerパターン : {0} | playerパターン : {1}", i, j));
 
                 ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_com, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
@@ -78,18 +100,80 @@ public class Computer : MonoBehaviour
 
                 bool didFlipSecret = predict_player.Item2;
 
-                if (didFlipSecret) { predict[i] += 1; }
+                //if (didFlipSecret) { predict[i] += 1; }
+                if (didFlipSecret) { P += 1; }
 
-                // 探索打ち切り
-                //if (predict[i] > predict.Min()) { Debug.Log(string.Format("探索打ち切り")); predict[i] = 999999; continue; }
-
-                if (n != f) { await Recursive(virtualBoard_player, n + 1, f); }
+                if (n != f)
+                {
+                    if ((return_predict.Count != 0) ? return_predict.Contains(0) : false)
+                    {
+                        Debug.Log(string.Format("探索打ち切り - B | 最善手を発見済み"));
+                        P += 1;
+                        break;
+                    }
+                    else if (P >= min)
+                    {
+                        Debug.Log(string.Format("探索打ち切り - B | 見込みなし"));
+                        P += 1;
+                        break;
+                    }
+                    else
+                    {
+                        int MIN = (return_predict.Count != 0) ? (return_predict.Min() >= P) ? P : return_predict.Min() : min;
+                        //int MIN = (return_predict.Count != 0) ? (return_predict.Min() >= P) ? P : return_predict.Min() : P;
+                        //int MIN = 0;
+                        List<int> next_p = await Recursive(virtualBoard_player, P, n + 1, f, MIN);
+                        //Debug.Log(string.Format("next_p.Sum() : {0}", next_p.Sum()));
+                        P += next_p.Sum();
+                    }
+                }
             }
 
-            
+            //Debug.Log("P => " + P);
+
+            return_predict.Add(P);
         }
 
-        return predict;
+        return return_predict;
+    }
+
+    int GetRandomMinIndex(List<int> list)
+    {
+        if (list == null || list.Count == 0)
+        {
+            // リストが空の場合やnullの場合に適切なエラー処理を行うか、例外をスローするなどの対応が必要です。
+            //throw new ArgumentException("リストが空またはnullです。");
+            Debug.Log("リストが空またはnullです。");
+        }
+
+        int minValue = list[0];
+        List<int> minIndices = new List<int> { 0 };
+
+        // 最小値を見つける
+        for (int i = 1; i < list.Count; i++)
+        {
+            int currentValue = list[i];
+            if (currentValue < minValue)
+            {
+                minValue = currentValue;
+                minIndices.Clear();
+                minIndices.Add(i);
+            }
+            else if (currentValue == minValue)
+            {
+                minIndices.Add(i);
+            }
+        }
+
+        for (int i = 0; i < minIndices.Count; i++)
+        {
+            Debug.Log(string.Format("minIndices[i] => {0}", minIndices[i]));
+        }
+
+        // 最小値のインデックスをランダムに選ぶ
+        System.Random random = new System.Random();
+        int randomIndex = minIndices[random.Next(minIndices.Count)];
+        return randomIndex;
     }
 
     async public UniTask Action()
@@ -126,7 +210,7 @@ public class Computer : MonoBehaviour
             {
                 if (opponent == Opponent.Yukihira_ui)
                 {
-                    Debug.Log("！部長用AIの挙動です！");
+                    Debug.Log("===== ういの挙動です =====");
 
                     // 最も石を裏返せる位置に置く
                     int maxLength = proposedCells[0].Item2;
@@ -150,7 +234,7 @@ public class Computer : MonoBehaviour
                 }
                 else if (opponent == Opponent.Takahashi_shota)
                 {
-                    Debug.Log("！部長用AIの挙動です！");
+                    Debug.Log("===== 部長の挙動です =====");
 
                     (Cell.Type, Cell.Color)[,] realBoard = this.board.GetBoard();
                     (Cell.Type, Cell.Color)[,] virtualBoard = new (Cell.Type, Cell.Color)[8, 8];
@@ -165,11 +249,15 @@ public class Computer : MonoBehaviour
 
                     Debug.Log(string.Format("AIが思考を開始します。"));
 
-                    ViewBoard(Turn.Type.player, true, virtualBoard);
+                    ViewBoard(Turn.Type.computer, true, virtualBoard);
 
                     List<int> predict = new List<int>();
 
-                    predict = await Recursive(virtualBoard, 1, this.foresight);
+                    //List<((int, int), int)> proposedCells = GetProposedCell(Cell.Color.white, virtualBoard);
+                    //List<((int, int), int)> proposedCells_com = GetProposedCell(Cell.Color.white, virtualBoard);
+
+                    List<int> next_p = await Recursive(virtualBoard, 0, 1, this.foresight, 9999);
+                    predict = next_p;
 
                     /*
                     for (int n = 0; n < this.foresight; n++)
@@ -226,29 +314,23 @@ public class Computer : MonoBehaviour
                         }
                     }*/
 
-                    Debug.Log("predict => " + predict);
-
-
-                    int min = 999;
-                    List<int> index = new List<int>();
-                    for (int p = 0; p < predict.Count; p++)
+                    
+                    for (int i = 0; i < predict.Count; i++)
                     {
-                        Debug.Log(string.Format("predict[{0}] => {1}", p, predict[p]));
-
-                        if (min == predict[p])
-                        {
-                            index.Add(p);
-                        }
-
-                        if (min > predict[p])
-                        {
-                            index.Clear();
-                            min = predict[p];
-                            index.Add(p);
-                        }
+                        Debug.Log(string.Format("predict[i] => {0}", predict[i]));
                     }
 
-                    cellIndex = proposedCells[index[Random.Range(0, index.Count)]].Item1;
+
+                    //Debug.Log("predict.Count => " + predict.Count);
+                    //Debug.Log("proposedCells.Count => " + proposedCells.Count);
+
+                    int minIndex = GetRandomMinIndex(predict);
+
+                    cellIndex = proposedCells[minIndex].Item1;
+
+                    Debug.Log(string.Format("predict.Min() => {0} | minIndex => {1} | cellIndex => {2}", predict.Min(), minIndex, cellIndex));
+
+                    //cellIndex = proposedCells[predict.IndexOf(predict.Min())].Item1;
                 }
             }
 
