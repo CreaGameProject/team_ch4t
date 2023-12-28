@@ -44,7 +44,8 @@ public class Computer : MonoBehaviour
         // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
         for (int i = 0; i < proposedCells_com.Count; i++)
         {
-            int p = 0;
+            //int p = 0;
+            predict.Add(0);
 
             Debug.Log(string.Format("computerパターン : {0}", i));
 
