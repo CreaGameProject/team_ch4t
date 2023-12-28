@@ -25,18 +25,6 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // ステージクリア時の処理(ステージ番号, 報告するかどうか)
     public void HandleStageClear(int currentStageNum, bool report)
     {
