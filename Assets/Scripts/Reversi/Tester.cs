@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Board;
 
@@ -25,7 +26,8 @@ public class Tester : MonoBehaviour
         // ※ opponent => None : 誰でもない（初期状態）
         // ※ opponent => Yukihira_ui : 雪平 優依（ゆきひら うい）
         // ※ opponent => Takahashi_shota : 高橋 翔太（たかはし しょうた）
-        Computer.Opponent opponent = Board.instance.getOpponent;
+        //Computer.Opponent opponent = Board.instance.getOpponent;
+        Computer.Opponent opponent = Computer.opponent;
         Debug.Log(string.Format("【Tester】opponent | {0}", opponent));
 
         // 現在取得しているヒミツの数を取得する

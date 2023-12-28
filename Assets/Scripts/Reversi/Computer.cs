@@ -22,9 +22,7 @@ public class Computer : MonoBehaviour
         Takahashi_shota = 1,
     }
 
-    [SerializeField] private Opponent opponent = Opponent.Yukihira_ui;
-
-    public Opponent getOpponent { get { return this.opponent; } }
+    public static Opponent opponent = Opponent.Yukihira_ui;
 
     [Header("N 手先まで思考する（部長AIのみ有効）")] // default => 1
     [SerializeField] private int foresight = 1;
@@ -126,11 +124,11 @@ public class Computer : MonoBehaviour
             }
             else
             {
-                if (this.opponent == Opponent.Yukihira_ui)
+                if (opponent == Opponent.Yukihira_ui)
                 {
 
                 }
-                else if (this.opponent == Opponent.Takahashi_shota)
+                else if (opponent == Opponent.Takahashi_shota)
                 {
 
                 }
@@ -158,7 +156,7 @@ public class Computer : MonoBehaviour
 
                 // 部長用
 
-                if (this.opponent == Opponent.Takahashi_shota)
+                if (opponent == Opponent.Takahashi_shota)
                 {
                     Debug.Log("！部長用AIの挙動です！");
 
