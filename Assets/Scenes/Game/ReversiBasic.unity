@@ -3216,7 +3216,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1607851398}
-  opponent: 1
   foresight: 2
 --- !u!4 &888730779
 Transform:
@@ -5817,6 +5816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72f89519d352d5c4497b2f7891d231ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isShowed: 0
   image: {fileID: 0}
   birthdayText: {fileID: 0}
   profileText: {fileID: 0}
