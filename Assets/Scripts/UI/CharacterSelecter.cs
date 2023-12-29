@@ -18,7 +18,6 @@ public class CharacterSelecter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
         text.text = opponent.ToString();
     }
@@ -31,8 +30,8 @@ public class CharacterSelecter : MonoBehaviour
 
     private void OnClick()
     {
-
-        // ‘Îí‘Šè‚ğ‚±‚±‚Åİ’è
+        // ‘Îí‘Šè‚ğİ’è
+        Computer.opponent = opponent;
 
         SceneManager.LoadScene("Dialogue");
     }
