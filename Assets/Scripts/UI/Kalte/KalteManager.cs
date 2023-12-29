@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class KalteManager : MonoBehaviour
 {
-
+    // ================================================
     // このスクリプトは、いずれ消去予定
+    // ================================================
 
     [SerializeField]
     private GameObject[] kaltes = new GameObject[2];

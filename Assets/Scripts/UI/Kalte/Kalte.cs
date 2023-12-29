@@ -7,6 +7,11 @@ using UnityEngine.EventSystems;
 
 public class Kalte : MonoBehaviour
 {
+
+    // ================================================
+    // このスクリプトは、いずれ消去予定
+    // ================================================
+
     [SerializeField]
     private float openWindowAnimationTime = 0.3f;
     [SerializeField]
