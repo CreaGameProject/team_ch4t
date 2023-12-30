@@ -2731,12 +2731,12 @@ RectTransform:
   - {fileID: 1401629037}
   - {fileID: 1638949666}
   - {fileID: 8576172752177032901}
-  - {fileID: 5463822308498821861}
   - {fileID: 399508569}
   - {fileID: 1521874935}
   - {fileID: 349167966}
   - {fileID: 866876526}
   - {fileID: 1658246359}
+  - {fileID: 5463822308498821861}
   - {fileID: 425776144}
   - {fileID: 1980924757}
   m_Father: {fileID: 0}
@@ -3229,7 +3229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   board: {fileID: 1607851398}
   com: 1
-  foresight: 0
+  foresight: 1
 --- !u!4 &888730779
 Transform:
   m_ObjectHideFlags: 0
@@ -7072,6 +7072,14 @@ PrefabInstance:
     - target: {fileID: 3424016858489510585, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3424016858489510585, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1011
+      objectReference: {fileID: 0}
+    - target: {fileID: 3424016858489510585, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -296
       objectReference: {fileID: 0}
     - target: {fileID: 4123722177428102088, guid: debb494e3e872bd4084b76bb2ae611fb, type: 3}
       propertyPath: m_Name
