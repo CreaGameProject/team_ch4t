@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 
 [RequireComponent(typeof(EventTrigger))]
 

@@ -667,6 +667,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1710699793}
     m_Modifications:
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1219373614279067135, guid: 808875d6b34458b49a7501f9b1cdb2f4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 3
@@ -710,46 +750,6 @@ PrefabInstance:
     - target: {fileID: 2999596859407046474, guid: 808875d6b34458b49a7501f9b1cdb2f4, type: 3}
       propertyPath: m_Name
       value: BoardCell (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6275815870812847139, guid: b415f51e605121845842956021fec2c1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3228,7 +3228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 1607851398}
-  com: 1
+  com: 0
   foresight: 1
 --- !u!4 &888730779
 Transform:
@@ -6798,13 +6798,9 @@ MonoBehaviour:
   presetIndex: 0
   copi: "\uFF03 \u25CF \u25CB \u25C6 \u25A1"
   presets:
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25CB\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25CF\uFF03\uFF03\uFF03\u25CF\uFF03\r\n\uFF03\uFF03\u25CF\u3007\u25CF\u25CF\u25CF\u25C6\r\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\u25A1\u25A1\uFF03\uFF03\uFF03\uFF03\uFF03\n\uFF03\u25A1\u25CF\u25CF\u25CF\u25A1\u25CB\uFF03\n\uFF03\uFF03\u25CF\u25CF\u25CF\u25CB\uFF03\uFF03\n\uFF03\uFF03\u25CF\u25C6\u25CF\u25A1\uFF03\uFF03\n\uFF03\uFF03\u25A1\u25CF\u25CF\u25CB\u25CB\uFF03\n\uFF03\uFF03\uFF03\uFF03\u25CF\u25A1\uFF03\uFF03\n\u25A1\uFF03\u25A1\uFF03\uFF03\uFF03\uFF03\uFF03"
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\u25C6\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\u3007\u25CF\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\u25A1\u25A1\uFF03\r\n\uFF03\u25CB\u25A1\u25CF\u25CF\u25CF\u25A1\uFF03\r\n\u25CF\u25CF\u25CF\u25CF\u25CF\u25CF\uFF03\uFF03\n\uFF03\u25CF\uFF03\u25CF\u25C6\u25CF\uFF03\uFF03\n\uFF03\u25CB\u25CF\u25CF\u25CF\u25CF\u25A1\uFF03\n\uFF03\uFF03\u25A1\u25CF\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\u25A1\uFF03\u25A1"
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\u25A1\u25A1\uFF03\r\n\uFF03\u25CB\u25A1\u25CF\u25CF\u25CF\u25A1\uFF03\r\n\uFF03\uFF03\u25CB\u25CF\u25CF\u25CF\uFF03\uFF03\n\uFF03\uFF03\u25A1\u25CF\u25C6\u25CF\uFF03\uFF03\n\uFF03\u25CB\u25CB\u25CF\u25CF\u25A1\uFF03\uFF03\n\uFF03\uFF03\u25A1\u25CF\uFF03\uFF03\uFF03\uFF03\n\uFF03\uFF03\uFF03\uFF03\uFF03\u25A1\uFF03\u25A1"
-  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25A1\u25A1\u25A1\u25A1\u25A1\uFF03\r\n\uFF03\uFF03\u25A1\u25CF\u25CB\u25CF\uFF03\uFF03\r\n\uFF03\uFF03\u25A1\u25CB\u25CF\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25A1\u25A1\u25A1\u25A1\u25A1\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
-  - board: "\uFF03\u3007\uFF03\uFF03\uFF03\u3007\uFF03\uFF03\r\n\u3007\u3007\u3007\uFF03\u3007\u3007\u3007\uFF03\r\n\u3007\u3007\u3007\u3007\u3007\u3007\u3007\uFF03\r\n\u3007\u3007\u3007\u25C6\u3007\u3007\u3007\uFF03\r\n\uFF03\u3007\u3007\u3007\u3007\u3007\uFF03\uFF03\r\n\uFF03\uFF03\u3007\u3007\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\u25CF\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03"
+  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\u3007\u25CF\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r"
+  - board: "\uFF03\u3007\uFF03\uFF03\uFF03\u3007\uFF03\uFF03\r\n\u3007\u3007\u3007\uFF03\u3007\u3007\u3007\uFF03\r\n\u3007\u3007\u3007\u3007\u3007\u3007\u3007\uFF03\r\n\u3007\u3007\u3007\u25C6\u3007\u3007\u3007\uFF03\r\n\uFF03\u3007\u3007\u3007\u3007\u3007\uFF03\uFF03\r\n\uFF03\uFF03\u3007\u3007\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\u25CF\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r"
+  - board: "\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25CB\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\u25CF\uFF03\uFF03\uFF03\u25CF\uFF03\r\n\uFF03\uFF03\u25CF\u3007\u25CF\u25CF\u25CF\u25C6\r\n\uFF03\uFF03\uFF03\u25CF\u3007\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r\n\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\uFF03\r"
 --- !u!1 &1613347877 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4270382813054936782, guid: b415f51e605121845842956021fec2c1, type: 3}
