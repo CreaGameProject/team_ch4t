@@ -16,10 +16,10 @@ public class AudioSlider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SceneManager.activeSceneChanged += ActiveSceneChanged;
+
         seSlider = GameObject.Find("SESlider").GetComponent<Slider>();
         bgmSlider = GameObject.Find("BGMSlider").GetComponent<Slider>();
-
-        Debug.Log("aaaaaaaaaaaaaaaa");
 
         // AudioManagerオブジェクトを取得
         audioManager = GameObject.Find("AudioManager");
@@ -75,5 +75,22 @@ public class AudioSlider : MonoBehaviour
         bgmSource.volume = newVolume;
         Debug.Log("BGMの音量を" + newVolume + "に変更");
     }
-    
+
+    /// <summary>
+    /// シーンが読み込まれた際に呼ばれる
+    /// </summary>
+    public void ActiveSceneChanged(Scene thisScene, Scene nextScene)
+    {
+        seSlider = GameObject.Find("SESlider").GetComponent<Slider>();
+        bgmSlider = GameObject.Find("BGMSlider").GetComponent<Slider>();
+
+        // AudioManagerオブジェクトを取得
+        audioManager = GameObject.Find("AudioManager");
+
+        // SEのスライダーの値が変更されたときに音量を更新
+        seSlider.onValueChanged.AddListener(UpdateSEVolume);
+
+        // BGMのスライダーの値が変更されたときに音量を更新
+        bgmSlider.onValueChanged.AddListener(UpdateBGMVolume);
+    }
 }
