@@ -10,6 +10,8 @@ public class Result : MonoBehaviour
     private float fadeDuration = 2;
     [SerializeField]
     private GameObject backGround;
+    [SerializeField]
+    private StageManager stageManager;
     private Image fadeInOutImage;
 
     // Start is called before the first frame update
@@ -67,5 +69,26 @@ public class Result : MonoBehaviour
                 .Append(fadeInOutImage.DOFade(0, fadeDuration));
                 }*/
         transform.localScale = Vector3.zero;
+    }
+
+    /// <summary>
+    /// ÉNÉäÉAÇï€ë∂
+    /// </summary>
+    /// <param name="isReport">ïÒçêÇ∑ÇÈÇ©î€Ç©</param>
+    public void SaveStageClear(bool isReport)
+    {
+        int opponent = 0;
+
+        switch (Computer.opponent)
+        {
+            case Computer.Opponent.Yukihira_ui:
+                opponent = 1;
+                break;
+            case Computer.Opponent.Takahashi_shota:
+                opponent = 2;
+                break;
+        }
+
+        stageManager.HandleStageClear(opponent, isReport);
     }
 }
