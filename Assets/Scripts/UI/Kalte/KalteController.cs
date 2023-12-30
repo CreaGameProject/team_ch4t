@@ -119,11 +119,19 @@ public class KalteController : MonoBehaviour
 
     public void ExpandKalte()
     {
-        if (!isExpand) windowRect.DOScale(expandRate * defaultWindowsSize, expandAnimationTime);
+        if (!isExpand)
+        {
+            windowRect.DOScale(expandRate * defaultWindowsSize, expandAnimationTime);
+            AudioManager.instance_AudioManager.PlaySE(1);
+        }
     }
 
     public void ShrinkKalte()
     {
-        if (!isExpand) windowRect.DOScale(defaultWindowsSize, expandAnimationTime);
+        if (!isExpand)
+        {
+            windowRect.DOScale(defaultWindowsSize, expandAnimationTime);
+            AudioManager.instance_AudioManager.PlaySE(1);
+        }
     }
 }
