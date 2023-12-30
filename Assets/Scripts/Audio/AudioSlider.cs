@@ -87,6 +87,9 @@ public class AudioSlider : MonoBehaviour
         // AudioManagerオブジェクトを取得
         audioManager = GameObject.Find("AudioManager");
 
+        seSlider.value = seSource.volume;
+        bgmSlider.value = bgmSource.volume;
+
         // SEのスライダーの値が変更されたときに音量を更新
         seSlider.onValueChanged.AddListener(UpdateSEVolume);
 
