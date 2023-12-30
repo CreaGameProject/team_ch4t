@@ -33,6 +33,22 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void LoadCharacterSelectScene()
+    {
+        StageManager stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
+        if (stageManager.GetHasCleared(1))
+        {
+            // ステージ1をクリアしていたら、キャラクター選択画面へ
+            LoadScene("CharacterSelect");
+        }
+        else
+        {
+            // クリアしていなかったら、キャラクター選択画面をスキップ
+            Computer.opponent = Computer.Opponent.Yukihira_ui;
+            LoadScene("Dialogue");
+        }
+    }
+
     public void ExitGame()
     {
 #if UNITY_EDITOR

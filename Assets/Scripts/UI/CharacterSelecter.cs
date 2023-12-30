@@ -12,14 +12,14 @@ public class CharacterSelecter : MonoBehaviour
     Computer.Opponent opponent;
     [SerializeField]
     Button button;
-    [SerializeField]
-    TextMeshProUGUI text;
+    //[SerializeField]
+    //TextMeshProUGUI text;
 
     // Start is called before the first frame update
     void Start()
     {
         button.onClick.AddListener(OnClick);
-        text.text = opponent.ToString();
+        //text.text = opponent.ToString();
     }
 
     // Update is called once per frame
