@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharacterSelectView : MonoBehaviour
@@ -11,6 +12,8 @@ public class CharacterSelectView : MonoBehaviour
     [SerializeField]
     private GameObject characterNodeParent;
     ScrollRect scrollRect;
+    [SerializeField]
+    private StageManager stageManager;
 
     [SerializeField]
     float fadeinSeparateDuration = 0.1f;
@@ -43,6 +46,11 @@ public class CharacterSelectView : MonoBehaviour
             characterSelectAnim.Join(characterNode.transform.GetChild(0).transform.DOScale(1, fadeinDuration).SetEase(Ease.OutBack));
         }
         */
+
+        for (int i = 0; i < stageManager.GetOpenStage(); i++)
+        {
+            AddOpponent((Computer.Opponent)i);
+        }
     }
 
     // Update is called once per frame
