@@ -16,7 +16,6 @@ public class AudioSlider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Sliderコンポーネントを取得
         seSlider = GameObject.Find("SESlider").GetComponent<Slider>();
         bgmSlider = GameObject.Find("BGMSlider").GetComponent<Slider>();
 
