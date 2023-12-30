@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5407571050358178400}
   - component: {fileID: 7755932862814519259}
   - component: {fileID: 154039466069269042}
-  - component: {fileID: 8642474479483530557}
   m_Layer: 5
   m_Name: BackgroundCloser
   m_TagString: Untagged
@@ -135,18 +134,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8642474479483530557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436692118985204769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46866f229ce62794ab43d68e1b1cfce5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &635966017908619460
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +607,6 @@ GameObject:
   - component: {fileID: 7108678935925837395}
   - component: {fileID: 6788750794197881622}
   - component: {fileID: 6837312925168600504}
-  - component: {fileID: 6332104465271363327}
   - component: {fileID: 1409885827965607231}
   m_Layer: 5
   m_Name: Panel
@@ -761,18 +747,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6332104465271363327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5320271734474495862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46866f229ce62794ab43d68e1b1cfce5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1409885827965607231
 MonoBehaviour:
   m_ObjectHideFlags: 0

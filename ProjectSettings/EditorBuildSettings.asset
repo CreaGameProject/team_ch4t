@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/Title.unity
     guid: 6c2e0f97bd6e8ba4eb7c84244e7c05ef
   - enabled: 1
+    path: Assets/Scenes/Game/CharacterSelect.unity
+    guid: a64c2fcb0e4f9614b9795c64375fa8b0
+  - enabled: 1
     path: Assets/Scenes/Game/Dialogue.unity
     guid: 2924bc6d92600ce40b51416e16a94292
   - enabled: 1
@@ -20,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game/Clear.unity
     guid: 068c9c98e8d397d458af01cdabce669a
+  - enabled: 1
+    path: Assets/Scenes/Game/NewCharacter.unity
+    guid: 9f9d86772fb66f8469fd1f71c97268dd
   m_configObjects: {}

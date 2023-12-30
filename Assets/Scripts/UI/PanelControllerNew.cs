@@ -29,11 +29,14 @@ public class PanelControllerNew : MonoBehaviour
     private Image backImage;
     private bool isAnimate = false;
 
+    private void Awake()
+    {
+        panel.SetActive(true);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        panel.SetActive(true);
-
         windowRect = windowPanel.GetComponent<RectTransform>();
         defaultScale = windowRect.localScale;
         windowRect.localScale = Vector3.zero;
