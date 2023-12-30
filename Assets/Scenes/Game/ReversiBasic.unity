@@ -1042,6 +1042,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 627430144}
     m_Modifications:
+    - target: {fileID: 941186400788926606, guid: a50359b548446394db2d10b9b2298259, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497596138488784346, guid: a50359b548446394db2d10b9b2298259, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1980308769710840907, guid: a50359b548446394db2d10b9b2298259, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1133,6 +1141,10 @@ PrefabInstance:
     - target: {fileID: 5499651294287728281, guid: a50359b548446394db2d10b9b2298259, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696200101009801033, guid: a50359b548446394db2d10b9b2298259, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540828847288335047, guid: a50359b548446394db2d10b9b2298259, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
