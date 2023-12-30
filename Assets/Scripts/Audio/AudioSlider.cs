@@ -19,6 +19,8 @@ public class AudioSlider : MonoBehaviour
         seSlider = GameObject.Find("SESlider").GetComponent<Slider>();
         bgmSlider = GameObject.Find("BGMSlider").GetComponent<Slider>();
 
+        Debug.Log("aaaaaaaaaaaaaaaa");
+
         // AudioManagerオブジェクトを取得
         audioManager = GameObject.Find("AudioManager");
         
