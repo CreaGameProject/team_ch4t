@@ -8,31 +8,31 @@ using UnityEngine.UI;
 public class KalteController : MonoBehaviour
 {
     [SerializeField]
-    [Header("ŠJ•ÂŠÔ")]
+    [Header("ï¿½Jï¿½Âï¿½ï¿½ï¿½")]
     private float openWindowAnimationTime = 0.3f;
     [SerializeField]
-    [Header("ŠgkŠÔ")]
+    [Header("ï¿½gï¿½kï¿½ï¿½ï¿½ï¿½")]
     private float expandAnimationTime = 0.21f;
     [SerializeField]
-    [Header("ŠJ•Â‚ÌŠg‘å—¦")]
+    [Header("ï¿½Jï¿½Âï¿½ï¿½ÌŠgï¿½å—¦")]
     private float windowScaleRatio = 2;
     [SerializeField]
-    [Header("ƒzƒo[‚ÌŠg‘å—¦")]
+    [Header("ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½ÌŠgï¿½å—¦")]
     private float expandRate = 1.1f;
     [SerializeField]
-    [Header("ŠJ‚­ƒ{ƒ^ƒ“")]
+    [Header("ï¿½Jï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½")]
     private GameObject windowOpener;
     [SerializeField]
-    [Header("•Â‚¶‚éƒ{ƒ^ƒ“")]
+    [Header("ï¿½Â‚ï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½")]
     private GameObject windowCloser;
     [SerializeField]
-    [Header("ƒJƒ‹ƒe‚Ì”wŒi")]
+    [Header("ï¿½Jï¿½ï¿½ï¿½eï¿½Ì”wï¿½i")]
     private GameObject backgroundPanel;
     [SerializeField]
-    [Header("ƒJƒ‹ƒe")]
+    [Header("ï¿½Jï¿½ï¿½ï¿½e")]
     private GameObject windowPanel;
     [SerializeField]
-    [Header("ƒJƒ‹ƒe‚Ì\¬—v‘f‘S‚Ä")]
+    //[Header("ï¿½Jï¿½ï¿½ï¿½eï¿½Ì\ï¿½ï¿½ï¿½vï¿½fï¿½Sï¿½ï¿½")]
     private GameObject panel;
 
     private RectTransform windowRect;
@@ -53,21 +53,21 @@ public class KalteController : MonoBehaviour
         backImage = backgroundPanel.GetComponent<Image>();
         backImage.color = Color.clear;
 
-        // ƒJƒ‹ƒe‚ğŠJ‚­‚½‚ß‚Ìƒ{ƒ^ƒ“
+        // ï¿½Jï¿½ï¿½ï¿½eï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ß‚Ìƒ{ï¿½^ï¿½ï¿½
         windowOpener.GetComponent<Button>().onClick.AddListener(OpenPanel);
 
-        // ƒJƒ‹ƒe‚ğ•Â‚¶‚é‚½‚ß‚Ìƒ{ƒ^ƒ“
+        // ï¿½Jï¿½ï¿½ï¿½eï¿½ï¿½Â‚ï¿½ï¿½é‚½ï¿½ß‚Ìƒ{ï¿½^ï¿½ï¿½
         windowCloser.GetComponent<Button>().onClick.AddListener(ClosePanel);
         windowCloser.SetActive(false);
 
-        // ƒfƒtƒHƒ‹ƒg‚ÌƒJƒ‹ƒe‚ÌTransform‚ğ•Û‘¶
+        // ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ÌƒJï¿½ï¿½ï¿½eï¿½ï¿½Transformï¿½ï¿½Û‘ï¿½
         defaultWindowsSize = windowRect.localScale;
         defaultWindowsPosition = windowRect.anchoredPosition;
         defaultWindowsRotation = windowRect.rotation;
         backgroundPanel.gameObject.SetActive(true);
         backgroundPanel.GetComponent<Image>().DOFade(0, 0.01f);
 
-        // ƒzƒo[‚µ‚½‚Æ‚«‚Ìƒ{ƒ^ƒ“‚ÌƒCƒxƒ“ƒg‚ğEventtriger‚É“o˜^
+        // ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ìƒ{ï¿½^ï¿½ï¿½ï¿½ÌƒCï¿½xï¿½ï¿½ï¿½gï¿½ï¿½Eventtrigerï¿½É“oï¿½^
         EventTrigger enterTrigger = windowPanel.GetComponent<EventTrigger>();
         EventTrigger.Entry enterEntry = new EventTrigger.Entry();
         enterEntry.eventID = EventTriggerType.PointerEnter;
@@ -88,7 +88,7 @@ public class KalteController : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒJƒ‹ƒe‚ğŠJ‚­
+    /// ï¿½Jï¿½ï¿½ï¿½eï¿½ï¿½ï¿½Jï¿½ï¿½
     /// </summary>
     public void OpenPanel()
     {
@@ -103,7 +103,7 @@ public class KalteController : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒJƒ‹ƒe‚ğ•Â‚¶‚é
+    /// ï¿½Jï¿½ï¿½ï¿½eï¿½ï¿½Â‚ï¿½ï¿½ï¿½
     /// </summary>
     public void ClosePanel()
     {
