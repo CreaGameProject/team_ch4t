@@ -38,8 +38,8 @@ public class KalteController : MonoBehaviour
     private RectTransform windowRect;
     private Image backImage;
 
-    private Vector2 defaultWindowsSize;
-    private Vector2 defaultWindowsPosition;
+    private Vector3 defaultWindowsSize;
+    private Vector3 defaultWindowsPosition;
     private Quaternion defaultWindowsRotation;
     private bool isExpand;
 
