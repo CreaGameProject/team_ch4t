@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Debug.Log()‚ğUI.Text‚É•\¦
+/// Debug.Log()ã‚’UI.Textã«è¡¨ç¤º
 /// </summary>
 public class CatchLog : MonoBehaviour
 {
@@ -14,13 +14,13 @@ public class CatchLog : MonoBehaviour
     private StringBuilder builder = new StringBuilder();
     private bool autoScroll = true;
 
-    [SerializeField, Tooltip("ƒeƒLƒXƒg‚Ìæ“ª‚É‚ğ•\¦‚·‚é")]
+    [SerializeField, Tooltip("ãƒ†ã‚­ã‚¹ãƒˆã®å…ˆé ­ã«æ™‚åˆ»ã‚’è¡¨ç¤ºã™ã‚‹")]
     private bool useTimeStamp = true;
 
-    [SerializeField, Tooltip("ƒƒO‚Ìí•Ê‚É‰‚¶‚ÄF‚ğ•t‚¯‚é")]
+    [SerializeField, Tooltip("ãƒ­ã‚°ã®ç¨®åˆ¥ã«å¿œã˜ã¦è‰²ã‚’ä»˜ã‘ã‚‹")]
     private bool coloredByLogType = true;
 
-    [SerializeField, Tooltip("“Á’è‚Ì•¶š—ñ‚ğŠÜ‚ŞƒƒO‚Í•\¦‚µ‚È‚¢")]
+    [SerializeField, Tooltip("ç‰¹å®šã®æ–‡å­—åˆ—ã‚’å«ã‚€ãƒ­ã‚°ã¯è¡¨ç¤ºã—ãªã„")]
     private string[] ignore = new string[] { "[OVR" };
 
     private void Awake()
@@ -96,7 +96,7 @@ public class CatchLog : MonoBehaviour
     }
 
     /// <summary>
-    /// •¶š—ñ‚ÉF•t‚¯
+    /// æ–‡å­—åˆ—ã«è‰²ä»˜ã‘
     /// </summary>
     /// <param name="src"></param>
     /// <param name="color"></param>
@@ -107,7 +107,7 @@ public class CatchLog : MonoBehaviour
     }
 
     /// <summary>
-    /// Text‚Ì”ÍˆÍ“à‚É•¶š—ñ‚ğû‚ß‚é
+    /// Textã®ç¯„å›²å†…ã«æ–‡å­—åˆ—ã‚’åã‚ã‚‹
     /// </summary>
     /// <param name="t"></param>
     private void AdjustText(Text t)
@@ -124,7 +124,7 @@ public class CatchLog : MonoBehaviour
         var lines = t.text.Split('\n');
         foreach (string line in lines)
         {
-            // Œ©Ø‚ê‚Ä‚¢‚é•¶š”‚ª0‚É‚È‚é‚Ü‚ÅAƒeƒLƒXƒg‚Ìæ“ªs‚©‚çÁ‚µ‚Ä‚ä‚­
+            // è¦‹åˆ‡ã‚Œã¦ã„ã‚‹æ–‡å­—æ•°ãŒ0ã«ãªã‚‹ã¾ã§ã€ãƒ†ã‚­ã‚¹ãƒˆã®å…ˆé ­è¡Œã‹ã‚‰æ¶ˆã—ã¦ã‚†ã
             t.text = t.text.Remove(0, line.Length + 1);
             truncatedCount -= (line.Length + 1);
             if (truncatedCount <= 0)
