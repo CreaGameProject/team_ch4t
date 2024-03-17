@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,14 +20,14 @@ public class BoardCell : MonoBehaviour
     {
         this.cellObject.SetActive(true);
 
-        // ‰ñ“]ƒAƒjƒ[ƒVƒ‡ƒ““ü‚ê‚Ä‚İ‚éH
+        // å›è»¢ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å…¥ã‚Œã¦ã¿ã‚‹ï¼Ÿ
 
         await this.cellObject.transform.DOScale(this.cellObjectOriginScale, animationTime).AsyncWaitForCompletion();
     }
 
     public async UniTask HideCell(float animationTime)
     {
-        // ‰ñ“]ƒAƒjƒ[ƒVƒ‡ƒ““ü‚ê‚Ä‚İ‚éH
+        // å›è»¢ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å…¥ã‚Œã¦ã¿ã‚‹ï¼Ÿ
 
         await this.cellObject.transform.DOScale(Vector3.zero, animationTime).AsyncWaitForCompletion();
 

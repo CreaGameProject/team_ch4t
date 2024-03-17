@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,36 +10,36 @@ public class Tester : MonoBehaviour
 {
     private void Start()
     {
-        // è”‚ğæ“¾‚·‚é
-        // ¦ 0 ‚É‚È‚Á‚½‚çƒQ[ƒ€ƒI[ƒo[
+        // æ‰‹æ•°ã‚’å–å¾—ã™ã‚‹
+        // â€» 0 ã«ãªã£ãŸã‚‰ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
         int restTurn = Board.instance.getPresetRestTurn;
-        Debug.Log(string.Format("yTesterzrestTurn | {0}", restTurn));
+        Debug.Log(string.Format("ã€Testerã€‘restTurn | {0}", restTurn));
 
-        // è”ÅiŒ»İ’N‚Ìƒ^[ƒ“‚©j‚ğæ“¾‚·‚é
-        // ¦ turn => neutral : ‚Ç‚¿‚ç‚Å‚à‚È‚¢
-        // ¦ turn => player : ƒvƒŒƒCƒ„[‚Ìƒ^[ƒ“
-        // ¦ turn => computer : ƒRƒ“ƒsƒ…[ƒ^‚Ìƒ^[ƒ“
+        // æ‰‹ç‰ˆï¼ˆç¾åœ¨èª°ã®ã‚¿ãƒ¼ãƒ³ã‹ï¼‰ã‚’å–å¾—ã™ã‚‹
+        // â€» turn => neutral : ã©ã¡ã‚‰ã§ã‚‚ãªã„
+        // â€» turn => player : ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¿ãƒ¼ãƒ³
+        // â€» turn => computer : ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã®ã‚¿ãƒ¼ãƒ³
         Turn.Type turn = Board.instance.getTurn;
-        Debug.Log(string.Format("yTesterzrestTurn | {0}", turn));
+        Debug.Log(string.Format("ã€Testerã€‘restTurn | {0}", turn));
 
-        // ‘Îí‘Šè‚ğæ“¾‚·‚éi‘Îí‘Šè‚Ì–¼‘Oj
-        // ¦ opponent => None : ’N‚Å‚à‚È‚¢i‰Šúó‘Ôj
-        // ¦ opponent => Yukihira_ui : á•½ —DˆËi‚ä‚«‚Ğ‚ç ‚¤‚¢j
-        // ¦ opponent => Takahashi_shota : ‚‹´ ãÄ‘¾i‚½‚©‚Í‚µ ‚µ‚å‚¤‚½j
+        // å¯¾æˆ¦ç›¸æ‰‹ã‚’å–å¾—ã™ã‚‹ï¼ˆå¯¾æˆ¦ç›¸æ‰‹ã®åå‰ï¼‰
+        // â€» opponent => None : èª°ã§ã‚‚ãªã„ï¼ˆåˆæœŸçŠ¶æ…‹ï¼‰
+        // â€» opponent => Yukihira_ui : é›ªå¹³ å„ªä¾ï¼ˆã‚†ãã²ã‚‰ ã†ã„ï¼‰
+        // â€» opponent => Takahashi_shota : é«˜æ©‹ ç¿”å¤ªï¼ˆãŸã‹ã¯ã— ã—ã‚‡ã†ãŸï¼‰
         //Computer.Opponent opponent = Board.instance.getOpponent;
         Computer.Opponent opponent = Computer.opponent;
-        Debug.Log(string.Format("yTesterzopponent | {0}", opponent));
+        Debug.Log(string.Format("ã€Testerã€‘opponent | {0}", opponent));
 
-        // Œ»İæ“¾‚µ‚Ä‚¢‚éƒqƒ~ƒc‚Ì”‚ğæ“¾‚·‚é
+        // ç¾åœ¨å–å¾—ã—ã¦ã„ã‚‹ãƒ’ãƒŸãƒ„ã®æ•°ã‚’å–å¾—ã™ã‚‹
         int howManyHimituDidGet = Board.instance.getHowManyHimituDidGet;
-        Debug.Log(string.Format("yTesterzhowManyHimituDidGet | {0}", howManyHimituDidGet));
+        Debug.Log(string.Format("ã€Testerã€‘howManyHimituDidGet | {0}", howManyHimituDidGet));
 
         Board.instance.OnChangeRestTurnExecuted += OnChangeRestTurnExecutedHandler;
         Board.instance.OnChangeTurnExecuted += OnChangeTurnExecutedHandler;
         Board.instance.OnChangeHimituNumberExecuted += OnChangeHimituNumberExecutedHandler;
         Board.instance.OnGameOverExecuted += OnGameOverExecutedHandler;
 
-        // ƒZƒŠƒt•\¦ƒXƒNƒŠƒvƒg‚É‚±‚ê‚ğ’Ç‰Á‚·‚é
+        // ã‚»ãƒªãƒ•è¡¨ç¤ºã‚¹ã‚¯ãƒªãƒ—ãƒˆã«ã“ã‚Œã‚’è¿½åŠ ã™ã‚‹
         Board.instance.OnSpeakComputerExecuted += OnSpeakComputerExecutedHandler;
         Board.instance.OnSecretCellPerformanceExecuted += OnSecretCellPerformanceExecutedHandler;
 
@@ -47,71 +47,71 @@ public class Tester : MonoBehaviour
         Board.instance.ImpossiblePlaceStonesExecuted += ImpossiblePlaceStones;
     }
 
-    // c‚èè”‚ª•ÏX‚³‚ê‚½‚Æ‚«‚ÉÀs‚³‚ê‚é
-    // ˆø”FrestTurnF•ÏX‚³‚ê‚½Œã‚Ìc‚è‚Ìè”
+    // æ®‹ã‚Šæ‰‹æ•°ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹
+    // å¼•æ•°ï¼šrestTurnï¼šå¤‰æ›´ã•ã‚ŒãŸå¾Œã®æ®‹ã‚Šã®æ‰‹æ•°
     private void OnChangeRestTurnExecutedHandler(int restTurn)
     {
-        // c‚èè”‚ª•ÏX‚³‚ê‚½‚Æ‚«‚Ìˆ—‚ğ‹Lq‚·‚é
-        Debug.Log("yTesterzOnChangeRestTurnExecutedHandler | c‚èè”‚ª•ÏX‚³‚ê‚½‚Æ‚«‚Ìˆ—‚ğ‹Lq‚·‚é");
+        // æ®‹ã‚Šæ‰‹æ•°ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã®å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹
+        Debug.Log("ã€Testerã€‘OnChangeRestTurnExecutedHandler | æ®‹ã‚Šæ‰‹æ•°ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã®å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹");
     }
 
-    // è”ÔiŒ»İ‚Ìƒ^[ƒ“j‚ª•ÏX‚³‚ê‚½‚Æ‚«‚ÉÀs‚³‚ê‚é
-    // ˆø”FtypeF•ÏX‚³‚ê‚½Œã‚Ìè”ÔiŒ»İ‚Ìƒ^[ƒ“jF
+    // æ‰‹ç•ªï¼ˆç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ï¼‰ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹
+    // å¼•æ•°ï¼štypeï¼šå¤‰æ›´ã•ã‚ŒãŸå¾Œã®æ‰‹ç•ªï¼ˆç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ï¼‰ï¼š
     private void OnChangeTurnExecutedHandler(Turn.Type type)
     {
-        // è”ÔiŒ»İ‚Ìƒ^[ƒ“j‚ª•ÏX‚³‚ê‚½‚Æ‚«‚Ìˆ—‚ğ‹Lq‚·‚é
-        Debug.Log("yTesterzOnChangeRestTurnExecutedHandler | è”ÔiŒ»İ‚Ìƒ^[ƒ“j‚ª•ÏX‚³‚ê‚½‚Æ‚«‚Ìˆ—‚ğ‹Lq‚·‚é");
+        // æ‰‹ç•ªï¼ˆç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ï¼‰ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã®å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹
+        Debug.Log("ã€Testerã€‘OnChangeRestTurnExecutedHandler | æ‰‹ç•ªï¼ˆç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ï¼‰ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã®å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹");
     }
 
-    // Œ»İæ“¾‚µ‚Ä‚¢‚éƒqƒ~ƒc‚Ì”‚ª•Ï‚í‚Á‚½‚çÀs‚³‚ê‚é
-    // ˆø”FhowManyHimituDidGetF•ÏX‚³‚ê‚½Œã‚ÌŒ»İæ“¾‚µ‚Ä‚¢‚éƒqƒ~ƒc‚Ì”
+    // ç¾åœ¨å–å¾—ã—ã¦ã„ã‚‹ãƒ’ãƒŸãƒ„ã®æ•°ãŒå¤‰ã‚ã£ãŸã‚‰å®Ÿè¡Œã•ã‚Œã‚‹
+    // å¼•æ•°ï¼šhowManyHimituDidGetï¼šå¤‰æ›´ã•ã‚ŒãŸå¾Œã®ç¾åœ¨å–å¾—ã—ã¦ã„ã‚‹ãƒ’ãƒŸãƒ„ã®æ•°
     private void OnChangeHimituNumberExecutedHandler(int howManyHimituDidGet)
     {
-        // Œ»İæ“¾‚µ‚Ä‚¢‚éƒqƒ~ƒc‚Ì”‚ª•ÏX‚³‚ê‚½‚Æ‚«‚Ìˆ—‚ğ‹Lq‚·‚é
-        Debug.Log("yTesterzOnChangeRestTurnExecutedHandler | Œ»İæ“¾‚µ‚Ä‚¢‚éƒqƒ~ƒc‚Ì”‚ª•ÏX‚³‚ê‚½‚Æ‚«‚Ìˆ—‚ğ‹Lq‚·‚é");
+        // ç¾åœ¨å–å¾—ã—ã¦ã„ã‚‹ãƒ’ãƒŸãƒ„ã®æ•°ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã®å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹
+        Debug.Log("ã€Testerã€‘OnChangeRestTurnExecutedHandler | ç¾åœ¨å–å¾—ã—ã¦ã„ã‚‹ãƒ’ãƒŸãƒ„ã®æ•°ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã®å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹");
     }
 
-    // ‘Î‹Ç‚ªŒˆ’…‚µ‚½‚çÀs‚³‚ê‚é
-    // ˆø”FgameResultF‘Î‹Ç‚ÌŒ‹‰Ê
-    // ¦ gameResult => None : ‰Šúó‘Ô
-    // ¦ gameResult => Player_WIN : ƒvƒŒƒCƒ„[‚ÌŸ‚¿
-    // ¦ gameResult => Player_LOSE : ƒvƒŒƒCƒ„[‚Ì•‰‚¯
-    // ¦ gameResult => Drow : ˆø‚«•ª‚¯
+    // å¯¾å±€ãŒæ±ºç€ã—ãŸã‚‰å®Ÿè¡Œã•ã‚Œã‚‹
+    // å¼•æ•°ï¼šgameResultï¼šå¯¾å±€ã®çµæœ
+    // â€» gameResult => None : åˆæœŸçŠ¶æ…‹
+    // â€» gameResult => Player_WIN : ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‹ã¡
+    // â€» gameResult => Player_LOSE : ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è² ã‘
+    // â€» gameResult => Drow : å¼•ãåˆ†ã‘
     private void OnGameOverExecutedHandler(GameResult gameResult)
     {
-        // ‘Î‹Ç‚ªŒˆ’…‚µ‚½‚çÀs‚³‚ê‚é
-        Debug.Log("yTesterzOnChangeRestTurnExecutedHandler | ‘Î‹Ç‚ªŒˆ’…‚µ‚½‚çÀs‚³‚ê‚é");
+        // å¯¾å±€ãŒæ±ºç€ã—ãŸã‚‰å®Ÿè¡Œã•ã‚Œã‚‹
+        Debug.Log("ã€Testerã€‘OnChangeRestTurnExecutedHandler | å¯¾å±€ãŒæ±ºç€ã—ãŸã‚‰å®Ÿè¡Œã•ã‚Œã‚‹");
 
-        Debug.Log(string.Format("yTesterzOnChangeRestTurnExecutedHandler | gameResult : {0}", gameResult));
+        Debug.Log(string.Format("ã€Testerã€‘OnChangeRestTurnExecutedHandler | gameResult : {0}", gameResult));
     }
 
     async public UniTask OnSecretCellPerformanceExecutedHandler()
     {
-        // ƒqƒ~ƒcƒ}ƒX‚ª— •Ô‚³‚ê‚½‚Æ‚«‚Ì‰‰o‚ğ‹Lq‚·‚é
-        Debug.Log("yTesterzOnSecretCellPerformanceExecutedHandler | ƒqƒ~ƒcƒ}ƒX‚ª— •Ô‚³‚ê‚½‚Æ‚«‚Ì‰‰o‚ğ‹Lq‚·‚é");
+        // ãƒ’ãƒŸãƒ„ãƒã‚¹ãŒè£è¿”ã•ã‚ŒãŸã¨ãã®æ¼”å‡ºã‚’è¨˜è¿°ã™ã‚‹
+        Debug.Log("ã€Testerã€‘OnSecretCellPerformanceExecutedHandler | ãƒ’ãƒŸãƒ„ãƒã‚¹ãŒè£è¿”ã•ã‚ŒãŸã¨ãã®æ¼”å‡ºã‚’è¨˜è¿°ã™ã‚‹");
 
         await UniTask.Yield();
     }
 
     async public UniTask OnSpeakComputerExecutedHandler()
     {
-        // ƒLƒƒƒ‰ƒNƒ^[‚ª’‚éˆ—‚ğ‹Lq‚·‚é
-        Debug.Log("yTesterzOnSpeakComputerExecutedHandler() | ƒLƒƒƒ‰ƒNƒ^[‚ª’‚éˆ—‚ğ‹Lq‚·‚é");
+        // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãŒå–‹ã‚‹å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹
+        Debug.Log("ã€Testerã€‘OnSpeakComputerExecutedHandler() | ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãŒå–‹ã‚‹å‡¦ç†ã‚’è¨˜è¿°ã™ã‚‹");
 
         await UniTask.Yield();
     }
 
 
-    public bool popUpWindowLock = false; // u‚Í‚¢vƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«‚É true ‚É
+    public bool popUpWindowLock = false; // ã€Œã¯ã„ã€ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã« true ã«
     async public UniTask ImpossiblePlaceStones()
     {
         await UniTask.Yield();
 
-        // ƒEƒBƒ“ƒhƒE‚ğƒ|ƒbƒvƒAƒbƒv‚³‚¹‚éˆ—
+        // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã•ã›ã‚‹å‡¦ç†
 
         while (!popUpWindowLock)
         {
-            // 100ƒ~ƒŠ•b‘Ò‹@‚µ‚ÄÄs
+            // 100ãƒŸãƒªç§’å¾…æ©Ÿã—ã¦å†è©¦è¡Œ
             await UniTask.Delay(10);
         }
 

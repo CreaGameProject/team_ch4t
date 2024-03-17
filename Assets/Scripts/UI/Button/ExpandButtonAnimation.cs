@@ -1,10 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(EventTrigger))]
 

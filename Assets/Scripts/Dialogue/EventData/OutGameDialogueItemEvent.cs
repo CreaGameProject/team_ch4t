@@ -1,4 +1,4 @@
-public class OutGameDialogueItemEvent : AbstractDialogueEvent
+﻿public class OutGameDialogueItemEvent : AbstractDialogueEvent
 {
     private int _eventID;
     public int EventID => _eventID;
