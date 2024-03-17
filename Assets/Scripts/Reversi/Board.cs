@@ -29,8 +29,6 @@ public class Board : MonoBehaviour
         {
             instance = this;
         }
-
-        //ChangeRestTurn(this.restTurn);
     }
 
     //第一次元⇒x座標、右に行けば増える
@@ -114,9 +112,19 @@ public class Board : MonoBehaviour
     public delegate void ChangeRestTurnExecutedDelegate(int restTurn);
     public event ChangeRestTurnExecutedDelegate OnChangeRestTurnExecuted;
 
+    [Header("残り手数が変更されたときに実行される")]
+    [SerializeField] private UnityEngine.Events.UnityEvent OnChangeRestTurn;
+
     public void ChangeRestTurn(int restTurn)
     {
         Debug.Log("<b><color=#ef476f>【Board - ChangeRestTurn】残り手数が変更されたときの演出</color></b>");
+
+        if (OnChangeRestTurn != null)
+        {
+            OnChangeRestTurn.Invoke();
+        }
+
+        /*
         if (OnChangeRestTurnExecuted != null) 
         {
             Debug.Log("<b><color=#ef476f>【Board - ChangeRestTurn】Delegate is not Null</color></b>");
@@ -126,7 +134,10 @@ public class Board : MonoBehaviour
         {
             Debug.Log("<b><color=#ef476f>【Board - ChangeRestTurn】Delegate is Null</color></b>");
         }
+        */
     }
+
+    
 
     // 現在取得しているヒミツの数が変わったら実行される
     public delegate void ChangeHimituNumberExecutedDelegate(int howManyHimituDidGet);
@@ -162,11 +173,13 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+
+        
+        
         Debug.Log("<b><color=#f35b04>【Board - Start()】</color>Before Call ChangeRestTurn(" + this.restTurn + ")</b>");
-
-        ChangeRestTurn(this.restTurn); // 機能してない
-
+        ChangeRestTurn(this.restTurn);
         Debug.Log("<b><color=#f35b04>【Board - Start()】</color>After Call ChangeRestTurn(" + this.restTurn + ")</b>");
+        
 
         Debug.Log(string.Format("対戦相手 : {0}", Computer.opponent));
 
@@ -181,9 +194,7 @@ public class Board : MonoBehaviour
         Debug.Log("<b><color=#F26E3E>【 Board 】GAME START! </color></b>");
 
         Debug.Log("<b><color=#f35b04>【 Board - UniTask Game()】</color>Before Call ChangeRestTurn(" + this.restTurn + ")</b>");
-
-        ChangeRestTurn(this.restTurn); // 機能してる
-
+        ChangeRestTurn(this.restTurn);
         Debug.Log("<b><color=#f35b04>【 Board - UniTask Game()】</color>After Call ChangeRestTurn(" + this.restTurn + ")</b>");
 
 
