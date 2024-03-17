@@ -7,21 +7,21 @@ using UnityEngine.EventSystems;
 
 public class PanelControllerNew : MonoBehaviour
 {
-    [Header("ƒpƒlƒ‹‚ÌŠJ•ÂŠÔ")]
+    [Header("ï¿½pï¿½lï¿½ï¿½ï¿½ÌŠJï¿½Âï¿½ï¿½ï¿½")]
     public float animationTime = 0.3f;
-    [Header("Window‚ÌüˆÍ‰Ÿ‰º‚Å•Â‚¶‚é‚©")]
+    [Header("Windowï¿½Ìï¿½ï¿½Í‰ï¿½ï¿½ï¿½ï¿½Å•Â‚ï¿½ï¿½é‚©")]
     public bool canClose = true;
-    [Header("Window‚ğŠJ‚­ƒ{ƒ^ƒ“")]
+    [Header("Windowï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½")]
     public List<GameObject> windowOpener = new List<GameObject>();
-    [Header("Window‚ğ•Â‚¶‚éƒ{ƒ^ƒ“")]
+    [Header("Windowï¿½ï¿½Â‚ï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½")]
     public List<GameObject> windowCloser = new List<GameObject>();
-    [Header("Window‚ğ•Â‚¶‚é”wŒiƒ{ƒ^ƒ“")]
+    [Header("Windowï¿½ï¿½Â‚ï¿½ï¿½ï¿½wï¿½iï¿½{ï¿½^ï¿½ï¿½")]
     public GameObject backWindowCloser;
-    [Header("Window‚Ì”wŒi")]
+    [Header("Windowï¿½Ì”wï¿½i")]
     public GameObject backgroundPanel;
     [Header("Window")]
     public GameObject windowPanel;
-    [Header("Window‚Ì\¬—v‘f‘S‚Ä")]
+    [Header("Windowï¿½Ìï¿½ï¿½vï¿½fï¿½Sï¿½ï¿½")]
     public GameObject panel;
 
     private RectTransform windowRect;
@@ -44,19 +44,19 @@ public class PanelControllerNew : MonoBehaviour
         backImage = backgroundPanel.GetComponent<Image>();
         backImage.color = Color.clear;
 
-        // Window‚ğŠJ‚­‚½‚ß‚Ìƒ{ƒ^ƒ“
+        // Windowï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ß‚Ìƒ{ï¿½^ï¿½ï¿½
         if (windowOpener != null)
         {
             foreach(GameObject g in windowOpener) g.GetComponent<Button>().onClick.AddListener(OpenPanel);
         }
 
-        // Window‚ğ•Â‚¶‚é‚½‚ß‚Ìƒ{ƒ^ƒ“
+        // Windowï¿½ï¿½Â‚ï¿½ï¿½é‚½ï¿½ß‚Ìƒ{ï¿½^ï¿½ï¿½
         if (windowCloser != null)
         {
             foreach (GameObject g in windowCloser) g.GetComponent<Button>().onClick.AddListener(ClosePanel);
         }
 
-        // Window‚ğ•Â‚¶‚é‚½‚ß‚Ì”wŒiƒ{ƒ^ƒ“
+        // Windowï¿½ï¿½Â‚ï¿½ï¿½é‚½ï¿½ß‚Ì”wï¿½iï¿½{ï¿½^ï¿½ï¿½
         backWindowCloser.GetComponent<Button>().onClick.AddListener(() =>
         {
             if (canClose) { ClosePanel(); } else { DontClosePanel(); }
@@ -71,7 +71,7 @@ public class PanelControllerNew : MonoBehaviour
     }
 
     /// <summary>
-    /// Window‚ğŠJ‚­
+    /// Windowï¿½ï¿½ï¿½Jï¿½ï¿½
     /// </summary>
     public void OpenPanel()
     {
@@ -82,7 +82,7 @@ public class PanelControllerNew : MonoBehaviour
     }
 
     /// <summary>
-    /// Window‚ğ•Â‚¶‚é
+    /// Windowï¿½ï¿½Â‚ï¿½ï¿½ï¿½
     /// </summary>
     public void ClosePanel()
     {
@@ -93,7 +93,7 @@ public class PanelControllerNew : MonoBehaviour
     }
 
     /// <summary>
-    /// Window‚ğ•Â‚¶‚ç‚ê‚È‚¢‚±‚Æ‚ğ‘£‚·
+    /// Windowï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Æ‚ğ‘£‚ï¿½
     /// </summary>
     public void DontClosePanel()
     {
