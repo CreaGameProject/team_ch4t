@@ -1,4 +1,4 @@
-public enum ParticleType
+﻿public enum ParticleType
 {
     Default,
 }

@@ -1,4 +1,4 @@
-public abstract class AbstractDialogueEvent
+﻿public abstract class AbstractDialogueEvent
 {
     private int _eventNumber;
     public int EventNumber => _eventNumber;

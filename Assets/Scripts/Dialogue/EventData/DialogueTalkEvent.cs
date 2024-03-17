@@ -1,4 +1,4 @@
-public class DialogueTalkEvent : AbstractDialogueEvent
+﻿public class DialogueTalkEvent : AbstractDialogueEvent
 {
     private int _secretCount;
     public int SecretCount => _secretCount;

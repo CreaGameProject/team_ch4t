@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +11,7 @@ public class SceneChanger : MonoBehaviour
     {
         if (Board.instance != null)
         {
-            Debug.Log("ySceneChanger - StartzBoard.instance != null");
+            Debug.Log("ã€SceneChanger - Startã€‘Board.instance != null");
             Board.instance.OnGameOverExecuted += OnGameOverExecutedHandler;
         }
         
@@ -38,12 +38,12 @@ public class SceneChanger : MonoBehaviour
         StageManager stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         if (stageManager.GetHasCleared(1))
         {
-            // ƒXƒe[ƒW1‚ğƒNƒŠƒA‚µ‚Ä‚¢‚½‚çAƒLƒƒƒ‰ƒNƒ^[‘I‘ğ‰æ–Ê‚Ö
+            // ã‚¹ãƒ†ãƒ¼ã‚¸1ã‚’ã‚¯ãƒªã‚¢ã—ã¦ã„ãŸã‚‰ã€ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼é¸æŠç”»é¢ã¸
             LoadScene("CharacterSelect");
         }
         else
         {
-            // ƒNƒŠƒA‚µ‚Ä‚¢‚È‚©‚Á‚½‚çAƒLƒƒƒ‰ƒNƒ^[‘I‘ğ‰æ–Ê‚ğƒXƒLƒbƒv
+            // ã‚¯ãƒªã‚¢ã—ã¦ã„ãªã‹ã£ãŸã‚‰ã€ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼é¸æŠç”»é¢ã‚’ã‚¹ã‚­ãƒƒãƒ—
             Computer.opponent = Computer.Opponent.Yukihira_ui;
             LoadScene("Dialogue");
         }
@@ -52,22 +52,22 @@ public class SceneChanger : MonoBehaviour
     public void ExitGame()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;//ƒQ[ƒ€ƒvƒŒƒCI—¹
+        UnityEditor.EditorApplication.isPlaying = false;//ã‚²ãƒ¼ãƒ ãƒ—ãƒ¬ã‚¤çµ‚äº†
 #else
-        Application.Quit();//ƒQ[ƒ€ƒvƒŒƒCI—¹
+        Application.Quit();//ã‚²ãƒ¼ãƒ ãƒ—ãƒ¬ã‚¤çµ‚äº†
 #endif
     }
 
-    // ˆø”FgameResultF‘Î‹Ç‚ÌŒ‹‰Ê
-    // ¦ gameResult => None : ‰Šúó‘Ô
-    // ¦ gameResult => Player_WIN : ƒvƒŒƒCƒ„[‚ÌŸ‚¿
-    // ¦ gameResult => Player_LOSE : ƒvƒŒƒCƒ„[‚Ì•‰‚¯
-    // ¦ gameResult => Drow : ˆø‚«•ª‚¯
+    // å¼•æ•°ï¼šgameResultï¼šå¯¾å±€ã®çµæœ
+    // â€» gameResult => None : åˆæœŸçŠ¶æ…‹
+    // â€» gameResult => Player_WIN : ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‹ã¡
+    // â€» gameResult => Player_LOSE : ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è² ã‘
+    // â€» gameResult => Drow : å¼•ãåˆ†ã‘
     private void OnGameOverExecutedHandler(GameResult gameResult)
     {
-        // ‘Î‹Ç‚ªŒˆ’…‚µ‚½‚çÀs‚³‚ê‚é
-        //Debug.Log("yTesterzOnChangeRestTurnExecutedHandler | ‘Î‹Ç‚ªŒˆ’…‚µ‚½‚çÀs‚³‚ê‚é");
-        //Debug.Log(string.Format("yTesterzOnChangeRestTurnExecutedHandler | gameResult : {0}", gameResult));
+        // å¯¾å±€ãŒæ±ºç€ã—ãŸã‚‰å®Ÿè¡Œã•ã‚Œã‚‹
+        //Debug.Log("ã€Testerã€‘OnChangeRestTurnExecutedHandler | å¯¾å±€ãŒæ±ºç€ã—ãŸã‚‰å®Ÿè¡Œã•ã‚Œã‚‹");
+        //Debug.Log(string.Format("ã€Testerã€‘OnChangeRestTurnExecutedHandler | gameResult : {0}", gameResult));
         if (gameResult == GameResult.Player_WIN)
         {
             LoadScene("Clear");
