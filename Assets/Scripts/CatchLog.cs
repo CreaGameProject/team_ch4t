@@ -25,7 +25,7 @@ public class CatchLog : MonoBehaviour
 
     private void Awake()
     {
-
+/*
 #if UNITY_EDITOR
         Debug.Log("UnityEditor");
         this.gameObject.SetActive(false);
@@ -33,7 +33,7 @@ public class CatchLog : MonoBehaviour
         Debug.Log("WebGL");
         this.gameObject.SetActive(true);
 #endif
-
+*/
         text = this.GetComponent<Text>();
         if (text == null)
         {
