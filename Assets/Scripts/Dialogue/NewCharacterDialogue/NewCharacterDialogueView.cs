@@ -1,0 +1,4 @@
+public class NewCharacterDialogueView : DialogueViewBase
+{
+        
+}
