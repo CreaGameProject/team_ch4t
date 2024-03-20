@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -100,6 +100,7 @@ public class KalteController : MonoBehaviour
         backImage.DOFade(0.85f, openWindowAnimationTime);
         AudioManager.instance_AudioManager.PlaySE(3);
         isExpand = true;
+        OverlayManager.OnOverlayOpened(true);
     }
 
     /// <summary>
@@ -115,6 +116,7 @@ public class KalteController : MonoBehaviour
         backImage.DOFade(0, openWindowAnimationTime);
         AudioManager.instance_AudioManager.PlaySE(3);
         isExpand = false;
+        OverlayManager.OnOverlayOpened(false);
     }
 
     public void ExpandKalte()

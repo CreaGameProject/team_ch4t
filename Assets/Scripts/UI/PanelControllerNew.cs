@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -79,6 +79,7 @@ public class PanelControllerNew : MonoBehaviour
         isAnimate = true;
         windowRect.DOScale(defaultScale, animationTime).SetEase(Ease.OutBack);
         backImage.DOFade(0.8f, animationTime).OnComplete(() => isAnimate = false);
+        OverlayManager.OnOverlayOpened(true);
     }
 
     /// <summary>
@@ -90,6 +91,7 @@ public class PanelControllerNew : MonoBehaviour
         isAnimate = true;
         windowRect.DOScale(0, animationTime).SetEase(Ease.InBack);
         backImage.DOFade(0, animationTime).OnComplete(() => isAnimate = false);
+        OverlayManager.OnOverlayOpened(false);
     }
 
     /// <summary>
