@@ -10,6 +10,7 @@ public class NewCharacterDialoguePresenter : MonoBehaviour
         _view.OnCharacterTalkExecuted += CharacterTalkExecutedEventHandler;
 
         await _view.StartDialogue();
+        _view.ChangeScene();
     }
 
     private void CharacterTalkExecutedEventHandler(string characterName, string dialogue)

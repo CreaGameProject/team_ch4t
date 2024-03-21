@@ -9,6 +9,8 @@ public class NewCharacterDialogueView : DialogueViewBase
 {
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private Image dialogueNextImage;
+
+    [SerializeField] private SceneChanger _sceneChanger;
     
     private void PrefixDialogue(string characterName)
     {
@@ -26,5 +28,10 @@ public class NewCharacterDialogueView : DialogueViewBase
         dialogueNextImage.gameObject.SetActive(true);
         await WaitUntilMouseClick();
         dialogueNextImage.gameObject.SetActive(false);
+    }
+
+    public void ChangeScene()
+    {
+        _sceneChanger.LoadScene("Title");
     }
 }
