@@ -8,6 +8,8 @@ public class NewCharacterDialoguePresenter : MonoBehaviour
     private async void Start()
     {
         _view.OnCharacterTalkExecuted += CharacterTalkExecutedEventHandler;
+
+        await _view.StartDialogue();
     }
 
     private void CharacterTalkExecutedEventHandler(string characterName, string dialogue)
