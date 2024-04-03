@@ -8,31 +8,31 @@ using UnityEngine.UI;
 public class KalteController : MonoBehaviour
 {
     [SerializeField]
-    [Header("開閉時間")]
+    [Header("�J����")]
     private float openWindowAnimationTime = 0.3f;
     [SerializeField]
-    [Header("拡縮時間")]
+    [Header("�g�k����")]
     private float expandAnimationTime = 0.21f;
     [SerializeField]
-    [Header("開閉時の拡大率")]
+    [Header("�J���̊g�嗦")]
     private float windowScaleRatio = 2;
     [SerializeField]
-    [Header("ホバー時の拡大率")]
+    [Header("�z�o�[���̊g�嗦")]
     private float expandRate = 1.1f;
     [SerializeField]
-    [Header("開くボタン")]
+    [Header("�J���{�^��")]
     private GameObject windowOpener;
     [SerializeField]
-    [Header("閉じるボタン")]
+    [Header("����{�^��")]
     private GameObject windowCloser;
     [SerializeField]
-    [Header("カルテの背景")]
+    [Header("�J���e�̔w�i")]
     private GameObject backgroundPanel;
     [SerializeField]
-    [Header("カルテ")]
+    [Header("�J���e")]
     private GameObject windowPanel;
     [SerializeField]
-    [Header("カルテの構成要素全て")]
+    [Header("�J���e�̍��v�f�S��")]
     private GameObject panel;
 
     private RectTransform windowRect;
@@ -53,21 +53,21 @@ public class KalteController : MonoBehaviour
         backImage = backgroundPanel.GetComponent<Image>();
         backImage.color = Color.clear;
 
-        // カルテを開くためのボタン
+        // �J���e���J�����߂̃{�^��
         windowOpener.GetComponent<Button>().onClick.AddListener(OpenPanel);
 
-        // カルテを閉じるためのボタン
+        // �J���e����邽�߂̃{�^��
         windowCloser.GetComponent<Button>().onClick.AddListener(ClosePanel);
         windowCloser.SetActive(false);
 
-        // デフォルトのカルテのTransformを保存
+        // �f�t�H���g�̃J���e��Transform��ۑ�
         defaultWindowsSize = windowRect.localScale;
         defaultWindowsPosition = windowRect.anchoredPosition;
         defaultWindowsRotation = windowRect.rotation;
         backgroundPanel.gameObject.SetActive(true);
         backgroundPanel.GetComponent<Image>().DOFade(0, 0.01f);
 
-        // ホバーしたときのボタンのイベントをEventtrigerに登録
+        // �z�o�[�����Ƃ��̃{�^���̃C�x���g��Eventtriger�ɓo�^
         EventTrigger enterTrigger = windowPanel.GetComponent<EventTrigger>();
         EventTrigger.Entry enterEntry = new EventTrigger.Entry();
         enterEntry.eventID = EventTriggerType.PointerEnter;
@@ -88,7 +88,7 @@ public class KalteController : MonoBehaviour
     }
 
     /// <summary>
-    /// カルテを開く
+    /// �J���e���J��
     /// </summary>
     public void OpenPanel()
     {
@@ -100,11 +100,10 @@ public class KalteController : MonoBehaviour
         backImage.DOFade(0.85f, openWindowAnimationTime);
         AudioManager.instance_AudioManager.PlaySE(3);
         isExpand = true;
-        OverlayManager.OnOverlayOpened(true);
     }
 
     /// <summary>
-    /// カルテを閉じる
+    /// �J���e�����
     /// </summary>
     public void ClosePanel()
     {
@@ -116,7 +115,6 @@ public class KalteController : MonoBehaviour
         backImage.DOFade(0, openWindowAnimationTime);
         AudioManager.instance_AudioManager.PlaySE(3);
         isExpand = false;
-        OverlayManager.OnOverlayOpened(false);
     }
 
     public void ExpandKalte()

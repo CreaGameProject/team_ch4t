@@ -96,6 +96,7 @@ public class DialogueViewBase : MonoBehaviour
     protected UniTask WaitUntilMouseClick()
     {
         var clickStream = Observable.EveryUpdate()
+            .Where(_ => !Helper.isOpen)
             .Where(_ => Input.GetMouseButtonDown(0))
             .First()
             .ToUniTask(useFirstValue: true);
@@ -112,14 +113,18 @@ public class DialogueViewBase : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if (Input.GetMouseButtonDown(0))
+                if (!Helper.isOpen)
                 {
-                    // クリックが検知されたらtrueを設定して完了
-                    tcs.TrySetResult(true);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // クリックが検知されたらtrueを設定して完了
+                        tcs.TrySetResult(true);
+                    }
                 }
             });
 
         // クリックが検知されるまで待機
         isSkip = await tcs.Task;
     }
+    
 }

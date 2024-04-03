@@ -25,6 +25,9 @@ public class OverlayManager : MonoBehaviour
     /// <param name="isOpen">開いているとtrue</param>
     public static void OnOverlayOpened(bool isOpen)
     {
-        OverlayOpened(isOpen);
+        if (OverlayOpened != null)
+        {
+            OverlayOpened(isOpen);
+        }
     }
 }

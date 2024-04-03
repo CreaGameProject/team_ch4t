@@ -7,21 +7,21 @@ using UnityEngine.EventSystems;
 
 public class PanelControllerNew : MonoBehaviour
 {
-    [Header("パネルの開閉時間")]
+    [Header("�p�l���̊J����")]
     public float animationTime = 0.3f;
-    [Header("Windowの周囲押下で閉じるか")]
+    [Header("Window�̎��͉����ŕ��邩")]
     public bool canClose = true;
-    [Header("Windowを開くボタン")]
+    [Header("Window���J���{�^��")]
     public List<GameObject> windowOpener = new List<GameObject>();
-    [Header("Windowを閉じるボタン")]
+    [Header("Window�����{�^��")]
     public List<GameObject> windowCloser = new List<GameObject>();
-    [Header("Windowを閉じる背景ボタン")]
+    [Header("Window�����w�i�{�^��")]
     public GameObject backWindowCloser;
-    [Header("Windowの背景")]
+    [Header("Window�̔w�i")]
     public GameObject backgroundPanel;
     [Header("Window")]
     public GameObject windowPanel;
-    [Header("Windowの構成要素全て")]
+    [Header("Window�̍��v�f�S��")]
     public GameObject panel;
 
     private RectTransform windowRect;
@@ -32,6 +32,7 @@ public class PanelControllerNew : MonoBehaviour
     private void Awake()
     {
         panel.SetActive(true);
+        OverlayManager.OverlayOpened += OverlayOpened;
     }
 
     // Start is called before the first frame update
@@ -44,19 +45,19 @@ public class PanelControllerNew : MonoBehaviour
         backImage = backgroundPanel.GetComponent<Image>();
         backImage.color = Color.clear;
 
-        // Windowを開くためのボタン
+        // Window���J�����߂̃{�^��
         if (windowOpener != null)
         {
             foreach(GameObject g in windowOpener) g.GetComponent<Button>().onClick.AddListener(OpenPanel);
         }
 
-        // Windowを閉じるためのボタン
+        // Window����邽�߂̃{�^��
         if (windowCloser != null)
         {
             foreach (GameObject g in windowCloser) g.GetComponent<Button>().onClick.AddListener(ClosePanel);
         }
 
-        // Windowを閉じるための背景ボタン
+        // Window����邽�߂̔w�i�{�^��
         backWindowCloser.GetComponent<Button>().onClick.AddListener(() =>
         {
             if (canClose) { ClosePanel(); } else { DontClosePanel(); }
@@ -71,34 +72,39 @@ public class PanelControllerNew : MonoBehaviour
     }
 
     /// <summary>
-    /// Windowを開く
+    /// Window���J��
     /// </summary>
     public void OpenPanel()
     {
         backWindowCloser.SetActive(true);
         isAnimate = true;
+        OverlayOpened(true);
         windowRect.DOScale(defaultScale, animationTime).SetEase(Ease.OutBack);
         backImage.DOFade(0.8f, animationTime).OnComplete(() => isAnimate = false);
-        OverlayManager.OnOverlayOpened(true);
     }
 
     /// <summary>
-    /// Windowを閉じる
+    /// Window�����
     /// </summary>
     public void ClosePanel()
     {
         backWindowCloser.SetActive(false);
         isAnimate = true;
+        OverlayOpened(false);
         windowRect.DOScale(0, animationTime).SetEase(Ease.InBack);
         backImage.DOFade(0, animationTime).OnComplete(() => isAnimate = false);
-        OverlayManager.OnOverlayOpened(false);
     }
 
     /// <summary>
-    /// Windowを閉じられないことを促す
+    /// Window������Ȃ����Ƃ𑣂�
     /// </summary>
     public void DontClosePanel()
     {
         windowRect.DOPunchScale(Vector3.one * 0.05f, animationTime).OnComplete(() => windowRect.DOScale(Vector3.one, 0.001f));
+    }
+
+    private void OverlayOpened(bool isOpen)
+    {
+        Helper.isOpen = isOpen;
     }
 }
