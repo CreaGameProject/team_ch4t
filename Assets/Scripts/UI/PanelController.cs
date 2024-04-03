@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class PanelController : MonoBehaviour
 {
-    [Header("ƒpƒlƒ‹‚ÌŠJ•ÂŠÔ")]
+    [Header("ãƒ‘ãƒãƒ«ã®é–‹é–‰æ™‚é–“")]
     public float animationTime = 0.3f;
-    [Header("WIndow‚Ì”wŒi")]
+    [Header("WIndowã®èƒŒæ™¯")]
     public GameObject backPanel;
     [Header("Window")]
     public GameObject windowPanel;

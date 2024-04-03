@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -28,11 +28,11 @@ public class TurnView : MonoBehaviour
 
     }
 
-    // è”ÔiŒ»İ‚Ìƒ^[ƒ“j‚ª•ÏX‚³‚ê‚½‚Æ‚«‚ÉÀs‚³‚ê‚é
-    // ˆø”FtypeF•ÏX‚³‚ê‚½Œã‚Ìè”ÔiŒ»İ‚Ìƒ^[ƒ“jF
+    // æ‰‹ç•ªï¼ˆç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ï¼‰ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹
+    // å¼•æ•°ï¼štypeï¼šå¤‰æ›´ã•ã‚ŒãŸå¾Œã®æ‰‹ç•ªï¼ˆç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ï¼‰ï¼š
     private void OnChangeTurnExecutedHandler(Turn.Type type)
     {
-        Debug.Log("yTurnViewzOnChangeTurnExecutedHandler(Turn.Type type) | " + type);
+        Debug.Log("ã€TurnViewã€‘OnChangeTurnExecutedHandler(Turn.Type type) | " + type);
 
         //turn = type;
 

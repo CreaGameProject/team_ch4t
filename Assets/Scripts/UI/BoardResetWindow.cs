@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,12 +27,12 @@ public class BoardResetWindow : MonoBehaviour
     {
         await UniTask.Yield();
 
-        // ƒEƒBƒ“ƒhƒE‚ğƒ|ƒbƒvƒAƒbƒv‚³‚¹‚éˆ—
+        // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã•ã›ã‚‹å‡¦ç†
         GetComponent<PanelControllerNew>()?.OpenPanel();
 
         while (!popUpWindowLock)
         {
-            // 100ƒ~ƒŠ•b‘Ò‹@‚µ‚ÄÄs
+            // 100ãƒŸãƒªç§’å¾…æ©Ÿã—ã¦å†è©¦è¡Œ
             await UniTask.Delay(10);
         }
 

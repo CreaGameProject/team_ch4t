@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
@@ -31,7 +31,7 @@ public class Stone : MonoBehaviour
         
     }
 
-    // ¶¬ƒAƒjƒ[ƒVƒ‡ƒ“
+    // ç”Ÿæˆæ™‚ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
     async public UniTask Generate(float time) // default => 0.4f
     {
         await UniTask.Yield();
@@ -46,21 +46,21 @@ public class Stone : MonoBehaviour
 
         await this.transform.DOMoveY(0, time).AsyncWaitForCompletion();
 
-        // yŒø‰Ê‰¹Ä¶‰ÓŠz¶¬
+        // ã€åŠ¹æœéŸ³å†ç”Ÿç®‡æ‰€ã€‘ç”Ÿæˆæ™‚
         AudioManager.instance_AudioManager.PlaySE(2);
     }
 
-    // ”jŠüƒAƒjƒ[ƒVƒ‡ƒ“
+    // ç ´æ£„æ™‚ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
     async public UniTask Destroy(float time) // default => 0.4f
     {
         await UniTask.Yield();
 
-        // yŒø‰Ê‰¹Ä¶‰ÓŠz”jŠü
+        // ã€åŠ¹æœéŸ³å†ç”Ÿç®‡æ‰€ã€‘ç ´æ£„æ™‚
 
         await this.transform.DOScale(Vector3.zero, time).AsyncWaitForCompletion();
     }
 
-    // — •Ô‚µƒAƒjƒ[ƒVƒ‡ƒ“
+    // è£è¿”ã—ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
     async public UniTask Flip()
     {
         await UniTask.Yield();
@@ -69,14 +69,14 @@ public class Stone : MonoBehaviour
 
         //float rotation = (color == Cell.Color.black) ? 180.0f : 0f;
 
-        //Debug.Log("yStonezFlip() : — •Ô‚µ");
+        //Debug.Log("ã€Stoneã€‘Flip() : è£è¿”ã—");
 
         await sequence.Append(this.transform.DOMoveY(1.0f, 0.4f))
                       .Join(transform.DORotate(new Vector3(0, 0, 180), 0.4f, RotateMode.WorldAxisAdd)).AsyncWaitForCompletion();
 
         await this.transform.DOMoveY(0, 0.4f).AsyncWaitForCompletion();
 
-        // yŒø‰Ê‰¹Ä¶‰ÓŠzƒpƒ`ƒbI
+        // ã€åŠ¹æœéŸ³å†ç”Ÿç®‡æ‰€ã€‘ãƒ‘ãƒãƒƒï¼
         AudioManager.instance_AudioManager.PlaySE(2);
     }
 }

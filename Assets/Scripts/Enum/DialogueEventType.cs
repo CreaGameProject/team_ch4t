@@ -1,4 +1,4 @@
-public enum DialogueEventType
+﻿public enum DialogueEventType
 {
     NONE,
     TALK,

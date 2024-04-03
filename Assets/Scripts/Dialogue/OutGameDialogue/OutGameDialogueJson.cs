@@ -1,4 +1,4 @@
-[System.Serializable]
+﻿[System.Serializable]
 public class OutGameDialogueJson
 {
     public int event_number;
