@@ -32,6 +32,7 @@ public class PanelControllerNew : MonoBehaviour
     private void Awake()
     {
         panel.SetActive(true);
+        OverlayManager.OverlayOpened += OverlayOpened;
     }
 
     // Start is called before the first frame update
@@ -77,6 +78,7 @@ public class PanelControllerNew : MonoBehaviour
     {
         backWindowCloser.SetActive(true);
         isAnimate = true;
+        OverlayOpened(true);
         windowRect.DOScale(defaultScale, animationTime).SetEase(Ease.OutBack);
         backImage.DOFade(0.8f, animationTime).OnComplete(() => isAnimate = false);
     }
@@ -88,6 +90,7 @@ public class PanelControllerNew : MonoBehaviour
     {
         backWindowCloser.SetActive(false);
         isAnimate = true;
+        OverlayOpened(false);
         windowRect.DOScale(0, animationTime).SetEase(Ease.InBack);
         backImage.DOFade(0, animationTime).OnComplete(() => isAnimate = false);
     }
@@ -98,5 +101,10 @@ public class PanelControllerNew : MonoBehaviour
     public void DontClosePanel()
     {
         windowRect.DOPunchScale(Vector3.one * 0.05f, animationTime).OnComplete(() => windowRect.DOScale(Vector3.one, 0.001f));
+    }
+
+    private void OverlayOpened(bool isOpen)
+    {
+        Helper.isOpen = isOpen;
     }
 }

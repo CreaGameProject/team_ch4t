@@ -112,14 +112,18 @@ public class DialogueViewBase : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if (Input.GetMouseButtonDown(0))
+                if (!Helper.isOpen)
                 {
-                    // クリックが検知されたらtrueを設定して完了
-                    tcs.TrySetResult(true);
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        // クリックが検知されたらtrueを設定して完了
+                        tcs.TrySetResult(true);
+                    }
                 }
             });
 
         // クリックが検知されるまで待機
         isSkip = await tcs.Task;
     }
+    
 }
