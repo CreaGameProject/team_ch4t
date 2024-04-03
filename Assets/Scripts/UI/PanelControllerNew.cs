@@ -48,17 +48,17 @@ public class PanelControllerNew : MonoBehaviour
         // Window���J�����߂̃{�^��
         if (windowOpener != null)
         {
-            foreach(GameObject g in windowOpener) g.GetComponent<Button>().onClick.AddListener(OpenPanel);
+            foreach(GameObject g in windowOpener) g.GetComponent<CustomButton>().onClick.AddListener(OpenPanel);
         }
 
         // Window����邽�߂̃{�^��
         if (windowCloser != null)
         {
-            foreach (GameObject g in windowCloser) g.GetComponent<Button>().onClick.AddListener(ClosePanel);
+            foreach (GameObject g in windowCloser) g.GetComponent<CustomButton>().onClick.AddListener(ClosePanel);
         }
 
         // Window����邽�߂̔w�i�{�^��
-        backWindowCloser.GetComponent<Button>().onClick.AddListener(() =>
+        backWindowCloser.GetComponent<CustomButton>().onClick.AddListener(() =>
         {
             if (canClose) { ClosePanel(); } else { DontClosePanel(); }
         });
@@ -78,7 +78,7 @@ public class PanelControllerNew : MonoBehaviour
     {
         backWindowCloser.SetActive(true);
         isAnimate = true;
-        OverlayOpened(true);
+        OverlayOpened(false);
         windowRect.DOScale(defaultScale, animationTime).SetEase(Ease.OutBack);
         backImage.DOFade(0.8f, animationTime).OnComplete(() => isAnimate = false);
     }
@@ -90,7 +90,7 @@ public class PanelControllerNew : MonoBehaviour
     {
         backWindowCloser.SetActive(false);
         isAnimate = true;
-        OverlayOpened(false);
+        OverlayOpened(true);
         windowRect.DOScale(0, animationTime).SetEase(Ease.InBack);
         backImage.DOFade(0, animationTime).OnComplete(() => isAnimate = false);
     }
@@ -103,8 +103,8 @@ public class PanelControllerNew : MonoBehaviour
         windowRect.DOPunchScale(Vector3.one * 0.05f, animationTime).OnComplete(() => windowRect.DOScale(Vector3.one, 0.001f));
     }
 
-    private void OverlayOpened(bool isOpen)
+    private void OverlayOpened(bool isAllowedTextClick)
     {
-        Helper.isOpen = isOpen;
+        Helper.isAllowedTextClick = isAllowedTextClick;
     }
 }

@@ -96,7 +96,7 @@ public class DialogueViewBase : MonoBehaviour
     protected UniTask WaitUntilMouseClick()
     {
         var clickStream = Observable.EveryUpdate()
-            .Where(_ => !Helper.isOpen)
+            .Where(_ => Helper.isAllowedTextClick)
             .Where(_ => Input.GetMouseButtonDown(0))
             .First()
             .ToUniTask(useFirstValue: true);
@@ -113,7 +113,7 @@ public class DialogueViewBase : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if (!Helper.isOpen)
+                if (Helper.isAllowedTextClick)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
