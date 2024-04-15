@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class TitleGameButtonController : MonoBehaviour
     [SerializeField] private GameObject startButton = null;
     [SerializeField] private GameObject exitButton = null;
 
-    // WebGL—p‚Ìƒ{ƒ^ƒ“‚ÌÀ•W
+    // WebGLç”¨ã®ãƒœã‚¿ãƒ³ã®åº§æ¨™
     [SerializeField] private Transform webGLStartButtonPosition = null;
 
     private void Awake()

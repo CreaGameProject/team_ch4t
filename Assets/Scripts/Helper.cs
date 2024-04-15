@@ -14,4 +14,6 @@ public class Helper
     public const string ItemFilePath = "Sprites/UI/";
     public const string BackgroundPath = "Sprites/UI/";
     public const string SoundFilePath = "Sound/";
+
+    public static bool isAllowedTextClick = true;
 }

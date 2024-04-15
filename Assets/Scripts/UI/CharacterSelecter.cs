@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CharacterSelecter : MonoBehaviour
 {
-    [Header("ƒLƒƒƒ‰ƒNƒ^[")]
+    [Header("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼")]
     [SerializeField]
     Computer.Opponent opponent;
     [SerializeField]
@@ -30,7 +30,7 @@ public class CharacterSelecter : MonoBehaviour
 
     private void OnClick()
     {
-        // ‘Îí‘Šè‚ğİ’è
+        // å¯¾æˆ¦ç›¸æ‰‹ã‚’è¨­å®š
         Computer.opponent = opponent;
 
         SceneManager.LoadScene("Dialogue");

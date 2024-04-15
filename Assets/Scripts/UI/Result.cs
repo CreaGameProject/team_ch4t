@@ -43,7 +43,7 @@ public class Result : MonoBehaviour
     }
     
     /// <summary>
-    /// ƒŠƒUƒ‹ƒg‚ğ•\¦
+    /// ãƒªã‚¶ãƒ«ãƒˆã‚’è¡¨ç¤º
     /// </summary>
     public void GoToResultView()
     {
@@ -57,7 +57,7 @@ public class Result : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒŠƒUƒ‹ƒg‰æ–Ê‚ÌŸ‚Ö
+    /// ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã®æ¬¡ã¸
     /// </summary>
     public void GoToTalkView()
     {
@@ -72,9 +72,9 @@ public class Result : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒNƒŠƒA‚ğ•Û‘¶
+    /// ã‚¯ãƒªã‚¢ã‚’ä¿å­˜
     /// </summary>
-    /// <param name="isReport">•ñ‚·‚é‚©”Û‚©</param>
+    /// <param name="isReport">å ±å‘Šã™ã‚‹ã‹å¦ã‹</param>
     public void SaveStageClear(bool isReport)
     {
         int opponent = 0;

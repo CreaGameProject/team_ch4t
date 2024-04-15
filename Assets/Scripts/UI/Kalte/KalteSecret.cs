@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using TMPro;
@@ -28,14 +28,14 @@ public class KalteSecret : MonoBehaviour
         image.GetComponent<Image>().sprite = kalteProfile.profiles[(int)opponent].kalteImage;
         birthdayText.GetComponent<TextMeshProUGUI>().text = kalteProfile.profiles[(int)opponent].birthday;
         profileText.GetComponent<TextMeshProUGUI>().text =
-            "<b>ƒNƒ‰ƒX</b> " + kalteProfile.profiles[(int)opponent].gradeAndClass + "\n" +
-            "<b>g’·</b> " + kalteProfile.profiles[(int)opponent].height + "cm\n" +
-            "<b>‘Ìd</b> " + kalteProfile.profiles[(int)opponent].bodyWeight + "kg\n" +
-            "<b>ï–¡</b> " + kalteProfile.profiles[(int)opponent].hobby + "\n" +
-            "<b>“Á‹Z</b> " + kalteProfile.profiles[(int)opponent].specialSkill;
+            "<b>ã‚¯ãƒ©ã‚¹</b> " + kalteProfile.profiles[(int)opponent].gradeAndClass + "\n" +
+            "<b>èº«é•·</b> " + kalteProfile.profiles[(int)opponent].height + "cm\n" +
+            "<b>ä½“é‡</b> " + kalteProfile.profiles[(int)opponent].bodyWeight + "kg\n" +
+            "<b>è¶£å‘³</b> " + kalteProfile.profiles[(int)opponent].hobby + "\n" +
+            "<b>ç‰¹æŠ€</b> " + kalteProfile.profiles[(int)opponent].specialSkill;
         for (int i = 0; i < 3; i++)
         {
-            secretText[i].GetComponent<TextMeshProUGUI>().text = "<b>‚Ğ‚İ‚Â" + (i+1) +" </b>" + kalteProfile.profiles[(int)opponent].secret[i];
+            secretText[i].GetComponent<TextMeshProUGUI>().text = "<b>ã²ã¿ã¤" + (i+1) +" </b>" + kalteProfile.profiles[(int)opponent].secret[i];
             if (!isShowed)
             {
                 Board.instance.OnChangeHimituNumberExecuted += OnChangeHimituNumberExecutedHandler;
@@ -51,9 +51,9 @@ public class KalteSecret : MonoBehaviour
     }
 
     /// <summary>
-    /// ”é–§‚ªV‚½‚ÉŠJ¦‚³‚ê‚é‚ÆŒÄ‚Î‚ê‚é
+    /// ç§˜å¯†ãŒæ–°ãŸã«é–‹ç¤ºã•ã‚Œã‚‹ã¨å‘¼ã°ã‚Œã‚‹
     /// </summary>
-    /// <param name="howManyHimituDidGet">”é–§”Ô†</param>
+    /// <param name="howManyHimituDidGet">ç§˜å¯†ç•ªå·</param>
     private void OnChangeHimituNumberExecutedHandler(int howManyHimituDidGet)
     {
         secretText[howManyHimituDidGet - 1].SetActive(true);

@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class KalteManager : MonoBehaviour
 {
     // ================================================
-    // ‚±‚ÌƒXƒNƒŠƒvƒg‚ÍA‚¢‚¸‚êÁ‹—\’è
+    // ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã¯ã€ã„ãšã‚Œæ¶ˆå»äºˆå®š
     // ================================================
 
     [SerializeField]
