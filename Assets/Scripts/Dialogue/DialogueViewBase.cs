@@ -106,24 +106,12 @@ public class DialogueViewBase : MonoBehaviour
     
     public async UniTask WaitForClick()
     {
-        // UniTaskCompletionSourceを使用して非同期処理を管理
         var tcs = new UniTaskCompletionSource<bool>();
 
-        // クリックを検知する非同期処理
         this.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                if (Helper.isAllowedTextClick)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        // クリックが検知されたらtrueを設定して完了
-                        tcs.TrySetResult(true);
-                    }
-                }
-            });
+            .Where(_ => Helper.isAllowedTextClick && Input.GetMouseButtonDown(0))
+            .Subscribe(_ => tcs.TrySetResult(true));
 
-        // クリックが検知されるまで待機
         isSkip = await tcs.Task;
     }
     

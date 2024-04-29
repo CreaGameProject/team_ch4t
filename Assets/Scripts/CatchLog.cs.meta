@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Pool/KinakoItemData.cs.meta
+guid: 2e4620c8485e3dd45810af7dc0a7072d
+========
 guid: 33eed0ac7d405d9469ec44133dc5b4b0
+>>>>>>>> origin/develop:Assets/Scripts/CatchLog.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
