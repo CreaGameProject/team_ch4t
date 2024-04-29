@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,6 +8,10 @@ using UnityEditor;
 using System.ComponentModel;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+using System.Numerics;
+using System;
+using Random = UnityEngine.Random;
+//using System;
 //using System;
 
 public class Computer : MonoBehaviour
@@ -35,27 +39,123 @@ public class Computer : MonoBehaviour
 
     [Header("N 手先まで思考する（部長AIのみ有効）")] // default => 1
     [SerializeField] private int foresight = 1;
-    
-    // 再帰的に計算する（実行コスト高い）
-    async private UniTask<List<int>> Recursive((Cell.Type, Cell.Color)[,] virtualBoard, int p, int n, int f, int min)
+
+    // 戻り値
+    // int ヒミツマスが裏返される数の最小値
+    // List<int> 下の層で得たヒミツマスが裏返される数の最小値のリスト
+    async private UniTask<(int, List<int>)> Expolor((Cell.Type, Cell.Color)[,] virtualBoard, int depth, int floor, int min)
     {
         await UniTask.Yield();
 
-        List<int> return_predict = new List<int>();
+        Debug.Log(string.Format("<color=red><b>{0} 手先を試行中... </b></color>", floor));
 
+        // ヒミツマスが裏返される数
+        List<int> NumberOfSecretSquaresTurnedOvers = new List<int>();
+
+        // コンピュータが石を置ける場所を探す
         List<((int, int), int)> proposedCells_com = GetProposedCell(Cell.Color.white, virtualBoard);
 
-        //Debug.Log("proposedCells[j] : " + proposedCells[i]);
+        // ※ AIがポンコツ化する
+        // 探索箇所の順番をランダマイズ
+        // proposedCells_com = proposedCells_com.OrderBy(a => Guid.NewGuid()).ToList();
+
+        // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
+        for (int i = 0; i < proposedCells_com.Count; i++)
+        {
+            int NumberOfSecretSquaresTurnedOver = 0;
+
+            Debug.Log(string.Format("computerパターン : {0}", i));
+
+            // 探索継続条件の確認
+            int p_execute = 1;
+            if (NumberOfSecretSquaresTurnedOvers.Count != 0)
+            {
+                if (NumberOfSecretSquaresTurnedOvers.Min() >= min) { p_execute *= 3; }
+                if (NumberOfSecretSquaresTurnedOvers.Contains(0)) { p_execute *= 5; }
+            }
+            
+            // 探索継続の判定
+            if (p_execute % 3 == 0)
+            {
+                Debug.Log(string.Format("探索を枝切りしました。"));
+                NumberOfSecretSquaresTurnedOvers.Add(2147483647);
+                continue;
+            }
+
+            if (p_execute % 5 == 0)
+            {
+                Debug.Log(string.Format("最善手を発見済み。"));
+                NumberOfSecretSquaresTurnedOvers.Add(2147483647);
+                continue;
+            }
+
+            // コンピュータがある石を置いたので盤面を変化させる
+            ((Cell.Type, Cell.Color)[,], bool) predict_com = Predict(virtualBoard, proposedCells_com[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
+            (Cell.Type, Cell.Color)[,] virtualBoard_com = predict_com.Item1;
+            virtualBoard_com[proposedCells_com[i].Item1.Item1, proposedCells_com[i].Item1.Item2] = UpdateCell(Cell.Type.white);
+
+            // 【デバッグ】ボードの状態を表示する
+            ViewBoard(Turn.Type.player, true, virtualBoard_com);
+
+            // プレイヤーが石を置ける場所を探す
+            List<((int, int), int)> proposedCells_player = GetProposedCell(Cell.Color.black, virtualBoard_com);
+
+            (int, List<int>) lower_info;
+            for (int j = 0; j < proposedCells_player.Count; j++)
+            {
+                Debug.Log(string.Format("computerパターン : {0} | playerパターン : {1}", i, j));
+
+                // プレイヤーがある石を置いたので盤面を変化させる
+                ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_com, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
+                (Cell.Type, Cell.Color)[,] virtualBoard_player = predict_player.Item1;
+
+                // 【デバッグ】ボードの状態を表示する
+                ViewBoard(Turn.Type.computer, true, virtualBoard_player);
+
+                // ヒミツマスは裏返されたか？
+                bool didFlipSecret = predict_player.Item2;
+
+                // 裏返されたならインクリメント
+                if (didFlipSecret) { NumberOfSecretSquaresTurnedOver++; }
+
+                // 探索継続条件の確認
+                int c_execute = 1;
+                if (floor == depth) { c_execute *= 3; } // 探索範囲の制限
+                if (NumberOfSecretSquaresTurnedOver >= min) { c_execute *= 5; } // 枝切り：見込みなし
+                if (NumberOfSecretSquaresTurnedOvers.Contains(0)) { c_execute *= 7; } // 枝切り：最善手発見済み
+
+                // 探索継続の判定
+                if (c_execute % 3 == 0) { continue; }
+                if (c_execute % 5 == 0 || c_execute % 7 == 0) { NumberOfSecretSquaresTurnedOvers.Add(2147483647); continue; }
+
+                Debug.Log(string.Format("depth : {0} | floor : {1} | min : {2}", depth, floor, min));
+
+                lower_info = await Expolor(virtualBoard_player, depth, floor++, min);
+                int lower_min = lower_info.Item1;
+                min = lower_min;
+            }
+
+            NumberOfSecretSquaresTurnedOvers.Add(NumberOfSecretSquaresTurnedOver);
+        }
+
+        return (min, NumberOfSecretSquaresTurnedOvers);
+    }
+
+    // 再帰的に計算する（実行コスト高い）
+    async private UniTask<List<int>> Recursive((Cell.Type, Cell.Color)[,] virtualBoard, int p, int n, int min)
+    {
+        await UniTask.Yield();
+
         Debug.Log(string.Format("<color=red><b>{0} 手先を試行中...</b></color>", n));
-        //Debug.Log(string.Format("<color=red><b>{0} 回目の呼び出し</b></color>", n));
+
+        List<int> return_predict = new List<int>();
+        List<((int, int), int)> proposedCells_com = GetProposedCell(Cell.Color.white, virtualBoard);
 
         // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
         for (int i = 0; i < proposedCells_com.Count; i++)
         {
 
             int P = p;
-
-            //Debug.Log(string.Format("P : {0} | min : {1}", P, min));
             Debug.Log(string.Format("computerパターン : {0}", i));
 
             if ((return_predict.Count != 0) ? return_predict.Contains(0) : false)
@@ -85,7 +185,6 @@ public class Computer : MonoBehaviour
             ViewBoard(Turn.Type.player, true, virtualBoard_com);
 
             // => => プレイヤーが置ける場所を探す
-
             List<((int, int), int)> proposedCells_player = GetProposedCell(Cell.Color.black, virtualBoard_com);
 
             for (int j = 0; j < proposedCells_player.Count; j++)
@@ -100,10 +199,9 @@ public class Computer : MonoBehaviour
 
                 bool didFlipSecret = predict_player.Item2;
 
-                //if (didFlipSecret) { predict[i] += 1; }
                 if (didFlipSecret) { P += 1; }
 
-                if (n != f)
+                if (n <= 0)
                 {
                     if ((return_predict.Count != 0) ? return_predict.Contains(0) : false)
                     {
@@ -120,16 +218,11 @@ public class Computer : MonoBehaviour
                     else
                     {
                         int MIN = (return_predict.Count != 0) ? (return_predict.Min() >= P) ? P : return_predict.Min() : min;
-                        //int MIN = (return_predict.Count != 0) ? (return_predict.Min() >= P) ? P : return_predict.Min() : P;
-                        //int MIN = 0;
-                        List<int> next_p = await Recursive(virtualBoard_player, P, n + 1, f, MIN);
-                        //Debug.Log(string.Format("next_p.Sum() : {0}", next_p.Sum()));
+                        List<int> next_p = await Recursive(virtualBoard_player, P, n--, MIN);
                         P += next_p.Sum();
                     }
                 }
             }
-
-            //Debug.Log("P => " + P);
 
             return_predict.Add(P);
         }
@@ -165,10 +258,12 @@ public class Computer : MonoBehaviour
             }
         }
 
+        /*
         for (int i = 0; i < minIndices.Count; i++)
         {
             Debug.Log(string.Format("minIndices[i] => {0}", minIndices[i]));
         }
+        */
 
         // 最小値のインデックスをランダムに選ぶ
         System.Random random = new System.Random();
@@ -249,88 +344,23 @@ public class Computer : MonoBehaviour
 
                     Debug.Log(string.Format("AIが思考を開始します。"));
 
+                    // ボードを描画する
                     ViewBoard(Turn.Type.computer, true, virtualBoard);
 
-                    List<int> predict = new List<int>();
+                    // 【プロトタイプ】新AI
+                    int min = 2147483647;
+                    (int,List<int>) e_predict = await Expolor(virtualBoard, this.foresight, 1, min);
+                    List<int> predict = e_predict.Item2;
+                    // 【プロトタイプ】新AI
 
-                    //List<((int, int), int)> proposedCells = GetProposedCell(Cell.Color.white, virtualBoard);
-                    //List<((int, int), int)> proposedCells_com = GetProposedCell(Cell.Color.white, virtualBoard);
-
-                    List<int> next_p = await Recursive(virtualBoard, 0, 1, this.foresight, 9999);
-                    predict = next_p;
-
-                    /*
-                    for (int n = 0; n < this.foresight; n++)
-                    {
-                        //Debug.Log(string.Format("{0} 手先を読んでいます...", n + 1));
-
-                        (Cell.Type, Cell.Color)[,] v_board = virtualBoard;
-
-                        predict = new List<int> { proposedCells.Count };
-
-                        // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
-                        for (int i = 0; i < proposedCells.Count; i++)
-                        {
-                            predict.Add(0);
-
-                            //Debug.Log("proposedCells[j] : " + proposedCells[i]);
-                            Debug.Log(string.Format("{0} 手先 パターン{1} を読んでいます...", n + 1, i + 1));
-
-                            ((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(v_board, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
-                            //((Cell.Type, Cell.Color)[,], bool) predict_computer = Predict(virtualBoard, proposedCells[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
-
-                            (Cell.Type, Cell.Color)[,] virtualBoard_predict_1 = predict_computer.Item1;
-
-                            virtualBoard_predict_1[proposedCells[i].Item1.Item1, proposedCells[i].Item1.Item2] = UpdateCell(Cell.Type.white);
-
-                            ViewBoard(Turn.Type.player, true, virtualBoard_predict_1);
-
-                            // => => プレイヤーが置ける場所を探す
-
-                            List<((int, int), int)> proposedCells_player = GetProposedCell(Cell.Color.black, virtualBoard_predict_1);
-
-                            for (int j = 0; j < proposedCells_player.Count; j++)
-                            {
-                                //Debug.Log("proposedCells_player[j] : " + proposedCells_player[j]);
-
-                                // => => => プレイヤーが置ける場所に石を置いた場合の盤面を計算する
-
-                                ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_predict_1, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
-
-                                (Cell.Type, Cell.Color)[,] virtualBoard_predict_2 = predict_player.Item1;
-
-                                Debug.Log(string.Format("{0} 手先 パターン{1} の パターン{2} を読んでいます...", n + 1, i + 1, j + 1));
-
-                                ViewBoard(Turn.Type.player, true, virtualBoard_predict_2);
-
-                                bool didFlipSecret = predict_player.Item2;
-
-                                if (didFlipSecret) { predict[i] += 1; }
-
-                                v_board = virtualBoard_predict_2;
-                            }
-
-
-                        }
-                    }*/
-
-                    
-                    for (int i = 0; i < predict.Count; i++)
-                    {
-                        Debug.Log(string.Format("predict[i] => {0}", predict[i]));
-                    }
-
-
-                    //Debug.Log("predict.Count => " + predict.Count);
-                    //Debug.Log("proposedCells.Count => " + proposedCells.Count);
+                    //List<int> predict = await Recursive(virtualBoard, 0, this.foresight, 9999);
+                    for (int i = 0; i < predict.Count; i++) { Debug.Log(string.Format("predict[i] => {0}", predict[i])); }
 
                     int minIndex = GetRandomMinIndex(predict);
 
                     cellIndex = proposedCells[minIndex].Item1;
 
                     Debug.Log(string.Format("predict.Min() => {0} | minIndex => {1} | cellIndex => {2}", predict.Min(), minIndex, cellIndex));
-
-                    //cellIndex = proposedCells[predict.IndexOf(predict.Min())].Item1;
                 }
             }
 
