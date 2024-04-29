@@ -41,6 +41,7 @@ public class PanelController : MonoBehaviour
         isAnimate = true;
         windowRect.DOScale(1, animationTime).SetEase(Ease.OutBack);
         backImage.DOFade(0.8f, animationTime).OnComplete(() => isAnimate = false);
+        Helper.isAllowedTextClick = false;
         //StartCoroutine(FadeGackGroundPanel());
     }
 
@@ -49,6 +50,7 @@ public class PanelController : MonoBehaviour
         isAnimate = true;
         windowRect.DOScale(0, animationTime).SetEase(Ease.InBack);
         backImage.DOFade(0, animationTime).OnComplete(() => isAnimate = false);
+        Helper.isAllowedTextClick = true;
         //StartCoroutine(FadeGackGroundPanel());
     }
 

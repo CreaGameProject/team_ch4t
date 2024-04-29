@@ -62,6 +62,6 @@ public class ExpandButtonAnimation : MonoBehaviour
     
     private void OnPointer(bool isAllowedTextClick)
     {
-        Helper.isAllowedTextClick = isAllowedTextClick;
+        //Helper.isAllowedTextClick = isAllowedTextClick;
     }
 }
