@@ -49,6 +49,117 @@ public class Computer : MonoBehaviour
 
         Debug.Log(string.Format("<color=red><b>{0} 手先を試行中... </b></color>", floor));
 
+        // ヒミツマスが裏返される数のリスト
+        List<int> NumberOfSecretSquaresTurnedOvers = new List<int>();
+
+        // コンピュータが石を置ける場所を探す
+        List<((int, int), int)> proposedCells_com = GetProposedCell(Cell.Color.white, virtualBoard);
+
+        // ※ AIがポンコツ化する
+        // 探索箇所の順番をランダマイズ
+        // proposedCells_com = proposedCells_com.OrderBy(a => Guid.NewGuid()).ToList();
+
+        // => コンピュータが置ける場所に石を置いた場合の盤面を計算する
+        for (int i = 0; i < proposedCells_com.Count; i++)
+        {
+            int NumberOfSecretSquaresTurnedOver = 0;
+
+            Debug.Log(string.Format("computerパターン : {0}", i));
+
+            // 探索継続条件の確認
+            int p_execute = 1;
+
+            if(min == 0) 
+            {
+                NumberOfSecretSquaresTurnedOvers.Add(2147483647);
+                continue;
+            }
+
+            if (NumberOfSecretSquaresTurnedOvers.Count != 0)
+            {
+                if (NumberOfSecretSquaresTurnedOvers.Min() > min) { p_execute *= 3; }
+                if (NumberOfSecretSquaresTurnedOvers.Contains(0)) { p_execute *= 5; }
+            }
+
+            // 探索継続の判定
+            if (p_execute % 3 == 0)
+            {
+                Debug.Log(string.Format("探索を枝切りしました。"));
+                NumberOfSecretSquaresTurnedOvers.Add(2147483647);
+                continue;
+            }
+
+            if (p_execute % 5 == 0)
+            {
+                Debug.Log(string.Format("最善手を発見済み。"));
+                NumberOfSecretSquaresTurnedOvers.Add(2147483647);
+                continue;
+            }
+
+            // コンピュータがある石を置いたので盤面を変化させる
+            ((Cell.Type, Cell.Color)[,], bool) predict_com = Predict(virtualBoard, proposedCells_com[i].Item1, Cell.Color.white, Cell.Color.black, Cell.Type.white);
+            (Cell.Type, Cell.Color)[,] virtualBoard_com = predict_com.Item1;
+            virtualBoard_com[proposedCells_com[i].Item1.Item1, proposedCells_com[i].Item1.Item2] = UpdateCell(Cell.Type.white);
+
+            // 【デバッグ】ボードの状態を表示する
+            //ViewBoard(Turn.Type.player, true, virtualBoard_com);
+
+            // プレイヤーが石を置ける場所を探す
+            List<((int, int), int)> proposedCells_player = GetProposedCell(Cell.Color.black, virtualBoard_com);
+
+            (int, List<int>) lower_info;
+            for (int j = 0; j < proposedCells_player.Count; j++)
+            {
+
+                Debug.Log(string.Format("computerパターン : {0} | playerパターン : {1}", i, j));
+
+                // プレイヤーがある石を置いたので盤面を変化させる
+                ((Cell.Type, Cell.Color)[,], bool) predict_player = Predict(virtualBoard_com, proposedCells_player[j].Item1, Cell.Color.black, Cell.Color.white, Cell.Type.black);
+                (Cell.Type, Cell.Color)[,] virtualBoard_player = predict_player.Item1;
+
+                // 【デバッグ】ボードの状態を表示する
+                //ViewBoard(Turn.Type.computer, true, virtualBoard_player);
+
+                // ヒミツマスは裏返されたか？
+                bool didFlipSecret = predict_player.Item2;
+
+                // 裏返されたならインクリメント
+                if (didFlipSecret) { NumberOfSecretSquaresTurnedOver++; }
+
+                // 探索継続条件の確認
+
+                if (floor == depth) { continue; } // 探索範囲の制限
+
+                int c_execute = 1;
+                
+                if (NumberOfSecretSquaresTurnedOver > min) { c_execute *= 5; } // 枝切り：見込みなし
+                if (NumberOfSecretSquaresTurnedOvers.Contains(0)) { c_execute *= 7; } // 枝切り：最善手発見済み
+
+                // 探索継続の判定
+                if (c_execute % 5 == 0 || c_execute % 7 == 0) { NumberOfSecretSquaresTurnedOvers.Add(2147483647); continue; }
+
+                Debug.Log(string.Format("depth : {0} | floor : {1} | min : {2}", depth, floor, min));
+
+                lower_info = await Expolor(virtualBoard_player, depth, floor++, min);
+
+                if (min > lower_info.Item1) { min = lower_info.Item1; }
+            }
+
+            NumberOfSecretSquaresTurnedOvers.Add(NumberOfSecretSquaresTurnedOver);
+        }
+
+        return (min, NumberOfSecretSquaresTurnedOvers);
+    }
+
+    /*// 戻り値
+    // int ヒミツマスが裏返される数の最小値
+    // List<int> 下の層で得たヒミツマスが裏返される数の最小値のリスト
+    async private UniTask<List<int>> Expolor((Cell.Type, Cell.Color)[,] virtualBoard, int depth, int floor, int min)
+    {
+        await UniTask.Yield();
+
+        Debug.Log(string.Format("<color=red><b>{0} 手先を試行中... </b></color>", floor));
+
         // ヒミツマスが裏返される数
         List<int> NumberOfSecretSquaresTurnedOvers = new List<int>();
 
@@ -73,7 +184,7 @@ public class Computer : MonoBehaviour
                 if (NumberOfSecretSquaresTurnedOvers.Min() >= min) { p_execute *= 3; }
                 if (NumberOfSecretSquaresTurnedOvers.Contains(0)) { p_execute *= 5; }
             }
-            
+
             // 探索継続の判定
             if (p_execute % 3 == 0)
             {
@@ -103,6 +214,7 @@ public class Computer : MonoBehaviour
             (int, List<int>) lower_info;
             for (int j = 0; j < proposedCells_player.Count; j++)
             {
+
                 Debug.Log(string.Format("computerパターン : {0} | playerパターン : {1}", i, j));
 
                 // プレイヤーがある石を置いたので盤面を変化させる
@@ -131,7 +243,7 @@ public class Computer : MonoBehaviour
                 Debug.Log(string.Format("depth : {0} | floor : {1} | min : {2}", depth, floor, min));
 
                 lower_info = await Expolor(virtualBoard_player, depth, floor++, min);
-                int lower_min = lower_info.Item1;
+                int lower_min = lower_info.Item2.Min();
                 min = lower_min;
             }
 
@@ -139,7 +251,7 @@ public class Computer : MonoBehaviour
         }
 
         return (min, NumberOfSecretSquaresTurnedOvers);
-    }
+    }*/
 
     // 再帰的に計算する（実行コスト高い）
     async private UniTask<List<int>> Recursive((Cell.Type, Cell.Color)[,] virtualBoard, int p, int n, int min)
@@ -349,7 +461,7 @@ public class Computer : MonoBehaviour
 
                     // 【プロトタイプ】新AI
                     int min = 2147483647;
-                    (int,List<int>) e_predict = await Expolor(virtualBoard, this.foresight, 1, min);
+                    (int, List<int>) e_predict = await Expolor(virtualBoard, this.foresight, 1, min);
                     List<int> predict = e_predict.Item2;
                     // 【プロトタイプ】新AI
 
